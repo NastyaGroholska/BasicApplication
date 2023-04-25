@@ -25,4 +25,20 @@
         <item name="android:insetRight">0dp</item>
         <item name="android:insetBottom">0dp</item>
     </style>
+
+    <style name="buttonFont" parent="@style/outlinedButtonNoInset">
+        <item name="android:fontFamily">@font/open_sans</item>
+    </style>
+
+    <style name="bigButton" parent="@style/buttonFont">
+        <item name="android:layout_height">55dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0.25</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="smallButton" parent="@style/buttonFont">
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>
