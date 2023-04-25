@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BasicApplication</string>
+    <string name="open_facebook">Open facebook</string>
+    <string name="open_linkedin">Open linkedin</string>
+    <string name="open_instagram">Open instagram</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="view_my_contacts">VIEW MY CONTACTS</string>
+    <string name="settings">Settings</string>
+</resources>
