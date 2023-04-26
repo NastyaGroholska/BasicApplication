@@ -13,16 +13,19 @@
         android:theme="@style/Theme.BasisApplication"
         tools:targetApi="31">
         <activity
-            android:name="com.shpp.ahrokholska.basic.MyProfile"
+            android:name=".SignUp"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.BasisApplication">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MyProfile"
+            android:exported="false"
+            android:theme="@style/Theme.BasisApplication" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
