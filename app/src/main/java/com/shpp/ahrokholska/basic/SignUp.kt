@@ -1,5 +1,6 @@
 package com.shpp.ahrokholska.basic
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
@@ -84,7 +85,7 @@ class SignUp : ComponentActivity() {
                         .joinToString(separator = " ") { it ->
                             it[0].uppercase() + it.substring(1).lowercase()
                         })
-                })
+                }, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
             } else {
                 Snackbar.make(it, R.string.signup_error, Snackbar.LENGTH_SHORT).setAnchorView(it)
                     .show()
