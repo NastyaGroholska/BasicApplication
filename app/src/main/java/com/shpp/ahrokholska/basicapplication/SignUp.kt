@@ -80,17 +80,25 @@ class SignUp : AppCompatActivity() {
 
             if (isEmailValid && isPasswordValid) {
                 startActivity(Intent(this, MyProfile::class.java).apply {
-                    putExtra(USER_NAME, email.input.text.toString()
-                        .split("@")[0].split("[+._%\\-]+".toRegex())
-                        .joinToString(separator = " ") { it ->
-                            it[0].uppercase() + it.substring(1).lowercase()
-                        })
+                    putExtra(USER_NAME, getUserName(email.input.text.toString()))
                 }, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
             } else {
-                Snackbar.make(it, R.string.signup_error, Snackbar.LENGTH_SHORT).setAnchorView(it)
-                    .show()
+                Snackbar.make(it, R.string.signup_error, Snackbar.LENGTH_SHORT)
+                    .setAnchorView(it).show()
             }
         }
+    }
+
+    /**
+     * Returns user name parsed from [email].
+     * For example: "lucile.alvarado@gmail.com" -> "Lucile Alvarado"
+     * @param email Must be valid
+     */
+    private fun getUserName(email: String): String {
+        return email.split("@")[0].split("[+._%\\-]+".toRegex())
+            .joinToString(separator = " ") {
+                it[0].uppercase() + it.substring(1).lowercase()
+            }
     }
 
     private fun isEmailValid(email: String): Boolean {
