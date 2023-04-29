@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">СпрощенийЗастосунок</string>
+    <string name="open_facebook">Відкрити facebook</string>
+    <string name="open_linkedin">Відкрити linkedin</string>
+    <string name="open_instagram">Відкрити instagram</string>
+    <string name="edit_profile">Редагувати профіль</string>
+    <string name="view_my_contacts">ПЕРЕГЛЯНУТИ МОЇ КОНТАКТИ</string>
+    <string name="settings">Налаштування</string>
+    <string name="let_s_get_acquainted">Давай знайомитись</string>
+    <string name="fill_out_the_profile_and_go_to_the_application">Заповнюйте профіль і переходьте до застосунку!</string>
+    <string name="register">зареєструватися</string>
+    <string name="tos">Натиснувши «Зареєструватися», ви погоджуєтеся з нашими Умови Використання</string>
+    <string name="already_have_acc">Вже є аккаунт?</string>
+    <string name="sign_in">Увійти</string>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Пароль</string>
+    <string name="remember_me">Запам\'ятай мене</string>
+    <string name="google">GOOGLE</string>
+    <string name="or">чи</string>
+    <string name="incorrect_mail">Неправильна адреса електронної пошти</string>
+    <string name="incorrect_password">Ваш пароль має містити щонайменше 8 символів</string>
+    <string name="signup_error">Введіть правильну адресу електронної пошти та пароль</string>
+    <string name="career">Професія</string>
+    <string name="home_address">Домашня адреса</string>
+</resources>
