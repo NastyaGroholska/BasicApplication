@@ -5,10 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.shpp.ahrokholska.basicapplication.databinding.SignUpBinding
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class SignUp : AppCompatActivity() {
     private lateinit var binding: SignUpBinding
@@ -62,6 +65,12 @@ class SignUp : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val savedEmail = runBlocking { application.readStringFromStore(STORED_EMAIL_KEY) }
+        if (savedEmail != "") {
+            openMyProfile(getUserName(savedEmail))
+        }
+
         binding = SignUpBinding.inflate(layoutInflater)
         val email = Wrapper(
             binding.editTextTextEmailAddress, binding.emailGroup,
@@ -79,14 +88,24 @@ class SignUp : AppCompatActivity() {
             val isPasswordValid = password.processInput()
 
             if (isEmailValid && isPasswordValid) {
-                startActivity(Intent(this, MyProfile::class.java).apply {
-                    putExtra(USER_NAME, getUserName(email.input.text.toString()))
-                }, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+                val emailText = email.input.text.toString()
+                if (binding.rememberMe.isChecked) {
+                    lifecycleScope.launch {
+                        application.writeStringToStore(STORED_EMAIL_KEY, emailText)
+                    }
+                }
+                openMyProfile(getUserName(emailText))
             } else {
                 Snackbar.make(it, R.string.signup_error, Snackbar.LENGTH_SHORT)
                     .setAnchorView(it).show()
             }
         }
+    }
+
+    private fun openMyProfile(userName: String) {
+        startActivity(Intent(this, MyProfile::class.java).apply {
+            putExtra(USER_NAME, userName)
+        }, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
     }
 
     /**
