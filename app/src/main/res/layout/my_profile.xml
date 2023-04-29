@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,13 +10,25 @@
         android:id="@+id/top"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/dark_purple"
+        android:background="@color/upper_layout_color"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.5"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/bottom"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/lower_layout_color"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/settings"
@@ -31,7 +42,7 @@
         android:padding="0dp"
         android:text="@string/settings"
         android:textAllCaps="false"
-        android:textColor="@color/white"
+        android:textColor="@color/main_text_color"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
@@ -55,7 +66,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
         android:text=""
-        android:textColor="@color/white"
+        android:textColor="@color/main_text_color"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/top"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +82,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
         android:text="@string/career"
-        android:textColor="@color/grey"
+        android:textColor="@color/sub_text_color"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -84,7 +95,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
         android:text="@string/home_address"
-        android:textColor="@color/grey"
+        android:textColor="@color/sub_text_color"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/top"
         app:layout_constraintEnd_toEndOf="parent"
@@ -119,7 +130,7 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top"/>
+        app:layout_constraintTop_toBottomOf="@+id/top" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/instagram"
@@ -144,18 +155,18 @@
         android:backgroundTint="@color/transparent"
         android:text="@string/edit_profile"
         android:textAllCaps="false"
-        android:textColor="@color/black"
+        android:textColor="@color/secondary_text_color"
         app:layout_constraintBottom_toTopOf="@+id/view_my_contacts"
         app:layout_constraintEnd_toEndOf="@+id/percent96Vertical"
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
-        app:strokeColor="@color/black"
+        app:strokeColor="@color/secondary_text_color"
         app:strokeWidth="2dp" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/view_my_contacts"
         style="@style/bigButton"
         android:layout_width="0dp"
-        android:backgroundTint="@color/orange"
+        android:backgroundTint="@color/big_button_color"
         android:text="@string/view_my_contacts"
         app:layout_constraintBottom_toTopOf="@+id/percent98VHorizontal"
         app:layout_constraintEnd_toEndOf="@+id/percent96Vertical"

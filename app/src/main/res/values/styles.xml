@@ -38,7 +38,7 @@
         <item name="android:layout_height">55dp</item>
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">0.25</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/main_text_color</item>
     </style>
 
     <style name="smallButton" parent="@style/buttonFontIcon">
@@ -47,9 +47,9 @@
     </style>
 
     <style name="textInputLayoutWhiteTheme">
-        <item name="colorControlNormal">@color/white</item>
-        <item name="colorControlActivated">@color/white</item>
-        <item name="colorControlHighlight">@color/white</item>
+        <item name="colorControlNormal">@color/main_text_color</item>
+        <item name="colorControlActivated">@color/main_text_color</item>
+        <item name="colorControlHighlight">@color/main_text_color</item>
     </style>
 
     <style name="textInputLayoutWhiteStyle">
@@ -58,18 +58,18 @@
         <item name="errorEnabled">true</item>
         <item name="errorIconDrawable">@null</item>
         <item name="boxStrokeColor">@color/text_input_box_stroke</item>
-        <item name="boxStrokeErrorColor">@color/white</item>
+        <item name="boxStrokeErrorColor">@color/main_text_color</item>
     </style>
 
     <style name="textInputEditTextWhite">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/main_text_color</item>
         <item name="android:textSize">18sp</item>
         <item name="android:backgroundTint">@color/transparent</item>
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
 
     <style name="errorMessage" parent="TextAppearance.Design.Error">
-        <item name="android:textColor">@color/red</item>
+        <item name="android:textColor">@color/error_text_color</item>
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
