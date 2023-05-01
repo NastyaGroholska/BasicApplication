@@ -13,15 +13,21 @@ import com.shpp.ahrokholska.basicapplication.databinding.SignUpBinding
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
+private const val SIGN_AT = "@"
+private const val REGEX_PATTERN = "[+._%\\-]+"
+
 class SignUp : AppCompatActivity() {
     private lateinit var binding: SignUpBinding
 
+    //TODO move const value to separate constants class
     companion object IntentOptions {
         const val USER_NAME = "com.shpp.ahrokholska.basic.SignUp.UserName"
     }
 
     inner class Wrapper(
-        val input: TextInputEditText, val errorDisplay: TextInputLayout, val errorMessage: String,
+        val input: TextInputEditText,
+        val errorDisplay: TextInputLayout,
+        val errorMessage: String,
         private val isValid: (str: String) -> Boolean
     ) {
         init {
@@ -66,10 +72,7 @@ class SignUp : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val savedEmail = runBlocking { application.readStringFromStore(STORED_EMAIL_KEY) }
-        if (savedEmail != "") {
-            openMyProfile(getUserName(savedEmail))
-        }
+        checkForAutoLogin()
 
         binding = SignUpBinding.inflate(layoutInflater)
         val email = Wrapper(
@@ -83,6 +86,19 @@ class SignUp : AppCompatActivity() {
 
         setContentView(binding.root)
 
+        setListeners(email, password)
+
+
+    }
+
+    private fun setListeners(email: Wrapper, password: Wrapper) {
+        setRegisterButtonLister(email, password)
+    }
+
+    private fun setRegisterButtonLister(
+        email: Wrapper,
+        password: Wrapper
+    ) {
         binding.registerButton.setOnClickListener {
             val isEmailValid = email.processInput()
             val isPasswordValid = password.processInput()
@@ -102,6 +118,14 @@ class SignUp : AppCompatActivity() {
         }
     }
 
+    private fun checkForAutoLogin() {
+        val savedEmail =
+            runBlocking { application.readStringFromStore(STORED_EMAIL_KEY) } //TODO maybe have to invoke in IO thread
+        if (savedEmail != "") {
+            openMyProfile(getUserName(savedEmail))
+        }
+    }
+
     private fun openMyProfile(userName: String) {
         startActivity(Intent(this, MyProfile::class.java).apply {
             putExtra(USER_NAME, userName)
@@ -114,7 +138,7 @@ class SignUp : AppCompatActivity() {
      * @param email Must be valid
      */
     private fun getUserName(email: String): String {
-        return email.split("@")[0].split("[+._%\\-]+".toRegex())
+        return email.split(SIGN_AT)[0].split(REGEX_PATTERN.toRegex())
             .joinToString(separator = " ") {
                 it[0].uppercase() + it.substring(1).lowercase()
             }

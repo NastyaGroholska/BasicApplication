@@ -9,12 +9,12 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "PreferenceDataStore")
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "PreferenceDataStore") // TODO extract string literal to const value
 
 suspend fun Context.readStringFromStore(key: String): String {
     return dataStore.data.map { preferences ->
         preferences[stringPreferencesKey(key)] ?: ""
-    }.first()
+    }.first() //TODO maybe collect
 }
 
 suspend fun Context.writeStringToStore(key: String, value: String) {
