@@ -6,21 +6,22 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "PreferenceDataStore") // TODO extract string literal to const value
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "PreferenceDataStore")
 
-suspend fun Context.readStringFromStore(key: String): String {
+fun Context.readStringFromStore(key: Preferences.Key<String>): Flow<String> {
     return dataStore.data.map { preferences ->
-        preferences[stringPreferencesKey(key)] ?: ""
-    }.first() //TODO maybe collect
-}
-
-suspend fun Context.writeStringToStore(key: String, value: String) {
-    dataStore.edit { settings ->
-        settings[stringPreferencesKey(key)] = value
+        preferences[key] ?: ""
     }
 }
 
-const val STORED_EMAIL_KEY = "com.shpp.ahrokholska.basic.PreferenceDataStoreHelper.Email"
+suspend fun Context.writeStringToStore(key: Preferences.Key<String>, value: String) {
+    dataStore.edit { settings ->
+        settings[key] = value
+    }
+}
+
+val STORED_EMAIL_KEY =
+    stringPreferencesKey("com.shpp.ahrokholska.basic.PreferenceDataStoreHelper.Email")

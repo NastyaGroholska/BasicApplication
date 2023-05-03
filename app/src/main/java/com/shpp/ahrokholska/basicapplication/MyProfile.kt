@@ -7,12 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.shpp.ahrokholska.basicapplication.databinding.MyProfileBinding
 
 class MyProfile : AppCompatActivity() {
-    private lateinit var binding: MyProfileBinding
+    private val binding: MyProfileBinding by lazy { MyProfileBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = MyProfileBinding.inflate(layoutInflater)
-        binding.textName.text = intent.getStringExtra(SignUp.USER_NAME)
+        binding.textName.text = intent.getStringExtra(USER_NAME)
 
         with(window) {
             requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)

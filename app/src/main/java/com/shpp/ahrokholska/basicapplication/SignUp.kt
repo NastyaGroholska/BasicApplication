@@ -10,101 +10,45 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.shpp.ahrokholska.basicapplication.databinding.SignUpBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
-private const val SIGN_AT = "@"
-private const val REGEX_PATTERN = "[+._%\\-]+"
+private const val EMAIL_DOMAIN_SEPARATOR = "@"
+private const val DELIMITER_REGEX = "[+._%\\-]+"
 
 class SignUp : AppCompatActivity() {
-    private lateinit var binding: SignUpBinding
-
-    //TODO move const value to separate constants class
-    companion object IntentOptions {
-        const val USER_NAME = "com.shpp.ahrokholska.basic.SignUp.UserName"
-    }
-
-    inner class Wrapper(
-        val input: TextInputEditText,
-        val errorDisplay: TextInputLayout,
-        val errorMessage: String,
-        private val isValid: (str: String) -> Boolean
-    ) {
-        init {
-            errorDisplay.setErrorTextAppearance(R.style.errorMessage)
-            setInputErrorListeners(input, ::processInput)
-        }
-
-        /**
-         * Adds listener to [viewToListenTo] when [viewToListenTo] loses focus or
-         * when the enter key is pressed invokes [processStr]
-         */
-        private fun setInputErrorListeners(
-            viewToListenTo: TextInputEditText, processStr: () -> Unit
-        ) {
-            viewToListenTo.setOnFocusChangeListener { view, hasFocus ->
-                if (!hasFocus) {
-                    processStr()
-                }
-            }
-
-            viewToListenTo.setOnEditorActionListener { view, actionId, event ->
-                processStr()
-                true
-            }
-        }
-
-        /**
-         * If [input] text is valid according to [isValid] then sets error message in [errorDisplay]
-         * to null, otherwise sets it to [errorMessage]. Returns if [input] text is valid
-         */
-        fun processInput(): Boolean {
-            return if (isValid(input.text.toString())) {
-                errorDisplay.error = null
-                true
-            } else {
-                errorDisplay.error = errorMessage
-                false
-            }
-        }
-    }
+    private val binding: SignUpBinding by lazy { SignUpBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         checkForAutoLogin()
 
-        binding = SignUpBinding.inflate(layoutInflater)
-        val email = Wrapper(
+        setContentView(binding.root)
+
+        setListeners()
+    }
+
+    private fun setListeners() {
+        val email = InputHandler(
             binding.tiedEmail, binding.tilEmail,
             resources.getString(R.string.incorrect_mail), ::isEmailValid
         )
-        val password = Wrapper(
+        val password = InputHandler(
             binding.tietPassword, binding.tilPassword,
             resources.getString(R.string.incorrect_password), ::isPasswordValid
         )
-
-        setContentView(binding.root)
-
-        setListeners(email, password)
-
-
+        setRegisterButtonListener(email, password)
     }
 
-    private fun setListeners(email: Wrapper, password: Wrapper) {
-        setRegisterButtonLister(email, password)
-    }
-
-    private fun setRegisterButtonLister(
-        email: Wrapper,
-        password: Wrapper
-    ) {
+    private fun setRegisterButtonListener(email: InputHandler, password: InputHandler) {
         binding.btnRegister.setOnClickListener {
             val isEmailValid = email.processInput()
             val isPasswordValid = password.processInput()
 
             if (isEmailValid && isPasswordValid) {
-                val emailText = email.input.text.toString()
+                val emailText = email.getInputText()
                 if (binding.checkRememberMe.isChecked) {
                     lifecycleScope.launch {
                         application.writeStringToStore(STORED_EMAIL_KEY, emailText)
@@ -118,11 +62,15 @@ class SignUp : AppCompatActivity() {
         }
     }
 
+    /**
+     * If an email is stored in DataStore, opens MyProfile activity
+     */
     private fun checkForAutoLogin() {
-        val savedEmail =
-            runBlocking { application.readStringFromStore(STORED_EMAIL_KEY) } //TODO maybe have to invoke in IO thread
-        if (savedEmail != "") {
-            openMyProfile(getUserName(savedEmail))
+        lifecycleScope.launch(Dispatchers.IO) {
+            val savedEmail = application.readStringFromStore(STORED_EMAIL_KEY).first()
+            if (savedEmail != "") {
+                openMyProfile(getUserName(savedEmail))
+            }
         }
     }
 
@@ -138,7 +86,7 @@ class SignUp : AppCompatActivity() {
      * @param email Must be valid
      */
     private fun getUserName(email: String): String {
-        return email.split(SIGN_AT)[0].split(REGEX_PATTERN.toRegex())
+        return email.split(EMAIL_DOMAIN_SEPARATOR)[0].split(DELIMITER_REGEX.toRegex())
             .joinToString(separator = " ") {
                 it[0].uppercase() + it.substring(1).lowercase()
             }
@@ -151,4 +99,53 @@ class SignUp : AppCompatActivity() {
     private fun isPasswordValid(password: String): Boolean {
         return password.isNotEmpty() && password.length >= 8
     }
+
+    /**
+     * Checks input for errors
+     */
+    inner class InputHandler(
+        private val input: TextInputEditText, private val errorDisplay: TextInputLayout,
+        private val errorMessage: String, private val isValid: (str: String) -> Boolean
+    ) {
+        init {
+            errorDisplay.setErrorTextAppearance(R.style.errorMessage)
+            setInputErrorListeners()
+        }
+
+        /**
+         * Adds listener to [input] when [input] loses focus or
+         * when the enter key is pressed calls [processInput]
+         */
+        private fun setInputErrorListeners() {
+            input.setOnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) {
+                    processInput()
+                }
+            }
+
+            input.setOnEditorActionListener { _, _, _ ->
+                processInput()
+                true
+            }
+        }
+
+        fun getInputText(): String {
+            return input.text.toString()
+        }
+
+        /**
+         * If [input] text is valid according to [isValid] then sets error message in [errorDisplay]
+         * to null, otherwise sets it to [errorMessage]. Returns if [input] text is valid
+         */
+        fun processInput(): Boolean {
+            return if (isValid(getInputText())) {
+                errorDisplay.error = null
+                true
+            } else {
+                errorDisplay.error = errorMessage
+                false
+            }
+        }
+    }
+
 }
