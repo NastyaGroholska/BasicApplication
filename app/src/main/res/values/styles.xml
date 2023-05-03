@@ -6,18 +6,12 @@
         <item name="cornerSize">50%</item>
     </style>
 
-    <style name="outlinedButtonMaterialComponentsTheme" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
+    <style name="buttonWithIcon" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:theme">@style/Theme.MaterialComponents</item>
-    </style>
-
-    <style name="outlinedButtonNoInset" parent="@style/outlinedButtonMaterialComponentsTheme">
         <item name="android:insetLeft">0dp</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetRight">0dp</item>
         <item name="android:insetBottom">0dp</item>
-    </style>
-
-    <style name="buttonWithIcon" parent="@style/outlinedButtonNoInset">
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">0dp</item>
         <item name="iconTint">@null</item>
@@ -29,31 +23,30 @@
         <item name="shapeAppearanceOverlay">@style/rounded</item>
     </style>
 
-
     <style name="buttonFontIcon" parent="@style/buttonWithIcon">
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
 
     <style name="bigButton" parent="@style/buttonFontIcon">
-        <item name="android:layout_height">55dp</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:layout_height">@dimen/btn_big_height</item>
+        <item name="android:textSize">@dimen/med_big_text_size</item>
         <item name="android:letterSpacing">0.25</item>
         <item name="android:textColor">@color/main_text_color</item>
     </style>
 
     <style name="smallButton" parent="@style/buttonFontIcon">
-        <item name="android:layout_height">40dp</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:layout_height">@dimen/btn_small_height</item>
+        <item name="android:textSize">@dimen/medium_text_size</item>
     </style>
 
-    <style name="textInputLayoutWhiteTheme">
+    <style name="textInputLayoutMainTheme">
         <item name="colorControlNormal">@color/main_text_color</item>
         <item name="colorControlActivated">@color/main_text_color</item>
         <item name="colorControlHighlight">@color/main_text_color</item>
     </style>
 
-    <style name="textInputLayoutWhiteStyle">
-        <item name="android:theme">@style/textInputLayoutWhiteTheme</item>
+    <style name="textInputLayoutMainStyle">
+        <item name="android:theme">@style/textInputLayoutMainTheme</item>
         <item name="boxStrokeWidthFocused">0dp</item>
         <item name="errorEnabled">true</item>
         <item name="errorIconDrawable">@null</item>
@@ -61,16 +54,21 @@
         <item name="boxStrokeErrorColor">@color/main_text_color</item>
     </style>
 
-    <style name="textInputEditTextWhite">
+    <style name="textInputEditTextMain">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/main_text_color</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/big_text_size</item>
         <item name="android:backgroundTint">@color/transparent</item>
         <item name="android:fontFamily">@font/open_sans</item>
+        <item name="android:paddingTop">@dimen/edit_text_padding</item>
+        <item name="android:paddingStart">@dimen/edit_text_padding</item>
+        <item name="android:paddingEnd">@dimen/edit_text_padding</item>
     </style>
 
     <style name="errorMessage" parent="TextAppearance.Design.Error">
         <item name="android:textColor">@color/error_text_color</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:fontFamily">@font/open_sans</item>
     </style>
 </resources>

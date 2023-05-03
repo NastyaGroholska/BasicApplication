@@ -76,11 +76,11 @@ class SignUp : AppCompatActivity() {
 
         binding = SignUpBinding.inflate(layoutInflater)
         val email = Wrapper(
-            binding.editTextTextEmailAddress, binding.emailGroup,
+            binding.tiedEmail, binding.tilEmail,
             resources.getString(R.string.incorrect_mail), ::isEmailValid
         )
         val password = Wrapper(
-            binding.editTextTextPassword, binding.passwordGroup,
+            binding.tietPassword, binding.tilPassword,
             resources.getString(R.string.incorrect_password), ::isPasswordValid
         )
 
@@ -99,13 +99,13 @@ class SignUp : AppCompatActivity() {
         email: Wrapper,
         password: Wrapper
     ) {
-        binding.registerButton.setOnClickListener {
+        binding.btnRegister.setOnClickListener {
             val isEmailValid = email.processInput()
             val isPasswordValid = password.processInput()
 
             if (isEmailValid && isPasswordValid) {
                 val emailText = email.input.text.toString()
-                if (binding.rememberMe.isChecked) {
+                if (binding.checkRememberMe.isChecked) {
                     lifecycleScope.launch {
                         application.writeStringToStore(STORED_EMAIL_KEY, emailText)
                     }

@@ -8,200 +8,188 @@
     tools:context=".SignUp">
 
     <TextView
-        android:id="@+id/header1"
+        android:id="@+id/text_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
         android:text="@string/let_s_get_acquainted"
         android:textColor="@color/main_text_color"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/subHeader"
+        android:textSize="@dimen/huge_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/text_subHeader"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/percent20Horizontal" />
 
     <TextView
-        android:id="@+id/subHeader"
+        android:id="@+id/text_subHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
         android:text="@string/fill_out_the_profile_and_go_to_the_application"
         android:textColor="@color/sub_text_color"
-        android:textSize="12sp"
+        android:textSize="@dimen/small_text_size"
         app:layout_constraintBottom_toTopOf="@+id/percent30Horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header1" />
+        app:layout_constraintTop_toBottomOf="@+id/text_header" />
 
     <TextView
-        android:id="@+id/email"
+        android:id="@+id/text_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
+        android:paddingHorizontal="@dimen/edit_text_padding"
+        android:paddingBottom="@dimen/edit_text_padding"
         android:text="@string/e_mail"
         android:textColor="@color/sub_text_color"
-        android:textSize="14sp"
-        android:paddingHorizontal="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/email_group"
+        android:textSize="@dimen/medium_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/til_email"
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
         app:layout_constraintTop_toBottomOf="@+id/percent30Horizontal"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email_group"
-        style="@style/textInputLayoutWhiteStyle"
+        android:id="@+id/til_email"
+        style="@style/textInputLayoutMainStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/password"
+        app:layout_constraintBottom_toTopOf="@+id/text_password"
         app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
-        app:layout_constraintTop_toBottomOf="@+id/email">
+        app:layout_constraintTop_toBottomOf="@+id/text_email">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextTextEmailAddress"
-            style="@style/textInputEditTextWhite"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
+            android:id="@+id/tied_email"
+            style="@style/textInputEditTextMain"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/password"
+        android:id="@+id/text_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="4dp"
         android:fontFamily="@font/open_sans"
+        android:paddingHorizontal="@dimen/edit_text_padding"
+        android:paddingBottom="@dimen/edit_text_padding"
         android:text="@string/password"
         android:textColor="@color/sub_text_color"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/password_group"
+        android:textSize="@dimen/medium_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/til_password"
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
-        app:layout_constraintTop_toBottomOf="@+id/email_group" />
+        app:layout_constraintTop_toBottomOf="@+id/til_email" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password_group"
-        style="@style/textInputLayoutWhiteStyle"
+        android:id="@+id/til_password"
+        style="@style/textInputLayoutMainStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/rememberMe"
+        app:layout_constraintBottom_toTopOf="@+id/check_rememberMe"
         app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
-        app:layout_constraintTop_toBottomOf="@+id/password">
+        app:layout_constraintTop_toBottomOf="@+id/text_password">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextTextPassword"
-            style="@style/textInputEditTextWhite"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
+            android:id="@+id/tiet_password"
+            style="@style/textInputEditTextMain"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- TODO Not match to design. Tip: use selector for checkbox checked and unchecked states -->
     <CheckBox
-        android:id="@+id/rememberMe"
+        android:id="@+id/check_rememberMe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:button="@drawable/checkbox_selector"
         android:buttonTint="@color/main_text_color"
+        android:paddingHorizontal="@dimen/checkbox_padding"
         android:text="@string/remember_me"
         android:textColor="@color/main_text_color"
-        android:textSize="14sp"
+        android:textSize="@dimen/medium_text_size"
         app:layout_constraintBottom_toTopOf="@+id/percent60Horizontal"
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
-        app:layout_constraintTop_toBottomOf="@+id/password_group" />
+        app:layout_constraintTop_toBottomOf="@+id/til_password" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/google"
+        android:id="@+id/btn_google"
         style="@style/smallButton"
         android:layout_width="0dp"
         android:backgroundTint="@color/lower_layout_color"
         android:text="@string/google"
         android:textColor="@color/secondary_text_color"
-        android:textSize="16sp"
+        android:textSize="@dimen/med_big_text_size"
         app:icon="@drawable/ic_google"
-        app:iconPadding="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/or"
+        app:iconPadding="@dimen/btn_icon_padding"
+        app:layout_constraintBottom_toTopOf="@+id/text_or"
         app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
         app:layout_constraintTop_toTopOf="@+id/percent67Horizontal" />
 
     <TextView
-        android:id="@+id/or"
+        android:id="@+id/text_or"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
         android:text="@string/or"
         android:textColor="@color/main_text_color"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/registerButton"
+        android:textSize="@dimen/big_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/btn_register"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/google" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_google" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/registerButton"
+        android:id="@+id/btn_register"
         style="@style/bigButton"
         android:layout_width="0dp"
         android:text="@string/register"
-        app:layout_constraintBottom_toTopOf="@+id/tos"
+        app:layout_constraintBottom_toTopOf="@+id/text_tos"
         app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
-        app:layout_constraintTop_toBottomOf="@+id/or"
+        app:layout_constraintTop_toBottomOf="@+id/text_or"
         app:strokeColor="@color/big_button_color"
-        app:strokeWidth="2dp" />
+        app:strokeWidth="@dimen/boarder_width" />
 
     <TextView
-        android:id="@+id/tos"
+        android:id="@+id/text_tos"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
         android:text="@string/tos"
         android:textAlignment="center"
         android:textColor="@color/sub_text_color"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomText"
+        android:textSize="@dimen/small_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/text_haveAcc"
         app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
-        app:layout_constraintTop_toBottomOf="@+id/registerButton" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_register" />
 
     <TextView
-        android:id="@+id/bottomText"
+        android:id="@+id/text_haveAcc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
         android:text="@string/already_have_acc"
         android:textColor="@color/sub_text_color"
-        android:textSize="14sp"
+        android:textSize="@dimen/medium_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/sign_in"
+        app:layout_constraintEnd_toStartOf="@+id/text_signIn"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tos" />
+        app:layout_constraintTop_toBottomOf="@+id/text_tos" />
 
     <TextView
-        android:id="@+id/sign_in"
+        android:id="@+id/text_signIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:fontFamily="@font/open_sans"
         android:text="@string/sign_in"
         android:textColor="@color/main_text_color"
-        android:textSize="14sp"
+        android:textSize="@dimen/medium_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bottomText"
-        app:layout_constraintTop_toBottomOf="@+id/tos" />
+        app:layout_constraintStart_toEndOf="@+id/text_haveAcc"
+        app:layout_constraintTop_toBottomOf="@+id/text_tos" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/percent20Horizontal"
