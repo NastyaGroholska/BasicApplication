@@ -3,7 +3,6 @@ package com.shpp.ahrokholska.basicapplication
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
-import android.util.Patterns
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
@@ -13,9 +12,6 @@ import com.shpp.ahrokholska.basicapplication.databinding.SignUpBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-
-private const val EMAIL_DOMAIN_SEPARATOR = "@"
-private const val DELIMITER_REGEX = "[+._%\\-]+"
 
 class SignUp : AppCompatActivity() {
     private val binding: SignUpBinding by lazy { SignUpBinding.inflate(layoutInflater) }
@@ -78,26 +74,6 @@ class SignUp : AppCompatActivity() {
         startActivity(Intent(this, MyProfile::class.java).apply {
             putExtra(USER_NAME, userName)
         }, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
-    }
-
-    /**
-     * Returns user name parsed from [email].
-     * For example: "lucile.alvarado@gmail.com" -> "Lucile Alvarado"
-     * @param email Must be valid
-     */
-    private fun getUserName(email: String): String {
-        return email.split(EMAIL_DOMAIN_SEPARATOR)[0].split(DELIMITER_REGEX.toRegex())
-            .joinToString(separator = " ") {
-                it[0].uppercase() + it.substring(1).lowercase()
-            }
-    }
-
-    private fun isEmailValid(email: String): Boolean {
-        return email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
-
-    private fun isPasswordValid(password: String): Boolean {
-        return password.isNotEmpty() && password.length >= 8
     }
 
     /**
