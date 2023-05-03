@@ -1,4 +1,4 @@
-package com.shpp.ahrokholska.basicapplication
+package com.shpp.ahrokholska.basicapplication.ui
 
 import android.app.ActivityOptions
 import android.content.Intent
@@ -8,16 +8,24 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.shpp.ahrokholska.basicapplication.*
 import com.shpp.ahrokholska.basicapplication.databinding.SignUpBinding
+import com.shpp.ahrokholska.basicapplication.utils.Constants.STORED_EMAIL_KEY
+import com.shpp.ahrokholska.basicapplication.utils.Constants.USER_NAME
+import com.shpp.ahrokholska.basicapplication.utils.Parser
+import com.shpp.ahrokholska.basicapplication.utils.ext.readStringFromStore
+import com.shpp.ahrokholska.basicapplication.utils.ext.writeStringToStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class SignUp : AppCompatActivity() {
-    private val binding: SignUpBinding by lazy { SignUpBinding.inflate(layoutInflater) }
+    private lateinit var binding: SignUpBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding = SignUpBinding.inflate(layoutInflater)
 
         checkForAutoLogin()
 
@@ -27,15 +35,22 @@ class SignUp : AppCompatActivity() {
     }
 
     private fun setListeners() {
-        val email = InputHandler(
-            binding.tiedEmail, binding.tilEmail,
-            resources.getString(R.string.incorrect_mail), ::isEmailValid
-        )
-        val password = InputHandler(
-            binding.tietPassword, binding.tilPassword,
-            resources.getString(R.string.incorrect_password), ::isPasswordValid
-        )
-        setRegisterButtonListener(email, password)
+        binding.textSubHeader
+        with(binding) {
+            val email = InputHandler(
+                tiedEmail,
+                tilEmail,
+                getString(R.string.incorrect_mail),
+                Parser::isEmailValid
+            )
+            val password = InputHandler(
+                tietPassword,
+                tilPassword,
+                getString(R.string.incorrect_password),
+                Parser::isPasswordValid
+            )
+            setRegisterButtonListener(email, password)
+        }
     }
 
     private fun setRegisterButtonListener(email: InputHandler, password: InputHandler) {
@@ -47,10 +62,10 @@ class SignUp : AppCompatActivity() {
                 val emailText = email.getInputText()
                 if (binding.checkRememberMe.isChecked) {
                     lifecycleScope.launch {
-                        application.writeStringToStore(STORED_EMAIL_KEY, emailText)
+                        writeStringToStore(STORED_EMAIL_KEY, emailText)
                     }
                 }
-                openMyProfile(getUserName(emailText))
+                openMyProfile(Parser.getUserName(emailText))
             } else {
                 Snackbar.make(it, R.string.signup_error, Snackbar.LENGTH_SHORT)
                     .setAnchorView(it).show()
@@ -63,9 +78,9 @@ class SignUp : AppCompatActivity() {
      */
     private fun checkForAutoLogin() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val savedEmail = application.readStringFromStore(STORED_EMAIL_KEY).first()
+            val savedEmail = readStringFromStore(STORED_EMAIL_KEY).first()
             if (savedEmail != "") {
-                openMyProfile(getUserName(savedEmail))
+                openMyProfile(Parser.getUserName(savedEmail))
             }
         }
     }
@@ -80,8 +95,10 @@ class SignUp : AppCompatActivity() {
      * Checks input for errors
      */
     inner class InputHandler(
-        private val input: TextInputEditText, private val errorDisplay: TextInputLayout,
-        private val errorMessage: String, private val isValid: (str: String) -> Boolean
+        private val input: TextInputEditText,
+        private val errorDisplay: TextInputLayout,
+        private val errorMessage: String,
+        private val isValid: (str: String) -> Boolean
     ) {
         init {
             errorDisplay.setErrorTextAppearance(R.style.errorMessage)

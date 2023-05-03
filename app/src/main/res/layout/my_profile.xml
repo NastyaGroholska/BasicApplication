@@ -159,7 +159,6 @@
         android:layout_width="0dp"
         android:backgroundTint="@color/big_button_color"
         android:text="@string/view_my_contacts"
-        android:textAllCaps="true"
         app:layout_constraintBottom_toTopOf="@+id/percent98VHorizontal"
         app:layout_constraintEnd_toEndOf="@+id/percent96Vertical"
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical" />
@@ -205,5 +204,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.98" />
+
+<!--    <ProgressBar-->
+<!--        android:id="@+id/ProgressBar"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:visibility="visible"-->
+<!--        android:progress="50" />-->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

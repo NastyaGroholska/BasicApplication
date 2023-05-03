@@ -1,10 +1,9 @@
-package com.shpp.ahrokholska.basicapplication
+package com.shpp.ahrokholska.basicapplication.utils.ext
 
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -22,6 +21,3 @@ suspend fun Context.writeStringToStore(key: Preferences.Key<String>, value: Stri
         settings[key] = value
     }
 }
-
-val STORED_EMAIL_KEY =
-    stringPreferencesKey("com.shpp.ahrokholska.basic.PreferenceDataStoreHelper.Email")

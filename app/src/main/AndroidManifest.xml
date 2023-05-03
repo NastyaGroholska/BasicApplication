@@ -13,10 +13,10 @@
         android:theme="@style/Theme.BasicApplication"
         tools:targetApi="31">
         <activity
-            android:name=".MyProfile"
+            android:name=".ui.MyProfile"
             android:exported="false" />
         <activity
-            android:name=".SignUp"
+            android:name=".ui.SignUp"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
