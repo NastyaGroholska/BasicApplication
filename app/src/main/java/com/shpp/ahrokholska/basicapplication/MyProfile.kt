@@ -12,7 +12,7 @@ class MyProfile : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = MyProfileBinding.inflate(layoutInflater)
-        binding.name.text = intent.getStringExtra(SignUp.USER_NAME)
+        binding.textName.text = intent.getStringExtra(SignUp.USER_NAME)
 
         with(window) {
             requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)

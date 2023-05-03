@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="my_profile_settings_fontsize">24sp</dimen>
     <dimen name="huge_text_size">24sp</dimen>
     <dimen name="big_text_size">18sp</dimen>
     <dimen name="med_big_text_size">16sp</dimen>
@@ -12,4 +11,5 @@
     <dimen name="btn_icon_padding">16dp</dimen>
     <dimen name="btn_small_height">40dp</dimen>
     <dimen name="btn_big_height">55dp</dimen>
+    <dimen name="text_gap">16dp</dimen>
 </resources>
