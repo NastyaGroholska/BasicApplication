@@ -20,12 +20,10 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class SignUp : AppCompatActivity() {
-    private lateinit var binding: SignUpBinding
+    private val binding: SignUpBinding by lazy { SignUpBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        binding = SignUpBinding.inflate(layoutInflater)
 
         checkForAutoLogin()
 
@@ -35,19 +33,14 @@ class SignUp : AppCompatActivity() {
     }
 
     private fun setListeners() {
-        binding.textSubHeader
         with(binding) {
             val email = InputHandler(
-                tiedEmail,
-                tilEmail,
-                getString(R.string.incorrect_mail),
-                Parser::isEmailValid
+                tietEmail, tilEmail,
+                getString(R.string.incorrect_mail), Parser::isEmailValid
             )
             val password = InputHandler(
-                tietPassword,
-                tilPassword,
-                getString(R.string.incorrect_password),
-                Parser::isPasswordValid
+                tietPassword, tilPassword,
+                getString(R.string.incorrect_password), Parser::isPasswordValid
             )
             setRegisterButtonListener(email, password)
         }

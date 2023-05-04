@@ -30,7 +30,6 @@
         android:textSize="@dimen/small_text_size"
         app:layout_constraintBottom_toTopOf="@+id/percent30Horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_header" />
 
@@ -60,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text_email">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tied_email"
+            android:id="@+id/tiet_email"
             style="@style/textInputEditTextMain"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
