@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.shpp.ahrokholska.basicapplication.data.Contact
 import com.shpp.ahrokholska.basicapplication.databinding.ContactsItemBinding
+import com.shpp.ahrokholska.basicapplication.utils.ext.loadFromURL
 
-class ContactsAdapter(private val onBinClick:(Contact,Int)->Unit) :
+class ContactsAdapter(private val onBinClick: (Contact, Int) -> Unit) :
     ListAdapter<Contact, ContactsAdapter.ViewHolder>(ContactsDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -30,14 +30,14 @@ class ContactsAdapter(private val onBinClick:(Contact,Int)->Unit) :
             with(binding) {
                 contactsTextName.text = contact.name
                 contactsTextCareer.text = contact.career
-                Glide.with(root).load(contact.picture).centerCrop().into(contactsImagePhoto)
+                contactsImagePhoto.loadFromURL(contact.picture)
             }
             setListeners(contact)
         }
 
         private fun setListeners(contact: Contact) {
             binding.contactsImageBin.setOnClickListener {
-                onBinClick(contact,adapterPosition)
+                onBinClick(contact, adapterPosition)
             }
         }
     }
