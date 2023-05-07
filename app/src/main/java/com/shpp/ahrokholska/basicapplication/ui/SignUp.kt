@@ -9,7 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.shpp.ahrokholska.basicapplication.*
-import com.shpp.ahrokholska.basicapplication.databinding.SignUpBinding
+import com.shpp.ahrokholska.basicapplication.databinding.ActivitySignUpBinding
 import com.shpp.ahrokholska.basicapplication.utils.Constants.STORED_EMAIL_KEY
 import com.shpp.ahrokholska.basicapplication.utils.Constants.USER_NAME
 import com.shpp.ahrokholska.basicapplication.utils.Parser
@@ -20,7 +20,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class SignUp : AppCompatActivity() {
-    private val binding: SignUpBinding by lazy { SignUpBinding.inflate(layoutInflater) }
+    private val binding: ActivitySignUpBinding by lazy {
+        ActivitySignUpBinding.inflate(
+            layoutInflater
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -22,4 +22,11 @@
     <string name="signup_error">Please enter correct email and password</string>
     <string name="career">Career</string>
     <string name="home_address">Home address</string>
+    <string name="contacts">Contacts</string>
+    <string name="add_contacts">Add contacts</string>
+    <string name="removed_contact">Contact was removed</string>
+    <string name="undo">Undo</string>
+    <string name="back">Back</string>
+    <string name="search">Search</string>
+    <string name="delete">Delete</string>
 </resources>

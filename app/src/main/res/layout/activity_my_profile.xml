@@ -159,7 +159,7 @@
         android:layout_width="0dp"
         android:backgroundTint="@color/big_button_color"
         android:text="@string/view_my_contacts"
-        app:layout_constraintBottom_toTopOf="@+id/percent98VHorizontal"
+        app:layout_constraintBottom_toTopOf="@+id/percent98Horizontal"
         app:layout_constraintEnd_toEndOf="@+id/percent96Vertical"
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical" />
 
@@ -199,7 +199,7 @@
         app:layout_constraintGuide_percent="0.02" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/percent98VHorizontal"
+        android:id="@+id/percent98Horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

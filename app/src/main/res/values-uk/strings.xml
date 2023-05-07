@@ -22,4 +22,11 @@
     <string name="signup_error">Введіть правильну адресу електронної пошти та пароль</string>
     <string name="career">Професія</string>
     <string name="home_address">Домашня адреса</string>
+    <string name="contacts">Контакти</string>
+    <string name="add_contacts">Додати контакти</string>
+    <string name="removed_contact">Контакт був видалений</string>
+    <string name="undo">Відмінити</string>
+    <string name="back">Назад</string>
+    <string name="search">Пошук</string>
+    <string name="delete">Видалити</string>
 </resources>
