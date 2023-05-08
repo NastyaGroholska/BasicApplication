@@ -9,8 +9,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.ahrokholska.basicapplication.R
+import com.shpp.ahrokholska.basicapplication.data.Contact
 import com.shpp.ahrokholska.basicapplication.databinding.ActivityMyContactsBinding
 import com.shpp.ahrokholska.basicapplication.ui.shared.VerticalSpaceItemDecoration
+import com.shpp.ahrokholska.basicapplication.utils.ext.enableHorizontalSwipe
 import com.shpp.ahrokholska.basicapplication.utils.ext.getHeight
 import kotlinx.coroutines.launch
 
@@ -19,14 +21,8 @@ class MyContacts : AppCompatActivity() {
         ActivityMyContactsBinding.inflate(layoutInflater)
     }
     private val viewModel: ContactsViewModel by viewModels()
-    private val contactsAdapter: ContactsAdapter by lazy {      ////why this is by lazy?
-        ContactsAdapter(onBinClick = { contact, position ->
-            viewModel.deleteContact(contact)
-            Snackbar.make(binding.myContactsRvContacts, R.string.removed_contact, RV_TIME_TO_CANCEL)
-                .setAction(getString(R.string.undo).uppercase()) {
-                    viewModel.insertContact(contact, position)
-                }.setAnchorView(binding.myContactsRvContacts).show()
-        })
+    private val contactsAdapter: ContactsAdapter by lazy {
+        ContactsAdapter(onBinClick = ::deleteRVItem)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,9 +37,21 @@ class MyContacts : AppCompatActivity() {
         binding.myContactsRvContacts.apply {
             adapter = contactsAdapter
             layoutManager = LinearLayoutManager(this@MyContacts)
+            enableHorizontalSwipe {
+                val pos = it.adapterPosition
+                deleteRVItem(contactsAdapter.currentList[pos], pos)
+            }
         }.addItemDecoration(
             VerticalSpaceItemDecoration((getHeight() * RV_ITEM_SPACE_PERCENT).toInt())
         )
+    }
+
+    private fun deleteRVItem(contact: Contact, position: Int) {
+        viewModel.deleteContact(contact)
+        Snackbar.make(binding.myContactsRvContacts, R.string.removed_contact, RV_TIME_TO_CANCEL)
+            .setAction(getString(R.string.undo).uppercase()) {
+                viewModel.insertContact(contact, position)
+            }.setAnchorView(binding.myContactsRvContacts).show()
     }
 
     private fun setObservers() {
