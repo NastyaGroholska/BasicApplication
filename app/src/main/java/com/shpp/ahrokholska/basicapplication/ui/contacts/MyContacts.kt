@@ -31,6 +31,7 @@ class MyContacts : AppCompatActivity() {
 
         initRecycler()
         setObservers()
+        setListeners()
     }
 
     private fun initRecycler() {
@@ -61,6 +62,13 @@ class MyContacts : AppCompatActivity() {
                     contactsAdapter.submitList(list)
                 }
             }
+        }
+    }
+
+    private fun setListeners(){
+        binding.myContactsTextAdd.setOnClickListener {
+            AddContactDialogFragment(viewModel::addContact)
+                .show(supportFragmentManager, AddContactDialogFragment.TAG)
         }
     }
 

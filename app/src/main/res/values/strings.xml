@@ -29,4 +29,7 @@
     <string name="back">Back</string>
     <string name="search">Search</string>
     <string name="delete">Delete</string>
+    <string name="add_contact">Add contact</string>
+    <string name="name">Name</string>
+    <string name="save">Save</string>
 </resources>

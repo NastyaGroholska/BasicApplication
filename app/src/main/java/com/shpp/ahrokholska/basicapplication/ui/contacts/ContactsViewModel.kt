@@ -22,6 +22,10 @@ class ContactsViewModel : ViewModel() {
         contactsDB.removeWithId(contact.id)
     }
 
+    fun addContact(name: String, career: String) {
+        contactsDB.addContact(name, career)
+    }
+
     fun insertContact(contact: Contact, position: Int) {
         contactsDB.insertAt(contact, position)
     }

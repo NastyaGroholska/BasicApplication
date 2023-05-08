@@ -29,4 +29,7 @@
     <string name="back">Назад</string>
     <string name="search">Пошук</string>
     <string name="delete">Видалити</string>
+    <string name="add_contact">Додати контакт</string>
+    <string name="name">Ім\'я</string>
+    <string name="save">Зберегти</string>
 </resources>
