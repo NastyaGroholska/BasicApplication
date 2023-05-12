@@ -108,11 +108,13 @@
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
         app:layout_constraintTop_toBottomOf="@+id/til_password" />
 
-    <com.google.android.material.button.MaterialButton
+    <com.shpp.ahrokholska.basicapplication.ui.shared.CustomButton
         android:id="@+id/btn_google"
-        style="@style/smallButton"
         android:layout_width="0dp"
-        android:backgroundTint="@color/lower_layout_color"
+        android:layout_height="@dimen/btn_small_height"
+        android:layout_marginBottom="10dp"
+        android:background="@color/lower_layout_color"
+        android:fontFamily="@font/open_sans"
         android:text="@string/google"
         android:textColor="@color/secondary_text_color"
         android:textSize="@dimen/med_big_text_size"
