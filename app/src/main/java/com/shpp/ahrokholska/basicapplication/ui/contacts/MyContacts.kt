@@ -65,10 +65,14 @@ class MyContacts : AppCompatActivity() {
         }
     }
 
-    private fun setListeners(){
+    private fun setListeners() {
         binding.myContactsTextAdd.setOnClickListener {
             AddContactDialogFragment(viewModel::addContact)
                 .show(supportFragmentManager, AddContactDialogFragment.TAG)
+        }
+
+        binding.myContactsImageArrow.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 
