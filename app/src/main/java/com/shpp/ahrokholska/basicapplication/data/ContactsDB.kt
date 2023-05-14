@@ -3,13 +3,17 @@ package com.shpp.ahrokholska.basicapplication.data
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class ContactsDB {
+object ContactsDB {
     private val _contacts = MutableStateFlow<List<Contact>>(emptyList())
     val contacts: StateFlow<List<Contact>> = _contacts
 
     private val picURL = "https://www.petful.com/wp-content/uploads/2016/07/british-shorthair.jpg"
 
-    fun initializeDB() {
+    init {
+        initializeDB()
+    }
+
+    private fun initializeDB() {
         _contacts.value = (1..10).map { i ->
             Contact(picURL, "Person $i", "Unique career")
         }
@@ -27,6 +31,8 @@ class ContactsDB {
     }
 
     fun insertAt(contact: Contact, position: Int) {
+        if (_contacts.value.any { it.id == contact.id }) return
         _contacts.value = _contacts.value.toMutableList().apply { add(position, contact) }
     }
+
 }

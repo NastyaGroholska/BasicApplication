@@ -3,9 +3,7 @@ package com.shpp.ahrokholska.basicapplication.ui.contacts
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.ahrokholska.basicapplication.R
@@ -49,7 +47,7 @@ class MyContacts : AppCompatActivity() {
 
     private fun deleteRVItem(contact: Contact, position: Int) {
         viewModel.deleteContact(contact)
-        Snackbar.make(binding.myContactsRvContacts, R.string.removed_contact, RV_TIME_TO_CANCEL)
+        Snackbar.make(binding.myContactsRvContacts, R.string.removed_contact, RV_TIME_TO_CANCEL_MS)
             .setAction(getString(R.string.undo).uppercase()) {
                 viewModel.insertContact(contact, position)
             }.setAnchorView(binding.myContactsRvContacts).show()
@@ -57,10 +55,8 @@ class MyContacts : AppCompatActivity() {
 
     private fun setObservers() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.contacts.collect { list ->
-                    contactsAdapter.submitList(list)
-                }
+            viewModel.contacts.collect { list ->
+                contactsAdapter.submitList(list)
             }
         }
     }
@@ -78,6 +74,6 @@ class MyContacts : AppCompatActivity() {
 
     companion object {
         private const val RV_ITEM_SPACE_PERCENT = 0.02
-        private const val RV_TIME_TO_CANCEL = 5 * 1000
+        private const val RV_TIME_TO_CANCEL_MS = 5 * 1000
     }
 }

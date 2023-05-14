@@ -9,9 +9,9 @@ import com.shpp.ahrokholska.basicapplication.databinding.ContactsItemBinding
 import com.shpp.ahrokholska.basicapplication.utils.ext.loadFromURL
 
 class ContactsAdapter(private val onBinClick: (Contact, Int) -> Unit) :
-    ListAdapter<Contact, ContactsAdapter.ViewHolder>(ContactsDiffCallback()) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
+    ListAdapter<Contact, ContactsAdapter.ContactsViewHolder>(ContactsDiffCallback()) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactsViewHolder {
+        return ContactsViewHolder(
             ContactsItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent, false
@@ -19,11 +19,11 @@ class ContactsAdapter(private val onBinClick: (Contact, Int) -> Unit) :
         )
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ContactsViewHolder, position: Int) {
         holder.bindTo(getItem(position))
     }
 
-    inner class ViewHolder(private val binding: ContactsItemBinding) :
+    inner class ContactsViewHolder(private val binding: ContactsItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindTo(contact: Contact) {

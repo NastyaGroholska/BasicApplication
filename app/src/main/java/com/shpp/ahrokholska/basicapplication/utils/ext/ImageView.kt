@@ -17,7 +17,7 @@ fun ImageView.loadFromURL(picture: String) {
     when (currentLoader) {
         ImageLoader.Glide -> Glide.with(this).load(picture).centerCrop().into(this)
         ImageLoader.Picasso -> Picasso.get().load(picture).fit().centerCrop().into(this)
-        ImageLoader.Coil -> this.load(picture) {
+        ImageLoader.Coil -> load(picture) {
             transformations(CircleCropTransformation())
             scale(Scale.FILL)
         }

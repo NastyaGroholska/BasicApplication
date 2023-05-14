@@ -18,6 +18,11 @@ class AddContactDialogFragment(private val onSave: (name: String, career: String
         savedInstanceState: Bundle?
     ): View {
         _binding = AddContactDialogBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         with(binding) {
             addContactDialogBtnSave.setOnClickListener {
                 onSave(
@@ -25,7 +30,6 @@ class AddContactDialogFragment(private val onSave: (name: String, career: String
                 )
                 dismiss()
             }
-            return root
         }
     }
 

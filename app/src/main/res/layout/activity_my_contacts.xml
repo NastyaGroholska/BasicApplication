@@ -38,7 +38,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/percent1Horizontal" />
 
-    <!-- TODO There is no onClickAction for button arrow -->
     <ImageView
         android:id="@+id/myContacts_image_arrow"
         android:layout_width="wrap_content"
