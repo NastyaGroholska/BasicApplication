@@ -7,7 +7,7 @@ object ContactsDB {
     private val _contacts = MutableStateFlow<List<Contact>>(emptyList())
     val contacts: StateFlow<List<Contact>> = _contacts
 
-    private val picURL = "https://www.petful.com/wp-content/uploads/2016/07/british-shorthair.jpg"
+    private const val picURL = "https://www.petful.com/wp-content/uploads/2016/07/british-shorthair.jpg"
 
     init {
         initializeDB()
@@ -19,6 +19,9 @@ object ContactsDB {
         }
     }
 
+    fun getContactWithId(id: Long): Contact {
+        return _contacts.value.find { it.id == id }!!
+    }
 
     fun addContact(name: String, career: String) {
         _contacts.value = _contacts.value.toMutableList().apply {

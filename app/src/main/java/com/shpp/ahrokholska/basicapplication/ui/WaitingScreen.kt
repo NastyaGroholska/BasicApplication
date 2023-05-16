@@ -1,7 +1,6 @@
 package com.shpp.ahrokholska.basicapplication.ui
 
 import android.os.Bundle
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -9,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.utils.Constants.STORED_EMAIL_KEY
 import com.shpp.ahrokholska.basicapplication.utils.Constants.STORED_USER_NAME_KEY
-import com.shpp.ahrokholska.basicapplication.utils.Constants.USER_NAME
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -39,8 +37,7 @@ class WaitingScreen : Fragment(R.layout.fragment_waiting_screen) {
                 delay(3000) // TODO:  remove in final version
                 launch(Dispatchers.Main) {
                     navController.navigate(
-                        R.id.action_waitingScreen_to_myProfile,
-                        bundleOf(USER_NAME to savedUserName)
+                        WaitingScreenDirections.actionWaitingScreenToMyProfile(savedUserName)
                     )
                 }
             }

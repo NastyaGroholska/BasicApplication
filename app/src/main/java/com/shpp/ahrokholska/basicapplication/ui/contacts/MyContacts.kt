@@ -24,7 +24,10 @@ class MyContacts : Fragment() {
     private val navController by lazy { findNavController() }
     private val viewModel: ContactsViewModel by activityViewModels()
     private val contactsAdapter: ContactsAdapter by lazy {
-        ContactsAdapter(onBinClick = ::deleteRVItem)
+        ContactsAdapter(
+            onBinClick = ::deleteRVItem,
+            onItemClick = ::openContactsProfile
+        )
     }
 
     override fun onCreateView(
@@ -65,6 +68,10 @@ class MyContacts : Fragment() {
             .setAction(getString(R.string.undo).uppercase()) {
                 viewModel.insertContact(contact, position)
             }.setAnchorView(binding.myContactsRvContacts).show()
+    }
+
+    private fun openContactsProfile(contact: Contact) {
+        navController.navigate(MyContactsDirections.actionMyContactsToContactsProfile(contact.id))
     }
 
     private fun setObservers() {

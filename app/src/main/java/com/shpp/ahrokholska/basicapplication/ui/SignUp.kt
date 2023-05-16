@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -15,7 +14,6 @@ import com.shpp.ahrokholska.basicapplication.*
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentSignUpBinding
 import com.shpp.ahrokholska.basicapplication.utils.Constants.STORED_EMAIL_KEY
 import com.shpp.ahrokholska.basicapplication.utils.Constants.STORED_USER_NAME_KEY
-import com.shpp.ahrokholska.basicapplication.utils.Constants.USER_NAME
 import com.shpp.ahrokholska.basicapplication.utils.Parser
 
 class SignUp : Fragment() {
@@ -67,10 +65,7 @@ class SignUp : Fragment() {
                     userViewModel.writeStringToStore(STORED_EMAIL_KEY, emailText)
                 }
                 userViewModel.writeStringToStore(STORED_USER_NAME_KEY, parsedUserName)
-                navController.navigate(
-                    R.id.action_signUp_to_myProfile,
-                    bundleOf(USER_NAME to parsedUserName)
-                )
+                navController.navigate(SignUpDirections.actionSignUpToMyProfile(parsedUserName))
             } else {
                 Snackbar.make(it, R.string.signup_error, Snackbar.LENGTH_SHORT)
                     .setAnchorView(it).show()

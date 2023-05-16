@@ -32,4 +32,6 @@
     <string name="add_contact">Add contact</string>
     <string name="name">Name</string>
     <string name="save">Save</string>
+    <string name="profile">Profile</string>
+    <string name="message">Message</string>
 </resources>

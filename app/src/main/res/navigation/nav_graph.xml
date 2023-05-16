@@ -40,7 +40,12 @@
         android:id="@+id/myProfile"
         android:name="com.shpp.ahrokholska.basicapplication.ui.MyProfile"
         android:label="MyProfile"
-        tools:layout="@layout/fragment_my_profile" >
+        tools:layout="@layout/fragment_my_profile">
+        <argument
+            android:name="userName"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_myProfile_to_myContacts"
             app:destination="@id/myContacts" />
@@ -49,19 +54,36 @@
         android:id="@+id/myContacts"
         android:name="com.shpp.ahrokholska.basicapplication.ui.contacts.MyContacts"
         android:label="fragment_my_contacts"
-        tools:layout="@layout/fragment_my_contacts" >
+        tools:layout="@layout/fragment_my_contacts">
         <action
             android:id="@+id/action_myContacts_to_myProfile"
             app:destination="@id/myProfile"
             app:popUpTo="@id/myProfile"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_myContacts_to_addContactDialogFragment"
             app:destination="@id/addContactDialogFragment" />
+        <action
+            android:id="@+id/action_myContacts_to_contactsProfile"
+            app:destination="@id/contactsProfile" />
     </fragment>
     <dialog
         android:id="@+id/addContactDialogFragment"
         android:name="com.shpp.ahrokholska.basicapplication.ui.contacts.AddContactDialogFragment"
         android:label="AddContactDialogFragment"
-        tools:layout="@layout/add_contact_dialog"/>
+        tools:layout="@layout/add_contact_dialog" />
+    <fragment
+        android:id="@+id/contactsProfile"
+        android:name="com.shpp.ahrokholska.basicapplication.ui.ContactsProfile"
+        android:label="ContactsProfile"
+        tools:layout="@layout/fragment_contacts_profile">
+        <argument
+            android:name="contactId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_contactsProfile_to_myContacts"
+            app:destination="@id/myContacts"
+            app:popUpTo="@id/myContacts"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

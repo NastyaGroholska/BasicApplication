@@ -8,7 +8,10 @@ import com.shpp.ahrokholska.basicapplication.data.Contact
 import com.shpp.ahrokholska.basicapplication.databinding.ContactsItemBinding
 import com.shpp.ahrokholska.basicapplication.utils.ext.loadFromURL
 
-class ContactsAdapter(private val onBinClick: (Contact, Int) -> Unit) :
+class ContactsAdapter(
+    private val onBinClick: (Contact, Int) -> Unit,
+    private val onItemClick: (Contact) -> Unit
+) :
     ListAdapter<Contact, ContactsAdapter.ContactsViewHolder>(ContactsDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactsViewHolder {
         return ContactsViewHolder(
@@ -38,6 +41,9 @@ class ContactsAdapter(private val onBinClick: (Contact, Int) -> Unit) :
         private fun setListeners(contact: Contact) {
             binding.contactsImageBin.setOnClickListener {
                 onBinClick(contact, adapterPosition)
+            }
+            binding.root.setOnClickListener {
+                onItemClick(contact)
             }
         }
     }

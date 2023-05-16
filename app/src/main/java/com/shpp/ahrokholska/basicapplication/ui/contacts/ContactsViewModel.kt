@@ -9,6 +9,10 @@ class ContactsViewModel : ViewModel() {
     private val contactsDB = ContactsDB
     val contacts: StateFlow<List<Contact>> = contactsDB.contacts
 
+    fun getContactWithId(id: Long): Contact {
+        return contactsDB.getContactWithId(id)
+    }
+
     fun deleteContact(contact: Contact) {
         contactsDB.removeWithId(contact.id)
     }

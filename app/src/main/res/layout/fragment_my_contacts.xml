@@ -1,117 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.contacts.MyContacts">
+    android:layout_height="match_parent">
 
-    <View
-        android:id="@+id/myContacts_top"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/upper_layout_color"
-        app:layout_constraintBottom_toTopOf="@+id/percent18Horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.contacts.MyContacts">
 
-    <View
-        android:id="@+id/myContacts_bottom"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/lower_layout_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/percent18Horizontal" />
+        <View
+            android:id="@+id/myContacts_top"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/upper_layout_color"
+            app:layout_constraintBottom_toTopOf="@+id/percent18Horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/myContacts_text_contacts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/contacts"
-        android:textColor="@color/main_text_color"
-        android:textSize="@dimen/huge_text_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/percent1Horizontal" />
+        <View
+            android:id="@+id/myContacts_bottom"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/lower_layout_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/percent18Horizontal" />
 
-    <ImageView
-        android:id="@+id/myContacts_image_arrow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/back"
-        app:layout_constraintBottom_toBottomOf="@+id/myContacts_text_contacts"
-        app:layout_constraintStart_toStartOf="@id/percent4Vertical"
-        app:layout_constraintTop_toTopOf="@+id/percent1Horizontal"
-        app:srcCompat="@drawable/ic_arrow_back" />
+        <TextView
+            android:id="@+id/myContacts_text_contacts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/contacts"
+            android:textColor="@color/main_text_color"
+            android:textSize="@dimen/huge_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/percent1Horizontal" />
 
-    <ImageView
-        android:id="@+id/myContacts_image_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/search"
-        app:layout_constraintBottom_toBottomOf="@+id/myContacts_text_contacts"
-        app:layout_constraintEnd_toEndOf="@id/percent96Vertical"
-        app:layout_constraintTop_toTopOf="@+id/percent1Horizontal"
-        app:srcCompat="@drawable/ic_magnifying_glass" />
+        <ImageView
+            android:id="@+id/myContacts_image_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/back"
+            app:layout_constraintBottom_toBottomOf="@+id/myContacts_text_contacts"
+            app:layout_constraintStart_toStartOf="@id/percent4Vertical"
+            app:layout_constraintTop_toTopOf="@+id/percent1Horizontal"
+            app:srcCompat="@drawable/ic_arrow_back" />
 
-    <TextView
-        android:id="@+id/myContacts_text_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/add_contacts"
-        android:textColor="@color/main_text_color"
-        android:textSize="@dimen/medium_text_size"
-        app:layout_constraintBottom_toBottomOf="@+id/percent14Horizontal"
-        app:layout_constraintStart_toStartOf="@+id/percent4Vertical" />
+        <ImageView
+            android:id="@+id/myContacts_image_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/search"
+            app:layout_constraintBottom_toBottomOf="@+id/myContacts_text_contacts"
+            app:layout_constraintEnd_toEndOf="@id/percent96Vertical"
+            app:layout_constraintTop_toTopOf="@+id/percent1Horizontal"
+            app:srcCompat="@drawable/ic_magnifying_glass" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/myContacts_rv_contacts"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
-        app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
-        app:layout_constraintTop_toBottomOf="@+id/myContacts_top"
-        tools:listitem="@layout/contacts_item"/>
+        <TextView
+            android:id="@+id/myContacts_text_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/add_contacts"
+            android:textColor="@color/main_text_color"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintBottom_toBottomOf="@+id/percent14Horizontal"
+            app:layout_constraintStart_toStartOf="@+id/percent4Vertical" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/percent18Horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.18" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/myContacts_rv_contacts"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
+            app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+            app:layout_constraintTop_toBottomOf="@+id/myContacts_top"
+            tools:listitem="@layout/contacts_item" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/percent14Horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.14" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/percent18Horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.18" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/percent1Horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.01" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/percent14Horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.14" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/percent1Horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.01" />
 
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/percent4Vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.04" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/percent4Vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.04" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/percent96Vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.96" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/percent96Vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.96" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

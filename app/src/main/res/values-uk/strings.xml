@@ -32,4 +32,6 @@
     <string name="add_contact">Додати контакт</string>
     <string name="name">Ім\'я</string>
     <string name="save">Зберегти</string>
+    <string name="profile">Профіль</string>
+    <string name="message">Написати</string>
 </resources>
