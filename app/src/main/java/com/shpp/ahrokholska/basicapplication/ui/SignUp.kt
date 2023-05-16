@@ -1,39 +1,44 @@
 package com.shpp.ahrokholska.basicapplication.ui
 
-import android.app.ActivityOptions
-import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.shpp.ahrokholska.basicapplication.*
-import com.shpp.ahrokholska.basicapplication.databinding.ActivitySignUpBinding
+import com.shpp.ahrokholska.basicapplication.databinding.FragmentSignUpBinding
 import com.shpp.ahrokholska.basicapplication.utils.Constants.STORED_EMAIL_KEY
+import com.shpp.ahrokholska.basicapplication.utils.Constants.STORED_USER_NAME_KEY
 import com.shpp.ahrokholska.basicapplication.utils.Constants.USER_NAME
 import com.shpp.ahrokholska.basicapplication.utils.Parser
-import com.shpp.ahrokholska.basicapplication.utils.ext.readStringFromStore
-import com.shpp.ahrokholska.basicapplication.utils.ext.writeStringToStore
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
-class SignUp : AppCompatActivity() {
-    private val binding: ActivitySignUpBinding by lazy {
-        ActivitySignUpBinding.inflate(
-            layoutInflater
-        )
+class SignUp : Fragment() {
+    private var _binding: FragmentSignUpBinding? = null
+    private val binding get() = _binding!!
+    private val navController by lazy { findNavController() }
+    private val userViewModel: UserViewModel by activityViewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSignUpBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        checkForAutoLogin()
-
-        setContentView(binding.root)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setListeners()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun setListeners() {
@@ -57,35 +62,20 @@ class SignUp : AppCompatActivity() {
 
             if (isEmailValid && isPasswordValid) {
                 val emailText = email.getInputText()
+                val parsedUserName = Parser.getUserName(emailText)
                 if (binding.checkRememberMe.isChecked) {
-                    lifecycleScope.launch {
-                        writeStringToStore(STORED_EMAIL_KEY, emailText)
-                    }
+                    userViewModel.writeStringToStore(STORED_EMAIL_KEY, emailText)
                 }
-                openMyProfile(Parser.getUserName(emailText))
+                userViewModel.writeStringToStore(STORED_USER_NAME_KEY, parsedUserName)
+                navController.navigate(
+                    R.id.action_signUp_to_myProfile,
+                    bundleOf(USER_NAME to parsedUserName)
+                )
             } else {
                 Snackbar.make(it, R.string.signup_error, Snackbar.LENGTH_SHORT)
                     .setAnchorView(it).show()
             }
         }
-    }
-
-    /**
-     * If an email is stored in DataStore, opens MyProfile activity
-     */
-    private fun checkForAutoLogin() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val savedEmail = readStringFromStore(STORED_EMAIL_KEY).first()
-            if (savedEmail != "") {
-                openMyProfile(Parser.getUserName(savedEmail))
-            }
-        }
-    }
-
-    private fun openMyProfile(userName: String) {
-        startActivity(Intent(this, MyProfile::class.java).apply {
-            putExtra(USER_NAME, userName)
-        }, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
     }
 
     /**

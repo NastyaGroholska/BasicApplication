@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -16,15 +15,8 @@
         android:theme="@style/Theme.BasicApplication"
         tools:targetApi="31">
         <activity
-            android:name=".ui.contacts.MyContacts"
-            android:exported="false" />
-        <activity
-            android:name=".ui.MyProfile"
-            android:exported="false" />
-        <activity
-            android:name=".ui.SignUp"
-            android:exported="true"
-            android:noHistory="true">
+            android:name=".ui.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

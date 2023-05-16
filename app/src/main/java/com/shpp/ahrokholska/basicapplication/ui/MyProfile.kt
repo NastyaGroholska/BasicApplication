@@ -1,43 +1,56 @@
 package com.shpp.ahrokholska.basicapplication.ui
 
-import android.content.Intent
 import android.os.Bundle
-import android.transition.Slide
-import android.view.Window
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.utils.Constants.USER_NAME
-import com.shpp.ahrokholska.basicapplication.databinding.ActivityMyProfileBinding
-import com.shpp.ahrokholska.basicapplication.ui.contacts.MyContacts
+import com.shpp.ahrokholska.basicapplication.databinding.FragmentMyProfileBinding
+import com.shpp.ahrokholska.basicapplication.utils.Constants.STORED_USER_NAME_KEY
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
-class MyProfile : AppCompatActivity() {
-    private val binding: ActivityMyProfileBinding by lazy {
-        ActivityMyProfileBinding.inflate(
-            layoutInflater
-        )
+class MyProfile : Fragment() {
+    private var _binding: FragmentMyProfileBinding? = null
+    private val binding get() = _binding!!
+    private val navController by lazy { findNavController() }
+    private val userViewModel: UserViewModel by activityViewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentMyProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding.textName.text = intent.getStringExtra(USER_NAME)
-
-        with(window) {
-            requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
-            enterTransition = Slide()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val userName = arguments?.getString(USER_NAME)
+        if (userName != null) {
+            binding.textName.text = userName
+        } else {
+            lifecycleScope.launch {
+                binding.textName.text =
+                    userViewModel.readStringFromStore(STORED_USER_NAME_KEY).first()
+            }
         }
-
-        setContentView(binding.root)
-
         setListeners()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun setListeners() {
         binding.btnViewMyContacts.setOnClickListener {
-            openMyContacts()
+            navController.navigate(R.id.action_myProfile_to_myContacts)
         }
-    }
-
-    private fun openMyContacts() {
-        startActivity(Intent(this, MyContacts::class.java))
     }
 
 }

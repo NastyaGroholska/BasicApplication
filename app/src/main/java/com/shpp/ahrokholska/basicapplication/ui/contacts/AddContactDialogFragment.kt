@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import com.shpp.ahrokholska.basicapplication.databinding.AddContactDialogBinding
 
-class AddContactDialogFragment(private val onSave: (name: String, career: String) -> Unit) :
-    DialogFragment() {
+class AddContactDialogFragment : DialogFragment() {
     private var _binding: AddContactDialogBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: ContactsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,8 +26,8 @@ class AddContactDialogFragment(private val onSave: (name: String, career: String
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
             addContactDialogBtnSave.setOnClickListener {
-                onSave(
-                    addContactDialogEtName.text.toString(), addContactDialogEdCareer.text.toString()
+                viewModel.addContact(
+                    addContactDialogEtName.text.toString(), addContactDialogEtCareer.text.toString()
                 )
                 dismiss()
             }
@@ -36,9 +37,5 @@ class AddContactDialogFragment(private val onSave: (name: String, career: String
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        const val TAG = "com.shpp.ahrokholska.basicapplication.AddContactDialogFragment"
     }
 }
