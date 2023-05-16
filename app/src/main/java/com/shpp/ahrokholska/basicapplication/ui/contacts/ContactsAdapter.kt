@@ -1,16 +1,20 @@
 package com.shpp.ahrokholska.basicapplication.ui.contacts
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.shpp.ahrokholska.basicapplication.data.Contact
 import com.shpp.ahrokholska.basicapplication.databinding.ContactsItemBinding
+import com.shpp.ahrokholska.basicapplication.utils.Constants.TRANSITION_NAME_CAREER
+import com.shpp.ahrokholska.basicapplication.utils.Constants.TRANSITION_NAME_IMAGE
+import com.shpp.ahrokholska.basicapplication.utils.Constants.TRANSITION_NAME_USER_NAME
 import com.shpp.ahrokholska.basicapplication.utils.ext.loadFromURL
 
 class ContactsAdapter(
     private val onBinClick: (Contact, Int) -> Unit,
-    private val onItemClick: (Contact) -> Unit
+    private val onItemClick: (Contact, Array<Pair<View, String>>) -> Unit
 ) :
     ListAdapter<Contact, ContactsAdapter.ContactsViewHolder>(ContactsDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactsViewHolder {
@@ -30,20 +34,33 @@ class ContactsAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindTo(contact: Contact) {
+            val transitionPairs = Array<Pair<View, String>>(3) { binding.root to "" }
             with(binding) {
                 contactsTextName.text = contact.name
                 contactsTextCareer.text = contact.career
                 contactsImagePhoto.loadFromURL(contact.picture)
+
+                transitionPairs[0] =
+                    setTransitionName(contactsImagePhoto, TRANSITION_NAME_IMAGE + contact.id)
+                transitionPairs[1] =
+                    setTransitionName(contactsTextName, TRANSITION_NAME_USER_NAME + contact.id)
+                transitionPairs[2] =
+                    setTransitionName(contactsTextCareer, TRANSITION_NAME_CAREER + contact.id)
             }
-            setListeners(contact)
+            setListeners(contact, transitionPairs)
         }
 
-        private fun setListeners(contact: Contact) {
+        private fun setTransitionName(view: View, name: String): Pair<View, String> {
+            view.transitionName = name
+            return view to name
+        }
+
+        private fun setListeners(contact: Contact, transitionPairs: Array<Pair<View, String>>) {
             binding.contactsImageBin.setOnClickListener {
                 onBinClick(contact, adapterPosition)
             }
             binding.root.setOnClickListener {
-                onItemClick(contact)
+                onItemClick(contact, transitionPairs)
             }
         }
     }

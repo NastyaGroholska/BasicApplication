@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -70,8 +71,11 @@ class MyContacts : Fragment() {
             }.setAnchorView(binding.myContactsRvContacts).show()
     }
 
-    private fun openContactsProfile(contact: Contact) {
-        navController.navigate(MyContactsDirections.actionMyContactsToContactsProfile(contact.id))
+    private fun openContactsProfile(contact: Contact, transitionPairs:Array<Pair<View, String>>) {
+        navController.navigate(
+            MyContactsDirections.actionMyContactsToContactsProfile(contact.id),
+            FragmentNavigatorExtras(*transitionPairs)
+        )
     }
 
     private fun setObservers() {
