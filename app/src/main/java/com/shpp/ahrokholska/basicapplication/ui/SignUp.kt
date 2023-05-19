@@ -12,7 +12,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.shpp.ahrokholska.basicapplication.*
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentSignUpBinding
-import com.shpp.ahrokholska.basicapplication.utils.Constants.STORED_EMAIL_KEY
+import com.shpp.ahrokholska.basicapplication.ui.viewmodels.UserViewModel
 import com.shpp.ahrokholska.basicapplication.utils.Constants.STORED_USER_NAME_KEY
 import com.shpp.ahrokholska.basicapplication.utils.Parser
 
@@ -62,10 +62,11 @@ class SignUp : Fragment() {
                 val emailText = email.getInputText()
                 val parsedUserName = Parser.getUserName(emailText)
                 if (binding.checkRememberMe.isChecked) {
-                    userViewModel.writeStringToStore(STORED_EMAIL_KEY, emailText)
+                    userViewModel.writeStringToStore(STORED_USER_NAME_KEY, parsedUserName)
+                } else {
+                    userViewModel.saveTmpUser(parsedUserName)
                 }
-                userViewModel.writeStringToStore(STORED_USER_NAME_KEY, parsedUserName)
-                navController.navigate(SignUpDirections.actionSignUpToMyProfile(parsedUserName))
+                navController.navigate(R.id.action_signUp_to_myProfile)
             } else {
                 Snackbar.make(it, R.string.signup_error, Snackbar.LENGTH_SHORT)
                     .setAnchorView(it).show()

@@ -41,11 +41,6 @@
         android:name="com.shpp.ahrokholska.basicapplication.ui.MyProfile"
         android:label="MyProfile"
         tools:layout="@layout/fragment_my_profile">
-        <argument
-            android:name="userName"
-            android:defaultValue="@null"
-            app:argType="string"
-            app:nullable="true" />
         <action
             android:id="@+id/action_myProfile_to_myContacts"
             app:destination="@id/myContacts" />

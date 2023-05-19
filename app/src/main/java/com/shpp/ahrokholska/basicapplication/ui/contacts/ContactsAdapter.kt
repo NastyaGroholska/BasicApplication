@@ -39,6 +39,8 @@ class ContactsAdapter(
                 contactsTextName.text = contact.name
                 contactsTextCareer.text = contact.career
                 contactsImagePhoto.loadFromURL(contact.picture)
+                contactsImageBin.isEnabled = true
+                root.isEnabled = true
 
                 transitionPairs[0] =
                     setTransitionName(contactsImagePhoto, TRANSITION_NAME_IMAGE + contact.id)
@@ -57,6 +59,8 @@ class ContactsAdapter(
 
         private fun setListeners(contact: Contact, transitionPairs: Array<Pair<View, String>>) {
             binding.contactsImageBin.setOnClickListener {
+                it.isEnabled = false
+                binding.root.isEnabled = false
                 onBinClick(contact, adapterPosition)
             }
             binding.root.setOnClickListener {

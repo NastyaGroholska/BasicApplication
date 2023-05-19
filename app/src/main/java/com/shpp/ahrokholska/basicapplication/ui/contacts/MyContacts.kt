@@ -16,6 +16,7 @@ import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.data.Contact
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentMyContactsBinding
 import com.shpp.ahrokholska.basicapplication.ui.shared.VerticalSpaceItemDecoration
+import com.shpp.ahrokholska.basicapplication.ui.viewmodels.ContactsViewModel
 import com.shpp.ahrokholska.basicapplication.utils.ext.enableHorizontalSwipe
 import kotlinx.coroutines.launch
 

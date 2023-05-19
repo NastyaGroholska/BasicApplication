@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.shpp.ahrokholska.basicapplication.databinding.AddContactDialogBinding
+import com.shpp.ahrokholska.basicapplication.ui.viewmodels.ContactsViewModel
 
 class AddContactDialogFragment : DialogFragment() {
     private var _binding: AddContactDialogBinding? = null

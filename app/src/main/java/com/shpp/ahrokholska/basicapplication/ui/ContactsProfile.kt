@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.data.Contact
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentContactsProfileBinding
-import com.shpp.ahrokholska.basicapplication.ui.contacts.ContactsViewModel
+import com.shpp.ahrokholska.basicapplication.ui.viewmodels.ContactsViewModel
 import com.shpp.ahrokholska.basicapplication.utils.Constants.TRANSITION_NAME_CAREER
 import com.shpp.ahrokholska.basicapplication.utils.Constants.TRANSITION_NAME_IMAGE
 import com.shpp.ahrokholska.basicapplication.utils.Constants.TRANSITION_NAME_USER_NAME

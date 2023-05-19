@@ -6,12 +6,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.shpp.ahrokholska.basicapplication.R
-import com.shpp.ahrokholska.basicapplication.utils.Constants.STORED_EMAIL_KEY
-import com.shpp.ahrokholska.basicapplication.utils.Constants.STORED_USER_NAME_KEY
+import com.shpp.ahrokholska.basicapplication.ui.viewmodels.UserViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class WaitingScreen : Fragment(R.layout.fragment_waiting_screen) {
     private val navController by lazy { findNavController() }
@@ -27,18 +26,14 @@ class WaitingScreen : Fragment(R.layout.fragment_waiting_screen) {
      */
     private fun checkForAutoLogin() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val savedEmail = userViewModel.readStringFromStore(STORED_EMAIL_KEY).first()
-            if (savedEmail == "") {
-                launch(Dispatchers.Main) {
-                    navController.navigate(R.id.action_waitingScreen_to_signUp)
-                }
-            } else {
-                val savedUserName = userViewModel.readStringFromStore(STORED_USER_NAME_KEY).first()
-                delay(3000) // TODO:  remove in final version
-                launch(Dispatchers.Main) {
-                    navController.navigate(
-                        WaitingScreenDirections.actionWaitingScreenToMyProfile(savedUserName)
-                    )
+            delay(3000) // TODO:  remove in final version
+            userViewModel.userNameStateFlow.collect {
+                withContext(Dispatchers.Main){
+                    if (it != "") {
+                        navController.navigate(R.id.action_waitingScreen_to_myProfile)
+                    } else {
+                        navController.navigate(R.id.action_waitingScreen_to_signUp)
+                    }
                 }
             }
         }
