@@ -10,7 +10,7 @@ import com.shpp.ahrokholska.basicapplication.databinding.FragmentMyProfileAndMyC
 
 class MyProfileAndMyContactsFragment : Fragment() {
     private var _binding: FragmentMyProfileAndMyContactsBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -21,15 +21,10 @@ class MyProfileAndMyContactsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.pager.adapter = ProfileAndContactsAdapter(this, ::selectPage)
+        binding.pager.adapter = ProfileAndContactsAdapter(this)
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
             tab.text = "OBJECT ${(position + 1)}"
         }.attach()
-    }
-
-    private fun selectPage(pageIndex: Int) {
-        binding.tabLayout.setScrollPosition(pageIndex, 0f, true)
-        binding.pager.currentItem = pageIndex
     }
 
     override fun onDestroyView() {
