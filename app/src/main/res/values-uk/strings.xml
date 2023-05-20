@@ -25,6 +25,7 @@
     <string name="contacts">Контакти</string>
     <string name="add_contacts">Додати контакти</string>
     <string name="removed_contact">Контакт був видалений</string>
+    <string name="removed_contacts">Контакти були видалені</string>
     <string name="undo">Відмінити</string>
     <string name="back">Назад</string>
     <string name="search">Пошук</string>

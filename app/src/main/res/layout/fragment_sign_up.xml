@@ -98,7 +98,7 @@
         android:id="@+id/check_rememberMe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:button="@drawable/checkbox_selector"
+        android:button="@drawable/square_checkbox_selector"
         android:buttonTint="@color/main_text_color"
         android:paddingHorizontal="@dimen/checkbox_padding"
         android:text="@string/remember_me"

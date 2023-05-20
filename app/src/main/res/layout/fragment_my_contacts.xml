@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.contacts.MyContacts">
@@ -76,11 +77,28 @@
             android:id="@+id/myContacts_rv_contacts"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/btn_icon_padding"
+            app:layout_constraintBottom_toTopOf="@+id/myContacts_bin_btn"
             app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
             app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
             app:layout_constraintTop_toBottomOf="@+id/myContacts_top"
             tools:listitem="@layout/contacts_item" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/myContacts_bin_btn"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/multiselect_bin_icon_height"
+            android:layout_marginBottom="@dimen/btn_small_height"
+            android:background="@color/big_button_color"
+            android:tint="@color/main_text_color"
+            android:visibility="gone"
+            app:contentPadding="@dimen/btn_icon_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="@id/percent96Vertical"
+            app:layout_goneMarginBottom="@dimen/btn_icon_padding"
+            app:shapeAppearanceOverlay="@style/rounded"
+            app:srcCompat="@drawable/ic_bin" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/percent18Horizontal"

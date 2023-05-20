@@ -15,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.data.Contact
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentMyContactsBinding
+import com.shpp.ahrokholska.basicapplication.ui.contacts.adapter.ContactsAdapter
 import com.shpp.ahrokholska.basicapplication.ui.shared.VerticalSpaceItemDecoration
 import com.shpp.ahrokholska.basicapplication.ui.viewmodels.ContactsViewModel
 import com.shpp.ahrokholska.basicapplication.utils.ext.enableHorizontalSwipe
@@ -26,10 +27,18 @@ class MyContacts : Fragment() {
     private val navController by lazy { findNavController() }
     private val viewModel: ContactsViewModel by activityViewModels()
     private val contactsAdapter: ContactsAdapter by lazy {
-        ContactsAdapter(
-            onBinClick = ::deleteRVItem,
-            onItemClick = ::openContactsProfile
-        )
+        ContactsAdapter(object : ContactsNormalItemListener {
+            override fun onBinClick(contact: Contact, position: Int) {
+                deleteRVItem(contact, position)
+            }
+
+            override fun onItemClick(contact: Contact, transitionPairs: Array<Pair<View, String>>) {
+                navController.navigate(
+                    MyContactsDirections.actionMyContactsToContactsProfile(contact.id),
+                    FragmentNavigatorExtras(*transitionPairs)
+                )
+            }
+        }, binding.myContactsBinBtn, ::deleteMultipleRVItems)
     }
 
     override fun onCreateView(
@@ -53,8 +62,8 @@ class MyContacts : Fragment() {
 
     private fun initRecycler(context: Context) {
         binding.myContactsRvContacts.apply {
-            adapter = contactsAdapter
             layoutManager = LinearLayoutManager(context)
+            adapter = contactsAdapter
             enableHorizontalSwipe {
                 val pos = it.adapterPosition
                 deleteRVItem(contactsAdapter.currentList[pos], pos)
@@ -72,11 +81,19 @@ class MyContacts : Fragment() {
             }.setAnchorView(binding.myContactsRvContacts).show()
     }
 
-    private fun openContactsProfile(contact: Contact, transitionPairs:Array<Pair<View, String>>) {
-        navController.navigate(
-            MyContactsDirections.actionMyContactsToContactsProfile(contact.id),
-            FragmentNavigatorExtras(*transitionPairs)
+    private fun deleteMultipleRVItems(contacts: List<Contact>, positions: List<Int>) {
+        contacts.forEach {
+            viewModel.deleteContact(it)
+        }
+        Snackbar.make(
+            binding.myContactsRvContacts, if (contacts.size == 1) R.string.removed_contact
+            else R.string.removed_contacts, RV_TIME_TO_CANCEL_MS
         )
+            .setAction(getString(R.string.undo).uppercase()) {
+                for (i in contacts.indices) {
+                    viewModel.insertContact(contacts[i], positions[i])
+                }
+            }.setAnchorView(binding.myContactsRvContacts).show()
     }
 
     private fun setObservers() {
