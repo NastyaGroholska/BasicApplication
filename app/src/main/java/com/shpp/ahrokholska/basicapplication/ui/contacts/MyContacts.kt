@@ -16,12 +16,13 @@ import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.data.Contact
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentMyContactsBinding
 import com.shpp.ahrokholska.basicapplication.ui.contacts.adapter.ContactsAdapter
+import com.shpp.ahrokholska.basicapplication.ui.profile_and_contacts.MyProfileAndMyContactsFragmentDirections
 import com.shpp.ahrokholska.basicapplication.ui.shared.VerticalSpaceItemDecoration
 import com.shpp.ahrokholska.basicapplication.ui.viewmodels.ContactsViewModel
 import com.shpp.ahrokholska.basicapplication.utils.ext.enableHorizontalSwipe
 import kotlinx.coroutines.launch
 
-class MyContacts : Fragment() {
+class MyContacts(private val selectPage: (Int) -> Unit) : Fragment() {
     private var _binding: FragmentMyContactsBinding? = null
     private val binding get() = _binding!!
     private val navController by lazy { findNavController() }
@@ -34,7 +35,9 @@ class MyContacts : Fragment() {
 
             override fun onItemClick(contact: Contact, transitionPairs: Array<Pair<View, String>>) {
                 navController.navigate(
-                    MyContactsDirections.actionMyContactsToContactsProfile(contact.id),
+                    MyProfileAndMyContactsFragmentDirections.actionMyContactsToContactsProfile(
+                        contact.id
+                    ),
                     FragmentNavigatorExtras(*transitionPairs)
                 )
             }
@@ -110,7 +113,7 @@ class MyContacts : Fragment() {
         }
 
         binding.myContactsImageArrow.setOnClickListener {
-            navController.navigate(R.id.action_myContacts_to_myProfile)
+            selectPage(0)
         }
     }
 
