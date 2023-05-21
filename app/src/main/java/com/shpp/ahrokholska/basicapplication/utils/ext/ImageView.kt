@@ -21,8 +21,8 @@ fun ImageView.loadFromURL(picture: String) {
         ImageLoader.Glide -> Glide.with(this).load(picture)
             .apply(
                 RequestOptions.placeholderOf(R.mipmap.ic_unknown_user)
-                    .override(Target.SIZE_ORIGINAL).dontTransform()
-            ).into(this)
+                    .override(Target.SIZE_ORIGINAL)
+            ).centerCrop().circleCrop().into(this)
 
         ImageLoader.Picasso -> Picasso.get().load(picture).fit().centerCrop().into(this)
         ImageLoader.Coil -> load(picture) {
