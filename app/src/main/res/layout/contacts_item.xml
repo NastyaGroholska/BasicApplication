@@ -6,17 +6,15 @@
     android:layout_height="wrap_content"
     android:background="@drawable/contacts_item_border">
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/contacts_image_photo"
         android:layout_width="@dimen/contacts_icon_height"
         android:layout_height="@dimen/contacts_icon_height"
         android:layout_marginVertical="@dimen/btn_icon_padding"
-        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/contacts_text_name"
         app:layout_constraintStart_toStartOf="@id/contacts_percent4Vertical"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/rounded"
         tools:src="@mipmap/ic_unknown_user" />
 
     <TextView
