@@ -20,7 +20,7 @@ import com.shpp.ahrokholska.basicapplication.ui.viewmodels.ContactsViewModel
 import com.shpp.ahrokholska.basicapplication.utils.ext.enableHorizontalSwipe
 import kotlinx.coroutines.launch
 
-class MyContacts : Fragment() {
+class MyContactsFragment : Fragment() {
     private var _binding: FragmentMyContactsBinding? = null
     private val binding get() = _binding!!
     private val navController by lazy { findNavController() }
@@ -59,6 +59,12 @@ class MyContacts : Fragment() {
                 val pos = it.adapterPosition
                 deleteRVItem(contactsAdapter.currentList[pos], pos)
             }
+            postponeEnterTransition()
+            viewTreeObserver
+                .addOnPreDrawListener {
+                    startPostponedEnterTransition()
+                    true
+                }
         }.addItemDecoration(
             VerticalSpaceItemDecoration(RV_ITEM_SPACE)
         )
@@ -74,7 +80,7 @@ class MyContacts : Fragment() {
 
     private fun openContactsProfile(contact: Contact, transitionPairs:Array<Pair<View, String>>) {
         navController.navigate(
-            MyContactsDirections.actionMyContactsToContactsProfile(contact.id),
+            MyContactsFragmentDirections.actionMyContactsToContactsProfile(contact.id),
             FragmentNavigatorExtras(*transitionPairs)
         )
     }
@@ -93,7 +99,7 @@ class MyContacts : Fragment() {
         }
 
         binding.myContactsImageArrow.setOnClickListener {
-            navController.navigate(R.id.action_myContacts_to_myProfile)
+            navController.popBackStack()
         }
     }
 
