@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/waitingScreen"
-        android:name="com.shpp.ahrokholska.basicapplication.ui.WaitingScreen"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.waitingScreen.WaitingScreen"
         android:label="WaitingScreen"
         tools:layout="@layout/fragment_waiting_screen">
         <action
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/signUp"
-        android:name="com.shpp.ahrokholska.basicapplication.ui.SignUp"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.signUp.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up">
         <action
@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/myProfile"
-        android:name="com.shpp.ahrokholska.basicapplication.ui.MyProfile"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.myProfile.MyProfileFragment"
         android:label="MyProfile"
         tools:layout="@layout/fragment_my_profile">
         <action
@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/myContacts"
-        android:name="com.shpp.ahrokholska.basicapplication.ui.contacts.MyContactsFragment"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.contacts.MyContactsFragment"
         android:label="fragment_my_contacts"
         tools:layout="@layout/fragment_my_contacts">
         <action
@@ -59,12 +59,12 @@
     </fragment>
     <dialog
         android:id="@+id/addContactDialogFragment"
-        android:name="com.shpp.ahrokholska.basicapplication.ui.contacts.AddContactDialogFragment"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.addContact.AddContactDialogFragment"
         android:label="AddContactDialogFragment"
         tools:layout="@layout/add_contact_dialog" />
     <fragment
         android:id="@+id/contactsProfile"
-        android:name="com.shpp.ahrokholska.basicapplication.ui.ContactsProfileFragment"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.detailView.ContactsProfileFragment"
         android:label="ContactsProfile"
         tools:layout="@layout/fragment_contacts_profile">
         <argument
