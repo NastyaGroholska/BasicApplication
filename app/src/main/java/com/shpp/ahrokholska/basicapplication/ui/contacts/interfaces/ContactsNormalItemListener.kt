@@ -1,4 +1,4 @@
-package com.shpp.ahrokholska.basicapplication.ui.contacts
+package com.shpp.ahrokholska.basicapplication.ui.contacts.interfaces
 
 import android.view.View
 import com.shpp.ahrokholska.basicapplication.data.Contact

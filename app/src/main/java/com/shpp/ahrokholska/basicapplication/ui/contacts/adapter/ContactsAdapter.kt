@@ -1,41 +1,45 @@
 package com.shpp.ahrokholska.basicapplication.ui.contacts.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.shpp.ahrokholska.basicapplication.data.Contact
 import com.shpp.ahrokholska.basicapplication.databinding.ContactsItemBinding
 import com.shpp.ahrokholska.basicapplication.databinding.ContactsItemMultiselectBinding
-import com.shpp.ahrokholska.basicapplication.ui.contacts.ContactsNormalItemListener
+import com.shpp.ahrokholska.basicapplication.ui.contacts.interfaces.ContactsNormalItemListener
+import com.shpp.ahrokholska.basicapplication.ui.contacts.interfaces.SelectionListener
 import com.shpp.ahrokholska.basicapplication.ui.contacts.viewholders.ContactsMultiselectViewHolder
 import com.shpp.ahrokholska.basicapplication.ui.contacts.viewholders.ContactsNormalViewHolder
-import com.shpp.ahrokholska.basicapplication.ui.contacts.viewholders.ContactsViewHolder
 
 class ContactsAdapter(
-    private val listener: ContactsNormalItemListener,
-    private val bigBinBtn: View, private val onBigBinClick: (List<Contact>, List<Int>) -> Unit
+    private val itemListener: ContactsNormalItemListener,
+    private val selectionListener: SelectionListener
 ) :
-    ListAdapter<Contact, ContactsViewHolder>(ContactsDiffCallback()) {
-    private var multiselectEnabled = false
-    private val selectedPosition = mutableListOf<Int>()
+    ListAdapter<Contact, RecyclerView.ViewHolder>(ContactsDiffCallback()) {
+    private var isMultiselectEnabled = false
+    private var selectedPositions = listOf<Int>()
 
     private enum class ViewType(val code: Int) {
         Normal(0), Multiselect(1)
     }
 
-    init {
-        bigBinBtn.setOnClickListener {
-            disableMultiselect()
-            selectedPosition.sort()
-            onBigBinClick(selectedPosition.map { getItem(it) }, selectedPosition.map { it })
-            selectedPosition.clear()
-        }
+    fun deleteMultiselectItems(): List<Pair<Int, Contact>> {
+        val itemsToRemove = selectedPositions.sorted().map { it to getItem(it) }
+        selectionListener.clearSelection()
+        return itemsToRemove
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactsViewHolder {
-        if (multiselectEnabled) {
+    fun changeMultiselectState(isMultiselectEnabled: Boolean) {
+        this.isMultiselectEnabled = isMultiselectEnabled
+    }
+
+    fun changeMultiselectItems(selectedPositions: List<Int>) {
+        this.selectedPositions = selectedPositions
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        if (isMultiselectEnabled) {
             return ContactsMultiselectViewHolder(
                 ContactsItemMultiselectBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
@@ -45,47 +49,28 @@ class ContactsAdapter(
         return ContactsNormalViewHolder(
             ContactsItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
-            ), ::enableMultiselect
+            ), selectionListener::addItemToSelection
         )
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (multiselectEnabled) ViewType.Multiselect.code else ViewType.Normal.code
+        return if (isMultiselectEnabled) ViewType.Multiselect.code else ViewType.Normal.code
     }
 
-    override fun onBindViewHolder(holder: ContactsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is ContactsNormalViewHolder -> holder.bindTo(getItem(position), listener)
+            is ContactsNormalViewHolder -> holder.bindTo(getItem(position), itemListener)
             is ContactsMultiselectViewHolder -> holder.bindTo(
-                getItem(position), selectedPosition.contains(position)
+                getItem(position), selectedPositions.contains(position)
             )
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private fun enableMultiselect(adapterPosition: Int) {
-        multiselectEnabled = true
-        bigBinBtn.visibility = View.VISIBLE
-        selectedPosition.add(adapterPosition)
-        notifyDataSetChanged()
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private fun disableMultiselect() {
-        multiselectEnabled = false
-        bigBinBtn.visibility = View.GONE
-        notifyDataSetChanged()
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
     private fun onMultiselectItemStateChange(isChecked: Boolean, adapterPosition: Int) {
         if (isChecked) {
-            selectedPosition.add(adapterPosition)
+            selectionListener.addItemToSelection(adapterPosition)
         } else {
-            selectedPosition.remove(adapterPosition)
-        }
-        if (selectedPosition.isEmpty()) {
-            disableMultiselect()
+            selectionListener.removeItemFromSelection(adapterPosition)
         }
     }
 }
