@@ -72,6 +72,12 @@ class MyContacts : Fragment() {
                 val pos = it.adapterPosition
                 deleteRVItem(contactsAdapter.currentList[pos], pos)
             }
+            postponeEnterTransition()
+            viewTreeObserver
+                .addOnPreDrawListener {
+                    startPostponedEnterTransition()
+                    true
+                }
         }.addItemDecoration(
             VerticalSpaceItemDecoration(RV_ITEM_SPACE)
         )

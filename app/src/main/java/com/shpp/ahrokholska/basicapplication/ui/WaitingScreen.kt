@@ -8,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.ui.viewmodels.UserViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -26,7 +25,6 @@ class WaitingScreen : Fragment(R.layout.fragment_waiting_screen) {
      */
     private fun checkForAutoLogin() {
         lifecycleScope.launch(Dispatchers.IO) {
-            delay(3000) // TODO:  remove in final version
             userViewModel.userNameStateFlow.collect {
                 withContext(Dispatchers.Main){
                     if (it != "") {

@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.data.Contact
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentContactsProfileBinding
 import com.shpp.ahrokholska.basicapplication.ui.viewmodels.ContactsViewModel
@@ -27,6 +26,8 @@ class ContactsProfile : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedElementReturnTransition = TransitionInflater.from(context)
+            .inflateTransition(android.R.transition.move)
         sharedElementEnterTransition = TransitionInflater.from(context)
             .inflateTransition(android.R.transition.move)
     }
@@ -42,7 +43,7 @@ class ContactsProfile : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bindThisToContact(viewModel.getContactWithId(args.contactId))
         binding.myContactsImageArrow.setOnClickListener {
-            navController.navigate(R.id.action_contactsProfile_to_myContacts)
+            navController.popBackStack()
         }
     }
 

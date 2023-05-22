@@ -14,7 +14,6 @@ class ContactsNormalViewHolder(
     ContactsViewHolder(binding.root) {
 
     fun bindTo(contact: Contact, listener: ContactsNormalItemListener) {
-        val transitionPairs = Array<Pair<View, String>>(3) { binding.root to "" }
         with(binding) {
             contactsTextName.text = contact.name
             contactsTextCareer.text = contact.career
@@ -22,18 +21,17 @@ class ContactsNormalViewHolder(
             contactsImageBin.isEnabled = true
             root.isEnabled = true
 
-            transitionPairs[0] = setTransitionName(
-                contactsImagePhoto, Constants.TRANSITION_NAME_IMAGE + contact.id
+            val transitionPairs = arrayOf(
+                setTransitionName(
+                    contactsImagePhoto, Constants.TRANSITION_NAME_IMAGE + contact.id
+                ), setTransitionName(
+                    contactsTextName, Constants.TRANSITION_NAME_USER_NAME + contact.id
+                ), setTransitionName(
+                    contactsTextCareer, Constants.TRANSITION_NAME_CAREER + contact.id
+                )
             )
-            transitionPairs[1] = setTransitionName(
-                contactsTextName,
-                Constants.TRANSITION_NAME_USER_NAME + contact.id
-            )
-            transitionPairs[2] = setTransitionName(
-                contactsTextCareer, Constants.TRANSITION_NAME_CAREER + contact.id
-            )
+            setListeners(contact, transitionPairs, listener)
         }
-        setListeners(contact, transitionPairs, listener)
     }
 
     private fun setTransitionName(view: View, name: String): Pair<View, String> {
