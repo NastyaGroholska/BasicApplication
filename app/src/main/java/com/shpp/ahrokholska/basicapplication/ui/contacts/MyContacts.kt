@@ -20,6 +20,7 @@ import com.shpp.ahrokholska.basicapplication.ui.contacts.interfaces.ContactsNorm
 import com.shpp.ahrokholska.basicapplication.ui.contacts.interfaces.SelectionListener
 import com.shpp.ahrokholska.basicapplication.ui.profile_and_contacts.MyProfileAndMyContactsFragment
 import com.shpp.ahrokholska.basicapplication.ui.profile_and_contacts.MyProfileAndMyContactsFragmentDirections
+import com.shpp.ahrokholska.basicapplication.ui.contacts.viewholders.ContactsNormalViewHolder
 import com.shpp.ahrokholska.basicapplication.ui.shared.VerticalSpaceItemDecoration
 import com.shpp.ahrokholska.basicapplication.ui.viewmodels.ContactsViewModel
 import com.shpp.ahrokholska.basicapplication.utils.ext.enableHorizontalSwipe
@@ -37,15 +38,18 @@ class MyContacts : Fragment() {
                     deleteRVItem(contact, position)
                 }
 
-            override fun onItemClick(contact: Contact, transitionPairs: Array<Pair<View, String>>) {
-                navController.navigate(
-                    MyProfileAndMyContactsFragmentDirections.actionMyContactsToContactsProfile(
-                        contact.id
-                    ),
-                    FragmentNavigatorExtras(*transitionPairs)
-                )
-            }
-        }, object : SelectionListener {
+                override fun onItemClick(
+                    contact: Contact,
+                    transitionPairs: Array<Pair<View, String>>
+                ) {
+                    navController.navigate(
+                        MyProfileAndMyContactsFragmentDirections.actionMyContactsToContactsProfile(
+                            contact.id
+                        ),
+                        FragmentNavigatorExtras(*transitionPairs)
+                    )
+                }
+            }, object : SelectionListener {
                 override fun clearSelection() {
                     viewModel.clearSelectedPositions()
                 }
@@ -83,7 +87,7 @@ class MyContacts : Fragment() {
         binding.myContactsRvContacts.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = contactsAdapter
-            enableHorizontalSwipe {
+            enableHorizontalSwipe<ContactsNormalViewHolder> {
                 val pos = it.adapterPosition
                 deleteRVItem(contactsAdapter.currentList[pos], pos)
             }
