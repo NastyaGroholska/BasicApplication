@@ -52,7 +52,7 @@
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
         app:layout_constraintTop_toTopOf="@+id/percent2VHorizontal" />
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image_profile"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -61,8 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/percent10Horizontal"
-        app:shapeAppearanceOverlay="@style/rounded"
-        app:srcCompat="@mipmap/ic_unknown_user_round" />
+        tools:src="@mipmap/ic_unknown_user" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_name"
