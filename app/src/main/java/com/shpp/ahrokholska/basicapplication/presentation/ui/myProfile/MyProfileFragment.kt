@@ -16,7 +16,7 @@ class MyProfileFragment : Fragment() {
     private var _binding: FragmentMyProfileBinding? = null
     private val binding get() = _binding!!
     private val navController by lazy { findNavController() }
-    private val myProfileViewModel: MyProfileViewModel by viewModels()
+    private val viewModel: MyProfileViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -38,7 +38,7 @@ class MyProfileFragment : Fragment() {
 
     private fun setObservers() {
         lifecycleScope.launch {
-            myProfileViewModel.userName.collect {
+            viewModel.userName.collect {
                 binding.textName.text = it
             }
         }
@@ -49,5 +49,4 @@ class MyProfileFragment : Fragment() {
             navController.navigate(R.id.action_myProfile_to_myContacts)
         }
     }
-
 }

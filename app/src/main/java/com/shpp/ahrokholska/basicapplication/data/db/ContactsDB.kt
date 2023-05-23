@@ -20,8 +20,8 @@ object ContactsDB {
         }
     }
 
-    fun getContactWithId(id: Long): Contact {
-        return _contacts.value.find { it.id == id }!! // TODO Make it safe
+    fun getContactWithId(id: Long): Contact? {
+        return _contacts.value.find { it.id == id }
     }
 
     fun addContact(name: String, career: String) {

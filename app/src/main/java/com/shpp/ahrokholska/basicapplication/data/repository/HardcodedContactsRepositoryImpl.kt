@@ -9,7 +9,7 @@ class HardcodedContactsRepositoryImpl : ContactsRepository {
 
     override val contacts: StateFlow<List<Contact>> = ContactsDB.contacts
 
-    override suspend fun getContactWithId(id: Long): Contact {
+    override suspend fun getContactWithId(id: Long): Contact? {
         return ContactsDB.getContactWithId(id)
     }
 

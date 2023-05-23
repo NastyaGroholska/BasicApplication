@@ -1,4 +1,4 @@
-package com.shpp.ahrokholska.basicapplication.presentation.ui.detailView
+package com.shpp.ahrokholska.basicapplication.presentation.ui.contactsProfile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class DetailViewContactViewModel: ViewModel() {
+class DetailViewContactViewModel : ViewModel() {
     private val contactsRepository: ContactsRepository = HardcodedContactsRepositoryImpl()
 
     private val _contact = MutableStateFlow<Contact?>(null)

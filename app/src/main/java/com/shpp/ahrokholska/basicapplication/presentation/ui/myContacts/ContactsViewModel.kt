@@ -1,4 +1,4 @@
-package com.shpp.ahrokholska.basicapplication.presentation.ui.contacts
+package com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

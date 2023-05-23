@@ -13,12 +13,13 @@ import com.google.android.material.textfield.TextInputLayout
 import com.shpp.ahrokholska.basicapplication.*
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentSignUpBinding
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Parser
+import com.shpp.ahrokholska.basicapplication.presentation.utils.Validator
 
 class SignUpFragment : Fragment() {
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
     private val navController by lazy { findNavController() }
-    private val signUpViewModel: SignUpViewModel by viewModels()
+    private val viewModel: SignUpViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -41,11 +42,13 @@ class SignUpFragment : Fragment() {
         with(binding) {
             val email = InputHandler(
                 tietEmail, tilEmail,
-                getString(R.string.incorrect_mail), Parser::isEmailValid
+                getString(R.string.incorrect_mail), Validator::isEmailValid
             )
             val password = InputHandler(
-                tietPassword, tilPassword,
-                getString(R.string.incorrect_password), Parser::isPasswordValid
+                tietPassword,
+                tilPassword,
+                getString(R.string.incorrect_password),
+                Validator::isPasswordValid
             )
             setRegisterButtonListener(email, password)
         }
@@ -59,8 +62,8 @@ class SignUpFragment : Fragment() {
             if (isEmailValid && isPasswordValid) {
                 val emailText = email.getInputText()
                 val parsedUserName = Parser.getUserName(emailText)
-                signUpViewModel.saveIsAutoLoginEnabled(binding.checkRememberMe.isChecked)
-                signUpViewModel.saveUsername(parsedUserName)
+                viewModel.saveIsAutoLoginEnabled(binding.checkRememberMe.isChecked)
+                viewModel.saveUsername(parsedUserName)
                 navController.navigate(R.id.action_signUp_to_myProfile)
             } else {
                 Snackbar.make(it, R.string.signup_error, Snackbar.LENGTH_SHORT)
@@ -73,10 +76,8 @@ class SignUpFragment : Fragment() {
      * Checks input for errors
      */
     inner class InputHandler(
-        private val input: TextInputEditText,
-        private val errorDisplay: TextInputLayout,
-        private val errorMessage: String,
-        private val isValid: (str: String) -> Boolean
+        private val input: TextInputEditText, private val errorDisplay: TextInputLayout,
+        private val errorMessage: String, private val isValid: (str: String) -> Boolean
     ) {
         init {
             errorDisplay.setErrorTextAppearance(R.style.errorMessage)
