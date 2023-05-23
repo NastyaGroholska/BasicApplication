@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class DetailViewContactViewModel : ViewModel() {
+class ContactsProfileViewModel : ViewModel() {
     private val contactsRepository: ContactsRepository = HardcodedContactsRepositoryImpl()
 
     private val _contact = MutableStateFlow<Contact?>(null)

@@ -23,7 +23,7 @@ class ContactsProfileFragment : Fragment() {
     private val binding get() = _binding!!
     private val args: ContactsProfileFragmentArgs by navArgs()
     private val navController by lazy { findNavController() }
-    private val viewModel: DetailViewContactViewModel by viewModels()
+    private val viewModel: ContactsProfileViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
