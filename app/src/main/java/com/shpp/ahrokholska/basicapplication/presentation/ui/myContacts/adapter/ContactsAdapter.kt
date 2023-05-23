@@ -21,8 +21,8 @@ class ContactsAdapter(
     private var isMultiselectEnabled = false
     private var selectedPositions = listOf<Int>()
 
-    private enum class ViewType(val code: Int) {
-        Normal(0), Multiselect(1)
+    private enum class ViewType {
+        Normal, Multiselect
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -41,7 +41,7 @@ class ContactsAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (isMultiselectEnabled) ViewType.Multiselect.code else ViewType.Normal.code
+        return if (isMultiselectEnabled) ViewType.Multiselect.ordinal else ViewType.Normal.ordinal
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
