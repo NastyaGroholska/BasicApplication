@@ -8,17 +8,13 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import com.shpp.ahrokholska.basicapplication.databinding.AddContactDialogBinding
 
-// TODO read about shared view models: https://developer.android.com/codelabs/basic-android-kotlin-training-shared-viewmodel
-
 class AddContactDialogFragment : DialogFragment() {
     private var _binding: AddContactDialogBinding? = null
     private val binding get() = _binding!!
     private val viewModel: AddContactViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = AddContactDialogBinding.inflate(inflater, container, false)
         return binding.root

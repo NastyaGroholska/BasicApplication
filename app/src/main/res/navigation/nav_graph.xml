@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/waitingScreen"
-        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.waitingScreen.WaitingScreen"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.waitingScreen.WaitingScreenFragment"
         android:label="WaitingScreen"
         tools:layout="@layout/fragment_waiting_screen">
         <action
@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/myContacts"
-        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.contacts.MyContactsFragment"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.MyContactsFragment"
         android:label="fragment_my_contacts"
         tools:layout="@layout/fragment_my_contacts">
         <action
@@ -64,7 +64,7 @@
         tools:layout="@layout/add_contact_dialog" />
     <fragment
         android:id="@+id/contactsProfile"
-        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.detailView.ContactsProfileFragment"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.contactsProfile.ContactsProfileFragment"
         android:label="ContactsProfile"
         tools:layout="@layout/fragment_contacts_profile">
         <argument

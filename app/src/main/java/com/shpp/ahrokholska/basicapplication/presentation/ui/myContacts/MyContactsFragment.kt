@@ -1,6 +1,5 @@
-package com.shpp.ahrokholska.basicapplication.presentation.ui.contacts
+package com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts
 
-//todo remove
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentMyContactsBinding
-import com.shpp.ahrokholska.basicapplication.presentation.ui.contacts.adapter.ContactsAdapter
+import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.adapter.ContactsAdapter
 import com.shpp.ahrokholska.basicapplication.presentation.utils.VerticalSpaceItemDecoration
 import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.enableHorizontalSwipe
 import kotlinx.coroutines.launch
@@ -27,8 +26,7 @@ class MyContactsFragment : Fragment() {
     private val viewModel: ContactsViewModel by viewModels()
     private val contactsAdapter: ContactsAdapter by lazy {
         ContactsAdapter(
-            onBinClick = ::deleteRVItem,
-            onItemClick = ::openContactsProfile
+            onBinClick = ::deleteRVItem, onItemClick = ::openContactsProfile
         )
     }
 
@@ -54,7 +52,7 @@ class MyContactsFragment : Fragment() {
     private fun initRecycler() {
         binding.myContactsRvContacts.apply {
             adapter = contactsAdapter
-            layoutManager = LinearLayoutManager(binding.root.context) //TODO Look at me
+            layoutManager = LinearLayoutManager(binding.root.context)
             enableHorizontalSwipe {
                 val pos = it.adapterPosition
                 deleteRVItem(contactsAdapter.currentList[pos], pos)
@@ -78,7 +76,7 @@ class MyContactsFragment : Fragment() {
             }.setAnchorView(binding.myContactsRvContacts).show()
     }
 
-    private fun openContactsProfile(contact: Contact, transitionPairs:Array<Pair<View, String>>) {
+    private fun openContactsProfile(contact: Contact, transitionPairs: Array<Pair<View, String>>) {
         navController.navigate(
             MyContactsFragmentDirections.actionMyContactsToContactsProfile(contact.id),
             FragmentNavigatorExtras(*transitionPairs)

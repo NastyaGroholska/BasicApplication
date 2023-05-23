@@ -1,4 +1,4 @@
-package com.shpp.ahrokholska.basicapplication.presentation.ui.detailView
+package com.shpp.ahrokholska.basicapplication.presentation.ui.contactsProfile
 
 import android.os.Bundle
 import android.transition.TransitionInflater
@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
@@ -33,6 +31,7 @@ class ContactsProfileFragment : Fragment() {
             .inflateTransition(android.R.transition.move)
         sharedElementEnterTransition = TransitionInflater.from(context)
             .inflateTransition(android.R.transition.move)
+        viewModel.getContactWithId(args.contactId)
     }
 
     override fun onCreateView(
@@ -44,26 +43,27 @@ class ContactsProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getContactWithId(args.contactId)
         setObservers()
-        binding.myContactsImageArrow.setOnClickListener {
-            navController.popBackStack()
-        }
-    }
-
-    private fun setObservers() {
-        lifecycleScope.launch() {
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.contact.collect { contact ->
-                    contact?.let { bindThisToContact(it) }
-                }
-            }
-        }
+        setListeners()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setObservers() {
+        lifecycleScope.launch {
+            viewModel.contact.collect { contact ->
+                contact?.let { bindThisToContact(it) }
+            }
+        }
+    }
+
+    private fun setListeners() {
+        binding.myContactsImageArrow.setOnClickListener {
+            navController.popBackStack()
+        }
     }
 
     private fun bindThisToContact(contact: Contact) {

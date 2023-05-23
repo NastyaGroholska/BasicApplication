@@ -10,8 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-// TODO: make this an activity or Splash screen
-class WaitingScreen : Fragment(R.layout.fragment_waiting_screen) {
+class WaitingScreenFragment : Fragment(R.layout.fragment_waiting_screen) {
     private val navController by lazy { findNavController() }
     private val viewModel: WaitingScreenViewModel by viewModels()
 
@@ -20,15 +19,11 @@ class WaitingScreen : Fragment(R.layout.fragment_waiting_screen) {
         checkForAutoLogin()
     }
 
-    /**
-     * TODO КОСТИЛЯКА
-     * If an email is stored in DataStore, opens MyProfile fragment
-     */
     private fun checkForAutoLogin() {
         lifecycleScope.launch(Dispatchers.IO) {
             viewModel.isAutoLoginEnabled.collect { isAutoLoginEnabled ->
-                withContext(Dispatchers.Main){
-                    if (isAutoLoginEnabled) { // todo look at me
+                withContext(Dispatchers.Main) {
+                    if (isAutoLoginEnabled) {
                         navController.navigate(R.id.action_waitingScreen_to_myProfile)
                     } else {
                         navController.navigate(R.id.action_waitingScreen_to_signUp)
