@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/waitingScreen"
-        android:name="com.shpp.ahrokholska.basicapplication.ui.WaitingScreen"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.waitingScreen.WaitingScreenFragment"
         android:label="WaitingScreen"
         tools:layout="@layout/fragment_waiting_screen">
         <action
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/signUp"
-        android:name="com.shpp.ahrokholska.basicapplication.ui.SignUp"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.signUp.SignUpFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up">
         <action
@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/myProfileAndMyContacts"
-        android:name="com.shpp.ahrokholska.basicapplication.ui.profile_and_contacts.MyProfileAndMyContactsFragment"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.pager.MyProfileAndMyContactsFragment"
         android:label="MyProfile"
         tools:layout="@layout/fragment_my_profile">
         <action
@@ -51,12 +51,12 @@
 
     <dialog
         android:id="@+id/addContactDialogFragment"
-        android:name="com.shpp.ahrokholska.basicapplication.ui.contacts.AddContactDialogFragment"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.addContact.AddContactDialogFragment"
         android:label="AddContactDialogFragment"
         tools:layout="@layout/add_contact_dialog" />
     <fragment
         android:id="@+id/contactsProfile"
-        android:name="com.shpp.ahrokholska.basicapplication.ui.ContactsProfile"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.contactsProfile.ContactsProfileFragment"
         android:label="ContactsProfile"
         tools:layout="@layout/fragment_contacts_profile">
         <argument

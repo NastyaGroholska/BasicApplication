@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/upper_layout_color"
-    tools:context=".ui.SignUp">
+    tools:context=".presentation.ui.signUp.SignUpFragment">
 
     <TextView
         android:id="@+id/text_header"
@@ -108,7 +108,7 @@
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
         app:layout_constraintTop_toBottomOf="@+id/til_password" />
 
-    <com.shpp.ahrokholska.basicapplication.ui.shared.CustomButton
+    <com.shpp.ahrokholska.basicapplication.presentation.ui.custom.CustomButton
         android:id="@+id/btn_google"
         android:layout_width="0dp"
         android:layout_height="@dimen/btn_small_height"
