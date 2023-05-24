@@ -4,20 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentMyProfileAndMyContactsBinding
+import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 
-class MyProfileAndMyContactsFragment : Fragment() {
-    private var _binding: FragmentMyProfileAndMyContactsBinding? = null
-    val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMyProfileAndMyContactsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+class MyProfileAndMyContactsFragment : BaseFragment<FragmentMyProfileAndMyContactsBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,9 +18,12 @@ class MyProfileAndMyContactsFragment : Fragment() {
         }.attach()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun inflate(inflater: LayoutInflater, container: ViewGroup?):
+            FragmentMyProfileAndMyContactsBinding {
+        return FragmentMyProfileAndMyContactsBinding.inflate(inflater, container, false)
     }
 
+    fun openTab(ind:Int){
+        binding.pager.currentItem = ind
+    }
 }

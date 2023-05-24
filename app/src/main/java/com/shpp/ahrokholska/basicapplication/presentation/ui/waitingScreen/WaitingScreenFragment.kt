@@ -1,18 +1,24 @@
 package com.shpp.ahrokholska.basicapplication.presentation.ui.waitingScreen
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.shpp.ahrokholska.basicapplication.R
+import com.shpp.ahrokholska.basicapplication.databinding.FragmentWaitingScreenBinding
+import com.shpp.ahrokholska.basicapplication.presentation.ui.NavigationBaseFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class WaitingScreenFragment : Fragment(R.layout.fragment_waiting_screen) {
-    private val navController by lazy { findNavController() }
+class WaitingScreenFragment : NavigationBaseFragment<FragmentWaitingScreenBinding>() {
     private val viewModel: WaitingScreenViewModel by viewModels()
+
+    override fun inflate(inflater: LayoutInflater, container: ViewGroup?):
+            FragmentWaitingScreenBinding {
+        return FragmentWaitingScreenBinding.inflate(inflater, container, false)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -4,38 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.shpp.ahrokholska.basicapplication.*
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentSignUpBinding
+import com.shpp.ahrokholska.basicapplication.presentation.ui.NavigationBaseFragment
+import com.shpp.ahrokholska.basicapplication.presentation.utils.InputHandler
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Parser
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Validator
 
-class SignUpFragment : Fragment() {
-    private var _binding: FragmentSignUpBinding? = null
-    private val binding get() = _binding!!
-    private val navController by lazy { findNavController() }
+class SignUpFragment : NavigationBaseFragment<FragmentSignUpBinding>() {
     private val viewModel: SignUpViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSignUpBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun inflate(inflater: LayoutInflater, container: ViewGroup?): FragmentSignUpBinding {
+        return FragmentSignUpBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun setListeners() {
@@ -71,53 +58,4 @@ class SignUpFragment : Fragment() {
             }
         }
     }
-
-    /**
-     * Checks input for errors
-     */
-    inner class InputHandler(
-        private val input: TextInputEditText, private val errorDisplay: TextInputLayout,
-        private val errorMessage: String, private val isValid: (str: String) -> Boolean
-    ) {
-        init {
-            errorDisplay.setErrorTextAppearance(R.style.errorMessage)
-            setInputErrorListeners()
-        }
-
-        /**
-         * Adds listener to [input] when [input] loses focus or
-         * when the enter key is pressed calls [processInput]
-         */
-        private fun setInputErrorListeners() {
-            input.setOnFocusChangeListener { _, hasFocus ->
-                if (!hasFocus) {
-                    processInput()
-                }
-            }
-
-            input.setOnEditorActionListener { _, _, _ ->
-                processInput()
-                true
-            }
-        }
-
-        fun getInputText(): String {
-            return input.text.toString()
-        }
-
-        /**
-         * If [input] text is valid according to [isValid] then sets error message in [errorDisplay]
-         * to null, otherwise sets it to [errorMessage]. Returns if [input] text is valid
-         */
-        fun processInput(): Boolean {
-            return if (isValid(getInputText())) {
-                errorDisplay.error = null
-                true
-            } else {
-                errorDisplay.error = errorMessage
-                false
-            }
-        }
-    }
-
 }
