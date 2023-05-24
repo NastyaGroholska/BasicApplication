@@ -13,8 +13,9 @@ import android.util.AttributeSet
 import com.shpp.ahrokholska.basicapplication.R
 
 
-class CustomButton(context: Context, attrs: AttributeSet) :
-    androidx.appcompat.widget.AppCompatButton(context, attrs) {
+class CustomButton @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : androidx.appcompat.widget.AppCompatButton(context, attrs, defStyleAttr) {
     var icon: Drawable? = null
         set(value) {
             field = value

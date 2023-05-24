@@ -49,7 +49,7 @@ class ContactsProfileFragment : NavigationBaseFragment<FragmentContactsProfileBi
 
     private fun setListeners() {
         binding.myContactsImageArrow.setOnClickListener {
-            navController.popBackStack()
+            navController.navigateUp()
         }
     }
 
