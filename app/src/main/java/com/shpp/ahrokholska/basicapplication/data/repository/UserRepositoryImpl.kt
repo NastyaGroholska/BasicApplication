@@ -7,17 +7,18 @@ import com.shpp.ahrokholska.basicapplication.data.utils.Constants
 import com.shpp.ahrokholska.basicapplication.data.utils.ext.dataStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 class UserRepositoryImpl(private val context: Context) : UserRepository {
     override val userName: Flow<String> = context.dataStore.data.map { preferences ->
         preferences[Constants.STORED_USER_NAME_KEY].orEmpty()
-    }
+    }.flowOn(Dispatchers.IO)
 
     override val isAutoLoginEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
         preferences[Constants.IS_AUTO_LOGIN_ENABLED_KEY] ?: false
-    }
+    }.flowOn(Dispatchers.IO)
 
     override suspend fun saveUsername(value: String) {
         withContext(Dispatchers.IO) {
