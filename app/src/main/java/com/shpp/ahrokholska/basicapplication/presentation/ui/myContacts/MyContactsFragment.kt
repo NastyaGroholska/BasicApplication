@@ -92,11 +92,7 @@ class MyContactsFragment : BaseFragment<FragmentMyContactsBinding>() {
     }
 
     private fun deleteRVItem(contact: Contact, position: Int) {
-        viewModel.deleteContact(contact)
-        Snackbar.make(binding.myContactsRvContacts, R.string.removed_contact, RV_TIME_TO_CANCEL_MS)
-            .setAction(getString(R.string.undo).uppercase()) {
-                viewModel.insertContact(contact, position)
-            }.setAnchorView(binding.myContactsRvContacts).show()
+        deleteMultipleRVItems(listOf(position to contact))
     }
 
     private fun deleteMultipleRVItems(contacts: List<Pair<Int, Contact>>) {
