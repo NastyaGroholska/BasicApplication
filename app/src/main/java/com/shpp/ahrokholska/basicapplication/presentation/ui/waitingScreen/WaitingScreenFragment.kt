@@ -9,10 +9,10 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentWaitingScreenBinding
-import com.shpp.ahrokholska.basicapplication.presentation.ui.NavigationBaseFragment
+import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import kotlinx.coroutines.launch
 
-class WaitingScreenFragment : NavigationBaseFragment<FragmentWaitingScreenBinding>() {
+class WaitingScreenFragment : BaseFragment<FragmentWaitingScreenBinding>() {
     private val viewModel: WaitingScreenViewModel by viewModels()
 
     override fun inflate(inflater: LayoutInflater, container: ViewGroup?):

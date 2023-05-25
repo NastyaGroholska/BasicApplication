@@ -11,14 +11,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentContactsProfileBinding
-import com.shpp.ahrokholska.basicapplication.presentation.ui.NavigationBaseFragment
+import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.TRANSITION_NAME_CAREER
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.TRANSITION_NAME_IMAGE
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.TRANSITION_NAME_USER_NAME
 import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.loadFromURL
 import kotlinx.coroutines.launch
 
-class ContactsProfileFragment : NavigationBaseFragment<FragmentContactsProfileBinding>() {
+class ContactsProfileFragment : BaseFragment<FragmentContactsProfileBinding>() {
     private val args: ContactsProfileFragmentArgs by navArgs()
     private val viewModel: ContactsProfileViewModel by viewModels()
 

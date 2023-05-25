@@ -14,7 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentMyContactsBinding
-import com.shpp.ahrokholska.basicapplication.presentation.ui.NavigationBaseFragment
+import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.adapter.ContactsAdapter
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.interfaces.ContactsNormalItemListener
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.interfaces.SelectionListener
@@ -25,7 +25,7 @@ import com.shpp.ahrokholska.basicapplication.presentation.utils.VerticalSpaceIte
 import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.enableHorizontalSwipe
 import kotlinx.coroutines.launch
 
-class MyContactsFragment : NavigationBaseFragment<FragmentMyContactsBinding>() {
+class MyContactsFragment : BaseFragment<FragmentMyContactsBinding>() {
     private val viewModel: ContactsViewModel by viewModels()
     private val contactsAdapter: ContactsAdapter by lazy {
         ContactsAdapter(

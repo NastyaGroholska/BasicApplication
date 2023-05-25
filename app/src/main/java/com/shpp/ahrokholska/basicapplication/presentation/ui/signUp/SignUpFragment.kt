@@ -8,12 +8,12 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.ahrokholska.basicapplication.*
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentSignUpBinding
-import com.shpp.ahrokholska.basicapplication.presentation.ui.NavigationBaseFragment
+import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import com.shpp.ahrokholska.basicapplication.presentation.utils.InputHandler
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Parser
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Validator
 
-class SignUpFragment : NavigationBaseFragment<FragmentSignUpBinding>() {
+class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
     private val viewModel: SignUpViewModel by viewModels()
 
     override fun inflate(inflater: LayoutInflater, container: ViewGroup?): FragmentSignUpBinding {
