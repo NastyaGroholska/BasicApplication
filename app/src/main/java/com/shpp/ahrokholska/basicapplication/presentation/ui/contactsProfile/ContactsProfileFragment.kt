@@ -2,9 +2,7 @@ package com.shpp.ahrokholska.basicapplication.presentation.ui.contactsProfile
 
 import android.os.Bundle
 import android.transition.TransitionInflater
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -18,7 +16,8 @@ import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.TRANSI
 import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.loadFromURL
 import kotlinx.coroutines.launch
 
-class ContactsProfileFragment : BaseFragment<FragmentContactsProfileBinding>() {
+class ContactsProfileFragment :
+    BaseFragment<FragmentContactsProfileBinding>(FragmentContactsProfileBinding::inflate) {
     private val args: ContactsProfileFragmentArgs by navArgs()
     private val viewModel: ContactsProfileViewModel by viewModels()
 
@@ -34,11 +33,6 @@ class ContactsProfileFragment : BaseFragment<FragmentContactsProfileBinding>() {
         super.onViewCreated(view, savedInstanceState)
         setObservers()
         setListeners()
-    }
-
-    override fun inflate(inflater: LayoutInflater, container: ViewGroup?):
-            FragmentContactsProfileBinding {
-        return FragmentContactsProfileBinding.inflate(inflater, container, false)
     }
 
     private fun setObservers() {

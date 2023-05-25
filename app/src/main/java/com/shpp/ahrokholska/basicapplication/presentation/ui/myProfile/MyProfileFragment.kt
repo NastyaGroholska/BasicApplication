@@ -1,9 +1,7 @@
 package com.shpp.ahrokholska.basicapplication.presentation.ui.myProfile
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -12,14 +10,9 @@ import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import com.shpp.ahrokholska.basicapplication.presentation.ui.pager.MyProfileAndMyContactsFragment
 import kotlinx.coroutines.launch
 
-class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
+class MyProfileFragment :
+    BaseFragment<FragmentMyProfileBinding>(FragmentMyProfileBinding::inflate) {
     private val viewModel: MyProfileViewModel by viewModels()
-
-    override fun inflate(inflater: LayoutInflater, container: ViewGroup?):
-            FragmentMyProfileBinding {
-        return FragmentMyProfileBinding.inflate(inflater, container, false)
-    }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

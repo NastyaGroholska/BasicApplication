@@ -9,7 +9,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 
-abstract class BaseFragment<T : ViewBinding> : Fragment() {
+abstract class BaseFragment<T : ViewBinding>(private val inflate: (LayoutInflater, ViewGroup?, Boolean) -> T) :
+    Fragment() {
     private var _binding: T? = null
     protected val binding get() = _binding!!
     protected val navController: NavController
@@ -18,7 +19,7 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = inflate(inflater, container)
+        _binding = inflate(inflater, container, false)
         return binding.root
     }
 
@@ -26,6 +27,4 @@ abstract class BaseFragment<T : ViewBinding> : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-    protected abstract fun inflate(inflater: LayoutInflater, container: ViewGroup?): T
 }

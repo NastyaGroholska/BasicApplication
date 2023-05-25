@@ -1,9 +1,7 @@
 package com.shpp.ahrokholska.basicapplication.presentation.ui.signUp
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.ahrokholska.basicapplication.*
@@ -13,12 +11,8 @@ import com.shpp.ahrokholska.basicapplication.presentation.utils.InputHandler
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Parser
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Validator
 
-class SignUpFragment : BaseFragment<FragmentSignUpBinding>() {
+class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding::inflate) {
     private val viewModel: SignUpViewModel by viewModels()
-
-    override fun inflate(inflater: LayoutInflater, container: ViewGroup?): FragmentSignUpBinding {
-        return FragmentSignUpBinding.inflate(inflater, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

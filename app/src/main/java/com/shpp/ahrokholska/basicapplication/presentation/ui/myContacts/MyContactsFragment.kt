@@ -1,9 +1,7 @@
 package com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -25,7 +23,8 @@ import com.shpp.ahrokholska.basicapplication.presentation.utils.VerticalSpaceIte
 import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.enableHorizontalSwipe
 import kotlinx.coroutines.launch
 
-class MyContactsFragment : BaseFragment<FragmentMyContactsBinding>() {
+class MyContactsFragment :
+    BaseFragment<FragmentMyContactsBinding>(FragmentMyContactsBinding::inflate) {
     private val viewModel: ContactsViewModel by viewModels()
     private val contactsAdapter: ContactsAdapter by lazy {
         ContactsAdapter(
@@ -58,11 +57,6 @@ class MyContactsFragment : BaseFragment<FragmentMyContactsBinding>() {
                     viewModel.removeSelectedPosition(itemPos)
                 }
             })
-    }
-
-    override fun inflate(inflater: LayoutInflater, container: ViewGroup?):
-            FragmentMyContactsBinding {
-        return FragmentMyContactsBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
