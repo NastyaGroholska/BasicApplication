@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -108,20 +110,24 @@ class MyContactsFragment : NavigationBaseFragment<FragmentMyContactsBinding>() {
     }
 
     private fun setObservers() {
-        lifecycleScope.launch {
-            viewModel.contacts.collect { list ->
-                contactsAdapter.submitList(list)
-            }
-        }
-        lifecycleScope.launch {
-            viewModel.multiselectState.collect {
-                binding.myContactsBinBtn.visibility = if (it) View.VISIBLE else View.GONE
-                contactsAdapter.changeMultiselectState(it)
-            }
-        }
-        lifecycleScope.launch {
-            viewModel.selectedPositions.collect {
-                contactsAdapter.changeMultiselectItems(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.contacts.collect { list ->
+                        contactsAdapter.submitList(list)
+                    }
+                }
+                launch {
+                    viewModel.multiselectState.collect {
+                        binding.myContactsBinBtn.visibility = if (it) View.VISIBLE else View.GONE
+                        contactsAdapter.changeMultiselectState(it)
+                    }
+                }
+                launch {
+                    viewModel.selectedPositions.collect {
+                        contactsAdapter.changeMultiselectItems(it)
+                    }
+                }
             }
         }
     }

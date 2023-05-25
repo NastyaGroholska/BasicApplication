@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentMyProfileBinding
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
@@ -27,8 +28,8 @@ class MyProfileFragment : BaseFragment<FragmentMyProfileBinding>() {
     }
 
     private fun setObservers() {
-        lifecycleScope.launch {
-            viewModel.userName.collect {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.userName.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
                 binding.textName.text = it
             }
         }

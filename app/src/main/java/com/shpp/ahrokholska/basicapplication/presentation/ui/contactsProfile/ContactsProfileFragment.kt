@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
@@ -26,6 +27,7 @@ class ContactsProfileFragment : NavigationBaseFragment<FragmentContactsProfileBi
         sharedElementEnterTransition = TransitionInflater.from(context)
             .inflateTransition(android.R.transition.move)
         viewModel.getContactWithId(args.contactId)
+        postponeEnterTransition()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,8 +42,8 @@ class ContactsProfileFragment : NavigationBaseFragment<FragmentContactsProfileBi
     }
 
     private fun setObservers() {
-        lifecycleScope.launch {
-            viewModel.contact.collect { contact ->
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.contact.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { contact ->
                 contact?.let { bindThisToContact(it) }
             }
         }
@@ -63,5 +65,6 @@ class ContactsProfileFragment : NavigationBaseFragment<FragmentContactsProfileBi
             textName.transitionName = TRANSITION_NAME_USER_NAME + args.contactId
             textCareer.transitionName = TRANSITION_NAME_CAREER + args.contactId
         }
+        startPostponedEnterTransition()
     }
 }
