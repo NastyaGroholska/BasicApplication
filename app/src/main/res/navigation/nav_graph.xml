@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/waitingScreen"
         android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.waitingScreen.WaitingScreenFragment"
-        android:label="WaitingScreen"
+        android:label="WaitingScreenFragment"
         tools:layout="@layout/fragment_waiting_screen">
         <action
             android:id="@+id/action_waitingScreen_to_signUp"
@@ -17,7 +17,7 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_waitingScreen_to_myProfile"
-            app:destination="@id/myProfileAndMyContacts"
+            app:destination="@id/myProfile"
             app:popUpTo="@id/waitingScreen"
             app:popUpToInclusive="true" />
     </fragment>
@@ -25,11 +25,11 @@
     <fragment
         android:id="@+id/signUp"
         android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.signUp.SignUpFragment"
-        android:label="fragment_sign_up"
+        android:label="SignUpFragment"
         tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUp_to_myProfile"
-            app:destination="@id/myProfileAndMyContacts"
+            app:destination="@id/myProfile"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/stationary"
             app:popUpTo="@id/signUp"
@@ -37,12 +37,21 @@
     </fragment>
 
     <fragment
-        android:id="@+id/myProfileAndMyContacts"
-        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.pager.MyProfileAndMyContactsFragment"
-        android:label="MyProfile"
-        tools:layout="@layout/fragment_my_profile">
+        android:id="@+id/myProfile"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.myProfile.MyProfileFragment"
+        android:label="MyProfileFragment"
+        tools:layout="@layout/fragment_contacts_profile">
         <action
-            android:id="@+id/action_myContacts_to_addContactDialogFragment"
+            android:id="@+id/action_myProfile_to_myContacts"
+            app:destination="@id/myContacts" />
+    </fragment>
+    <fragment
+        android:id="@+id/myContacts"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.MyContactsFragment"
+        android:label="MyContactsFragment"
+        tools:layout="@layout/fragment_my_contacts">
+        <action
+            android:id="@+id/action_myContacts_to_addContactDialog"
             app:destination="@id/addContactDialogFragment" />
         <action
             android:id="@+id/action_myContacts_to_contactsProfile"
@@ -57,7 +66,7 @@
     <fragment
         android:id="@+id/contactsProfile"
         android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.contactsProfile.ContactsProfileFragment"
-        android:label="ContactsProfile"
+        android:label="ContactsProfileFragment"
         tools:layout="@layout/fragment_contacts_profile">
         <argument
             android:name="contactId"

@@ -17,8 +17,6 @@ import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.adapter.
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.interfaces.ContactsNormalItemListener
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.interfaces.SelectionListener
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.viewHolders.ContactsNormalViewHolder
-import com.shpp.ahrokholska.basicapplication.presentation.ui.pager.MyProfileAndMyContactsFragment
-import com.shpp.ahrokholska.basicapplication.presentation.ui.pager.MyProfileAndMyContactsFragmentDirections
 import com.shpp.ahrokholska.basicapplication.presentation.utils.VerticalSpaceItemDecoration
 import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.enableHorizontalSwipe
 import kotlinx.coroutines.launch
@@ -38,10 +36,9 @@ class MyContactsFragment :
                     transitionPairs: Array<Pair<View, String>>
                 ) {
                     navController.navigate(
-                        MyProfileAndMyContactsFragmentDirections.actionMyContactsToContactsProfile(
+                        MyContactsFragmentDirections.actionMyContactsToContactsProfile(
                             contact.id
-                        ),
-                        FragmentNavigatorExtras(*transitionPairs)
+                        ), FragmentNavigatorExtras(*transitionPairs)
                     )
                 }
             }, object : SelectionListener {
@@ -80,11 +77,10 @@ class MyContactsFragment :
                 deleteRVItem(contactsAdapter.currentList[pos], pos)
             }
             postponeEnterTransition()
-            viewTreeObserver
-                .addOnPreDrawListener {
-                    startPostponedEnterTransition()
-                    true
-                }
+            viewTreeObserver.addOnPreDrawListener {
+                startPostponedEnterTransition()
+                true
+            }
         }.addItemDecoration(
             VerticalSpaceItemDecoration(RV_ITEM_SPACE)
         )
@@ -129,10 +125,10 @@ class MyContactsFragment :
 
     private fun setListeners() {
         binding.myContactsTextAdd.setOnClickListener {
-            navController.navigate(R.id.action_myContacts_to_addContactDialogFragment)
+            navController.navigate(R.id.action_myContacts_to_addContactDialog)
         }
         binding.myContactsImageArrow.setOnClickListener {
-            (parentFragment as? MyProfileAndMyContactsFragment)?.openTab(0)
+            navController.navigateUp()
         }
         binding.myContactsBinBtn.setOnClickListener {
             deleteMultipleRVItems(contactsAdapter.deleteMultiselectItems())

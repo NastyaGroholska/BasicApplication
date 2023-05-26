@@ -5,9 +5,9 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentMyProfileBinding
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
-import com.shpp.ahrokholska.basicapplication.presentation.ui.pager.MyProfileAndMyContactsFragment
 import kotlinx.coroutines.launch
 
 class MyProfileFragment :
@@ -30,7 +30,7 @@ class MyProfileFragment :
 
     private fun setListeners() {
         binding.btnViewMyContacts.setOnClickListener {
-            (parentFragment as? MyProfileAndMyContactsFragment)?.openTab(1)
+            navController.navigate(R.id.action_myProfile_to_myContacts)
         }
     }
 }
