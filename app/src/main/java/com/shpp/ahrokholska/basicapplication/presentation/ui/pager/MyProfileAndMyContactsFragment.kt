@@ -11,10 +11,16 @@ class MyProfileAndMyContactsFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.pager.adapter = ProfileAndContactsAdapter(this)
+        binding.pager.adapter =
+            ProfileAndContactsAdapter(childFragmentManager, viewLifecycleOwner.lifecycle)
         TabLayoutMediator(binding.tabLayout, binding.pager) { tab, position ->
             tab.text = "OBJECT ${(position + 1)}"
         }.attach()
+    }
+
+    override fun onDestroyView() {
+        binding.pager.adapter = null
+        super.onDestroyView()
     }
 
     fun openTab(ind: Int) {

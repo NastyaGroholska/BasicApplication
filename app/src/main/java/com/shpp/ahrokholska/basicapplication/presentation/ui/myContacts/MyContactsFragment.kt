@@ -66,6 +66,11 @@ class MyContactsFragment :
         setListeners()
     }
 
+    override fun onDestroyView() {
+        binding.myContactsRvContacts.adapter = null
+        super.onDestroyView()
+    }
+
     private fun initRecycler() {
         binding.myContactsRvContacts.apply {
             adapter = contactsAdapter
