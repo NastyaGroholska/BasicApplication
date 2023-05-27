@@ -14,8 +14,10 @@ import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.TRANSI
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.TRANSITION_NAME_IMAGE
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.TRANSITION_NAME_USER_NAME
 import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.loadFromURL
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ContactsProfileFragment :
     BaseFragment<FragmentContactsProfileBinding>(FragmentContactsProfileBinding::inflate) {
     private val args: ContactsProfileFragmentArgs by navArgs()

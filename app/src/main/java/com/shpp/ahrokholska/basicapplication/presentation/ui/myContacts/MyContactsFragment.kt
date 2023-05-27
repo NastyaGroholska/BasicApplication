@@ -20,8 +20,10 @@ import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.interfac
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.viewHolders.ContactsNormalViewHolder
 import com.shpp.ahrokholska.basicapplication.presentation.utils.VerticalSpaceItemDecoration
 import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.enableHorizontalSwipe
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MyContactsFragment :
     BaseFragment<FragmentMyContactsBinding>(FragmentMyContactsBinding::inflate) {
     private val viewModel: ContactsViewModel by viewModels()

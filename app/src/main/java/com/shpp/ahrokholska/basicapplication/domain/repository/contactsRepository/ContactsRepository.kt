@@ -1,4 +1,4 @@
-package com.shpp.ahrokholska.basicapplication.domain.repository
+package com.shpp.ahrokholska.basicapplication.domain.repository.contactsRepository
 
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
 import kotlinx.coroutines.flow.StateFlow

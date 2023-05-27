@@ -1,4 +1,4 @@
-package com.shpp.ahrokholska.basicapplication.domain.repository
+package com.shpp.ahrokholska.basicapplication.domain.repository.userRepository
 
 import kotlinx.coroutines.flow.Flow
 

@@ -1,15 +1,15 @@
 package com.shpp.ahrokholska.basicapplication.presentation.ui.signUp
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shpp.ahrokholska.basicapplication.data.repository.UserRepositoryImpl
-import com.shpp.ahrokholska.basicapplication.domain.repository.UserRepository
+import com.shpp.ahrokholska.basicapplication.domain.repository.userRepository.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SignUpViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val userRepository: UserRepository = UserRepositoryImpl(application.applicationContext)
+@HiltViewModel
+class SignUpViewModel @Inject constructor(private val userRepository: UserRepository) :
+    ViewModel() {
 
     fun saveUsername(username: String) {
         viewModelScope.launch {

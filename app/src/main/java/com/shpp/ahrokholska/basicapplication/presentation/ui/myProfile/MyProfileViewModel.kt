@@ -1,13 +1,12 @@
 package com.shpp.ahrokholska.basicapplication.presentation.ui.myProfile
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import com.shpp.ahrokholska.basicapplication.data.repository.UserRepositoryImpl
-import com.shpp.ahrokholska.basicapplication.domain.repository.UserRepository
+import androidx.lifecycle.ViewModel
+import com.shpp.ahrokholska.basicapplication.domain.repository.userRepository.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class MyProfileViewModel(application: Application) : AndroidViewModel(application) {
-    private val userRepository: UserRepository = UserRepositoryImpl(application.applicationContext)
-
+@HiltViewModel
+class MyProfileViewModel @Inject constructor(userRepository: UserRepository) : ViewModel() {
     val userName: Flow<String> = userRepository.userName
 }

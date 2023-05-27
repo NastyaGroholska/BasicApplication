@@ -2,13 +2,14 @@ package com.shpp.ahrokholska.basicapplication.presentation.ui.addContact
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shpp.ahrokholska.basicapplication.data.repository.HardcodedContactsRepositoryImpl
-import com.shpp.ahrokholska.basicapplication.domain.repository.ContactsRepository
+import com.shpp.ahrokholska.basicapplication.domain.repository.contactsRepository.ContactsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AddContactViewModel : ViewModel() {
-    private val contactsRepository: ContactsRepository = HardcodedContactsRepositoryImpl()
-
+@HiltViewModel
+class AddContactViewModel @Inject constructor(private val contactsRepository: ContactsRepository) :
+    ViewModel() {
     fun addContact(name: String, career: String) {
         viewModelScope.launch {
             contactsRepository.addContact(name, career)

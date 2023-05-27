@@ -8,8 +8,10 @@ import androidx.lifecycle.lifecycleScope
 import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentWaitingScreenBinding
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class WaitingScreenFragment :
     BaseFragment<FragmentWaitingScreenBinding>(FragmentWaitingScreenBinding::inflate) {
     private val viewModel: WaitingScreenViewModel by viewModels()

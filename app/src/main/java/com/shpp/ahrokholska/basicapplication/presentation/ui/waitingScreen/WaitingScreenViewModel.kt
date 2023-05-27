@@ -1,13 +1,12 @@
 package com.shpp.ahrokholska.basicapplication.presentation.ui.waitingScreen
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import com.shpp.ahrokholska.basicapplication.data.repository.UserRepositoryImpl
-import com.shpp.ahrokholska.basicapplication.domain.repository.UserRepository
+import androidx.lifecycle.ViewModel
+import com.shpp.ahrokholska.basicapplication.domain.repository.userRepository.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class WaitingScreenViewModel(application: Application) : AndroidViewModel(application) {
-    private val userRepository: UserRepository = UserRepositoryImpl(application.applicationContext)
-
+@HiltViewModel
+class WaitingScreenViewModel @Inject constructor(userRepository: UserRepository) : ViewModel() {
     val isAutoLoginEnabled: Flow<Boolean> = userRepository.isAutoLoginEnabled
 }

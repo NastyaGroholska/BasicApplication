@@ -8,8 +8,10 @@ import androidx.lifecycle.lifecycleScope
 import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentMyProfileBinding
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MyProfileFragment :
     BaseFragment<FragmentMyProfileBinding>(FragmentMyProfileBinding::inflate) {
     private val viewModel: MyProfileViewModel by viewModels()

@@ -10,7 +10,9 @@ import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import com.shpp.ahrokholska.basicapplication.presentation.utils.InputHandler
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Parser
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Validator
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding::inflate) {
     private val viewModel: SignUpViewModel by viewModels()
 

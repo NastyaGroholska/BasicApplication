@@ -3,15 +3,16 @@ package com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
-import com.shpp.ahrokholska.basicapplication.data.repository.HardcodedContactsRepositoryImpl
-import com.shpp.ahrokholska.basicapplication.domain.repository.ContactsRepository
+import com.shpp.ahrokholska.basicapplication.domain.repository.contactsRepository.ContactsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ContactsViewModel : ViewModel() {
-    private val contactsRepository: ContactsRepository = HardcodedContactsRepositoryImpl()
-
+@HiltViewModel
+class ContactsViewModel @Inject constructor(private val contactsRepository: ContactsRepository) :
+    ViewModel() {
     val contacts: StateFlow<List<Contact>> = contactsRepository.contacts
 
     fun deleteContact(contact: Contact) {
