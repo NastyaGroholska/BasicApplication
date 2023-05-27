@@ -67,6 +67,10 @@ class ContactsAdapter(
         this.selectedPositions = selectedPositions
     }
 
+    fun getPositionOfId(id: Long): Int {
+        return currentList.indexOfFirst { it.id == id }
+    }
+
     private fun onMultiselectItemStateChange(isChecked: Boolean, adapterPosition: Int) {
         if (isChecked) {
             selectionListener.addItemToSelection(adapterPosition)

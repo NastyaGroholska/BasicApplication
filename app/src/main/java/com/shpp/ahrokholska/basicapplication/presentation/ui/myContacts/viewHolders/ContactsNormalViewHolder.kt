@@ -13,6 +13,7 @@ class ContactsNormalViewHolder(
     private val enableMultiselect: (Int) -> Unit
 ) :
     RecyclerView.ViewHolder(binding.root) {
+    var transitionPairs = emptyArray<Pair<View, String>>()
 
     fun bindTo(contact: Contact, listener: ContactsNormalItemListener) {
         with(binding) {
@@ -21,6 +22,15 @@ class ContactsNormalViewHolder(
             contactsImagePhoto.loadFromURL(contact.picture)
             contactsImageBin.isEnabled = true
             root.isEnabled = true
+            transitionPairs = arrayOf(
+                setTransitionName(
+                    contactsImagePhoto, Constants.TRANSITION_NAME_IMAGE + contact.id
+                ), setTransitionName(
+                    contactsTextName, Constants.TRANSITION_NAME_USER_NAME + contact.id
+                ), setTransitionName(
+                    contactsTextCareer, Constants.TRANSITION_NAME_CAREER + contact.id
+                )
+            )
         }
         setListeners(contact, listener)
     }
@@ -38,17 +48,7 @@ class ContactsNormalViewHolder(
                 listener.onBinClick(contact, adapterPosition)
             }
             root.setOnClickListener {
-                listener.onItemClick(
-                    contact, arrayOf(
-                        setTransitionName(
-                            contactsImagePhoto, Constants.TRANSITION_NAME_IMAGE + contact.id
-                        ), setTransitionName(
-                            contactsTextName, Constants.TRANSITION_NAME_USER_NAME + contact.id
-                        ), setTransitionName(
-                            contactsTextCareer, Constants.TRANSITION_NAME_CAREER + contact.id
-                        )
-                    )
-                )
+                listener.onItemClick(contact, transitionPairs)
             }
             root.setOnLongClickListener {
                 enableMultiselect(adapterPosition)

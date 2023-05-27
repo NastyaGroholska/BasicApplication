@@ -2,6 +2,7 @@ package com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -24,6 +25,7 @@ import kotlinx.coroutines.launch
 class MyContactsFragment :
     BaseFragment<FragmentMyContactsBinding>(FragmentMyContactsBinding::inflate) {
     private val viewModel: ContactsViewModel by viewModels()
+    private var sentId: Long = 0
     private val contactsAdapter: ContactsAdapter by lazy {
         ContactsAdapter(
             object : ContactsNormalItemListener {
@@ -32,9 +34,9 @@ class MyContactsFragment :
                 }
 
                 override fun onItemClick(
-                    contact: Contact,
-                    transitionPairs: Array<Pair<View, String>>
+                    contact: Contact, transitionPairs: Array<Pair<View, String>>
                 ) {
+                    sentId = contact.id
                     navController.navigate(
                         MyContactsFragmentDirections.actionMyContactsToContactsProfile(
                             contact.id
@@ -77,10 +79,25 @@ class MyContactsFragment :
                 deleteRVItem(contactsAdapter.currentList[pos], pos)
             }
             postponeEnterTransition()
-            viewTreeObserver.addOnPreDrawListener {
-                startPostponedEnterTransition()
-                true
-            }
+            setExitSharedElementCallback(object : androidx.core.app.SharedElementCallback() {
+                override fun onMapSharedElements(
+                    names: MutableList<String>?, sharedElements: MutableMap<String, View>?
+                ) {
+                    val holder =
+                        findViewHolderForAdapterPosition(contactsAdapter.getPositionOfId(sentId))
+                    val newSharedElements: MutableMap<String, View>?
+                    if (holder is ContactsNormalViewHolder) {
+                        newSharedElements = mutableMapOf()
+                        holder.transitionPairs.forEach {
+                            newSharedElements[it.second] = it.first
+                        }
+                    } else {
+                        newSharedElements = sharedElements
+                    }
+                    super.onMapSharedElements(names, newSharedElements)
+                }
+            })
+            doOnPreDraw { startPostponedEnterTransition() }
         }.addItemDecoration(
             VerticalSpaceItemDecoration(RV_ITEM_SPACE)
         )

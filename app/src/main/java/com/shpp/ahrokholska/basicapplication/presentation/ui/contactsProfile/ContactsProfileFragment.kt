@@ -25,8 +25,6 @@ class ContactsProfileFragment :
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context)
             .inflateTransition(android.R.transition.move)
-        enterTransition = TransitionInflater.from(context)
-            .inflateTransition(android.R.transition.fade)
         viewModel.getContactWithId(args.contactId)
         postponeEnterTransition()
     }
