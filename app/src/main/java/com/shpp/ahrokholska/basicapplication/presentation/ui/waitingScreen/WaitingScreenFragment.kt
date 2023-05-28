@@ -1,7 +1,5 @@
 package com.shpp.ahrokholska.basicapplication.presentation.ui.waitingScreen
 
-import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -16,12 +14,7 @@ class WaitingScreenFragment :
     BaseFragment<FragmentWaitingScreenBinding>(FragmentWaitingScreenBinding::inflate) {
     private val viewModel: WaitingScreenViewModel by viewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        checkForAutoLogin()
-    }
-
-    private fun checkForAutoLogin() {
+    override fun setObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.isAutoLoginEnabled.flowWithLifecycle(viewLifecycleOwner.lifecycle)
                 .collect { isAutoLoginEnabled ->

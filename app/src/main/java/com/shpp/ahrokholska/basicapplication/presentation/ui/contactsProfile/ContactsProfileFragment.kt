@@ -2,7 +2,6 @@ package com.shpp.ahrokholska.basicapplication.presentation.ui.contactsProfile
 
 import android.os.Bundle
 import android.transition.TransitionInflater
-import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -31,13 +30,7 @@ class ContactsProfileFragment :
         postponeEnterTransition()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setObservers()
-        setListeners()
-    }
-
-    private fun setObservers() {
+    override fun setObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.contact.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { contact ->
                 contact?.let { bindThisToContact(it) }
@@ -45,7 +38,7 @@ class ContactsProfileFragment :
         }
     }
 
-    private fun setListeners() {
+    override fun setListeners() {
         binding.myContactsImageArrow.setOnClickListener {
             navController.navigateUp()
         }

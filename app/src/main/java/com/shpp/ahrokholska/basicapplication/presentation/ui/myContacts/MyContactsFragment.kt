@@ -63,8 +63,6 @@ class MyContactsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecycler()
-        setObservers()
-        setListeners()
     }
 
     override fun onDestroyView() {
@@ -119,7 +117,7 @@ class MyContactsFragment :
         }.setAnchorView(binding.myContactsRvContacts).show()
     }
 
-    private fun setObservers() {
+    override fun setObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
@@ -142,7 +140,7 @@ class MyContactsFragment :
         }
     }
 
-    private fun setListeners() {
+    override fun setListeners() {
         binding.myContactsTextAdd.setOnClickListener {
             navController.navigate(R.id.action_myContacts_to_addContactDialog)
         }

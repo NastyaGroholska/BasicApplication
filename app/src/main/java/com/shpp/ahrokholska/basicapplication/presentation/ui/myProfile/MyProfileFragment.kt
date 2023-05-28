@@ -1,7 +1,5 @@
 package com.shpp.ahrokholska.basicapplication.presentation.ui.myProfile
 
-import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -16,13 +14,7 @@ class MyProfileFragment :
     BaseFragment<FragmentMyProfileBinding>(FragmentMyProfileBinding::inflate) {
     private val viewModel: MyProfileViewModel by viewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setObservers()
-        setListeners()
-    }
-
-    private fun setObservers() {
+    override fun setObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.userName.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
                 binding.textName.text = it
@@ -30,7 +22,7 @@ class MyProfileFragment :
         }
     }
 
-    private fun setListeners() {
+    override fun setListeners() {
         binding.btnViewMyContacts.setOnClickListener {
             navController.navigate(R.id.action_myProfile_to_myContacts)
         }

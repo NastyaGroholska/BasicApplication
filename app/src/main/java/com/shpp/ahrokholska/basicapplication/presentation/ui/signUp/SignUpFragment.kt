@@ -1,7 +1,5 @@
 package com.shpp.ahrokholska.basicapplication.presentation.ui.signUp
 
-import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.ahrokholska.basicapplication.*
@@ -16,20 +14,14 @@ import dagger.hilt.android.AndroidEntryPoint
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding::inflate) {
     private val viewModel: SignUpViewModel by viewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setListeners()
-    }
-
-    private fun setListeners() {
+    override fun setListeners() {
         with(binding) {
             val email = InputHandler(
                 tietEmail, tilEmail,
                 getString(R.string.incorrect_mail), Validator::isEmailValid
             )
             val password = InputHandler(
-                tietPassword,
-                tilPassword,
+                tietPassword, tilPassword,
                 getString(R.string.incorrect_password),
                 Validator::isPasswordValid
             )
