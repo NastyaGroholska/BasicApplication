@@ -9,6 +9,7 @@
     <dimen name="checkbox_padding">8dp</dimen>
     <dimen name="boarder_width">2dp</dimen>
     <dimen name="btn_icon_padding">16dp</dimen>
+    <dimen name="image_icon_padding">24dp</dimen>
     <dimen name="btn_small_height">40dp</dimen>
     <dimen name="btn_big_height">55dp</dimen>
     <dimen name="text_gap">16dp</dimen>

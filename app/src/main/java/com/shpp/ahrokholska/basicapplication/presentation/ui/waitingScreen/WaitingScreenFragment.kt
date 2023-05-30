@@ -3,7 +3,6 @@ package com.shpp.ahrokholska.basicapplication.presentation.ui.waitingScreen
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentWaitingScreenBinding
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,14 +15,15 @@ class WaitingScreenFragment :
 
     override fun setObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.isAutoLoginEnabled.flowWithLifecycle(viewLifecycleOwner.lifecycle)
-                .collect { isAutoLoginEnabled ->
-                    if (isAutoLoginEnabled) {
-                        navController.navigate(R.id.action_waitingScreen_to_myProfile)
+            viewModel.isAutoLoginEnabled.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
+                it?.let {
+                    if (it) {
+                        navController.navigate(WaitingScreenFragmentDirections.actionWaitingScreenToMyProfile())
                     } else {
-                        navController.navigate(R.id.action_waitingScreen_to_signUp)
+                        navController.navigate(WaitingScreenFragmentDirections.actionWaitingScreenToSignUp())
                     }
                 }
+            }
         }
     }
 }

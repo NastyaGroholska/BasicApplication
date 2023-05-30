@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
-        android:text="@string/let_s_get_acquainted"
+        android:text="@string/hello"
         android:textColor="@color/main_text_color"
         android:textSize="@dimen/huge_text_size"
         app:layout_constraintBottom_toTopOf="@+id/text_subHeader"
@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
-        android:text="@string/fill_out_the_profile_and_go_to_the_application"
+        android:text="@string/enter_your_email_and_password_below"
         android:textColor="@color/sub_text_color"
         android:textSize="@dimen/small_text_size"
         app:layout_constraintBottom_toTopOf="@+id/text_email"
@@ -109,97 +109,43 @@
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
         app:layout_constraintTop_toBottomOf="@+id/til_password" />
 
-    <com.shpp.ahrokholska.basicapplication.presentation.ui.custom.CustomButton
-        android:id="@+id/btn_google"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/btn_small_height"
-        android:layout_marginBottom="10dp"
-        android:background="@color/lower_layout_color"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/google"
-        android:textColor="@color/secondary_text_color"
-        android:textSize="@dimen/med_big_text_size"
-        app:icon="@drawable/ic_google"
-        app:iconPadding="@dimen/btn_icon_padding"
-        app:layout_constraintBottom_toTopOf="@+id/text_or"
-        app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
-        app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
-        app:layout_constraintTop_toTopOf="@+id/percent67Horizontal" />
-
-    <TextView
-        android:id="@+id/text_or"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/or"
-        android:textColor="@color/main_text_color"
-        android:textSize="@dimen/big_text_size"
-        app:layout_constraintBottom_toTopOf="@+id/btn_register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_google" />
-
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_register"
+        android:id="@+id/btn_login"
         style="@style/bigButton"
         android:layout_width="0dp"
-        android:text="@string/register"
-        app:layout_constraintBottom_toTopOf="@+id/text_tos"
+        android:text="@string/login"
+        app:layout_constraintBottom_toTopOf="@+id/text_dontHaveAcc"
         app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
-        app:layout_constraintTop_toBottomOf="@+id/text_or"
         app:strokeColor="@color/big_button_color"
         app:strokeWidth="@dimen/boarder_width" />
 
     <TextView
-        android:id="@+id/text_tos"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/open_sans"
-        android:text="@string/tos"
-        android:textAlignment="center"
-        android:textColor="@color/sub_text_color"
-        android:textSize="@dimen/small_text_size"
-        app:layout_constraintBottom_toTopOf="@+id/text_haveAcc"
-        app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
-        app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
-        app:layout_constraintTop_toBottomOf="@+id/btn_register" />
-
-    <TextView
-        android:id="@+id/text_haveAcc"
+        android:id="@+id/text_dontHaveAcc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/open_sans"
-        android:text="@string/already_have_acc"
+        android:paddingTop="@dimen/text_gap"
+        android:text="@string/don_t_have_account"
         android:textColor="@color/sub_text_color"
         android:textSize="@dimen/medium_text_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/text_signIn"
+        app:layout_constraintBottom_toBottomOf="@id/percent98Horizontal"
+        app:layout_constraintEnd_toStartOf="@+id/text_signUn"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_tos" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/text_signIn"
+        android:id="@+id/text_signUn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:fontFamily="@font/open_sans"
-        android:text="@string/sign_in"
+        android:text="@string/sign_up"
         android:textColor="@color/main_text_color"
         android:textSize="@dimen/medium_text_size"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/percent98Horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/text_haveAcc"
-        app:layout_constraintTop_toBottomOf="@+id/text_tos" />
-
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/percent67Horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.67" />
+        app:layout_constraintStart_toEndOf="@+id/text_dontHaveAcc" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/percent4Vertical"
@@ -215,8 +161,15 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.96" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/percent98Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.98" />
+
     <FrameLayout
-        android:id="@+id/signUp_progressWindow"
+        android:id="@+id/signIn_progressWindow"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/upper_layout_color_70_percent"
@@ -226,7 +179,7 @@
         android:visibility="invisible">
 
         <ProgressBar
-            android:id="@+id/signUp_progressBar"
+            android:id="@+id/signIn_progressBar"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

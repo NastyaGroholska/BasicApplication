@@ -1,11 +1,41 @@
 package com.shpp.ahrokholska.basicapplication.domain.repository.userRepository
 
-import kotlinx.coroutines.flow.Flow
+import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
+import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponseCode
+import com.shpp.ahrokholska.basicapplication.domain.model.User
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface UserRepository {
-    val userName: Flow<String>
-    val isAutoLoginEnabled: Flow<Boolean>
+@Singleton
+class UserRepository @Inject constructor(
+    private val networkRepo: UserNetworkRepository, private val localRepo: UserLocalRepository
+) {
+    private var _user = MutableStateFlow<User?>(null)
+    val user: StateFlow<User?> = _user
 
-    suspend fun saveUsername(value: String)
-    suspend fun saveAutoLoginState(isAutoLoginEnabled: Boolean)
+    suspend fun getUser(): NetworkResponse<User>? {
+        val token = localRepo.savedToken.first()
+        val response = if (token.isEmpty()) {
+            null
+        } else {
+            networkRepo.getUser(localRepo.savedId.first(), token)
+        }
+        _user.value = response?.data
+        return response
+    }
+
+    suspend fun getUser(email: String, password: String): NetworkResponse<User> {
+        val response = networkRepo.authorizeUser(email, password)
+        if (response.code == NetworkResponseCode.Success) {
+            _user.value = response.data
+        }
+        return response
+    }
+
+    suspend fun saveUser(id: Long, refreshToken: String) {
+        localRepo.saveUser(id, refreshToken)
+    }
 }

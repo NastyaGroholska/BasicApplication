@@ -1,8 +1,8 @@
-package com.shpp.ahrokholska.basicapplication.presentation.ui.signUp
+package com.shpp.ahrokholska.basicapplication.presentation.ui.loginGraph
 
-import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import com.google.android.material.snackbar.Snackbar
-import com.shpp.ahrokholska.basicapplication.*
+import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentSignUpBinding
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import com.shpp.ahrokholska.basicapplication.presentation.utils.InputHandler
@@ -12,7 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding::inflate) {
-    private val viewModel: SignUpViewModel by viewModels()
+    private val viewModel: LoginGraphViewModel by hiltNavGraphViewModels(R.id.loginGraph)
 
     override fun setListeners() {
         with(binding) {
@@ -25,6 +25,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                 getString(R.string.incorrect_password),
                 Validator::isPasswordValid
             )
+            textSignIn.setOnClickListener {
+                navController.navigateUp()
+            }
             setRegisterButtonListener(email, password)
         }
     }
@@ -37,9 +40,13 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
             if (isEmailValid && isPasswordValid) {
                 val emailText = email.getInputText()
                 val parsedUserName = Parser.getUserName(emailText)
-                viewModel.saveIsAutoLoginEnabled(binding.checkRememberMe.isChecked)
-                viewModel.saveUsername(parsedUserName)
-                navController.navigate(R.id.action_signUp_to_myProfile)
+                /* viewModel.saveIsAutoLoginEnabled(binding.checkRememberMe.isChecked)
+                 viewModel.saveUsername(parsedUserName)*/
+                navController.navigate(
+                    SignUpFragmentDirections.actionSignUpToSignUpExtended(
+                        parsedUserName
+                    )
+                )
             } else {
                 Snackbar.make(it, R.string.signup_error, Snackbar.LENGTH_SHORT)
                     .setAnchorView(it).show()

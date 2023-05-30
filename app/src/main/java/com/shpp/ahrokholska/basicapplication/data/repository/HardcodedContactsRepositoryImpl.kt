@@ -6,8 +6,9 @@ import com.shpp.ahrokholska.basicapplication.domain.repository.contactsRepositor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class HardcodedContactsRepositoryImpl : ContactsRepository {
+class HardcodedContactsRepositoryImpl @Inject constructor() : ContactsRepository {
     override val contacts: StateFlow<List<Contact>> = ContactsDB.contacts
 
     override suspend fun getContactWithId(id: Long): Contact? {

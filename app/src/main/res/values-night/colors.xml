@@ -3,6 +3,7 @@
     <color name="secondary_text_color">#C1C1C1</color>
     <color name="main_text_color">#FFFFFFFF</color>
     <color name="upper_layout_color">#000000</color>
+    <color name="upper_layout_color_70_percent">#B3000000</color>
     <color name="transparent">#00000000</color>
     <color name="big_button_color">#782B00</color>
     <color name="sub_text_color">#B2B2B3</color>

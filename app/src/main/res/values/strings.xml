@@ -20,6 +20,8 @@
     <string name="incorrect_mail">Incorrect E-Mail address</string>
     <string name="incorrect_password">Your password must include a minimum of 8 characters</string>
     <string name="signup_error">Please enter correct email and password</string>
+    <string name="incorrect_user_name">User name must contain at least 3 letters</string>
+    <string name="incorrect_phone_number">Phone number must be at least 10 digits long</string>
     <string name="career">Career</string>
     <string name="home_address">Home address</string>
     <string name="contacts">Contacts</string>
@@ -35,4 +37,17 @@
     <string name="save">Save</string>
     <string name="profile">Profile</string>
     <string name="message">Message</string>
+    <string name="your_profile_data">Your profile data</string>
+    <string name="user_name">User name</string>
+    <string name="mobile_phone">Mobile phone</string>
+    <string name="cancel">Cancel</string>
+    <string name="forward">Forward</string>
+    <string name="hello">Hello!</string>
+    <string name="enter_your_email_and_password_below">Enter your email and password below</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_account">Don’t have account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="sign_in_email_error">Incorrect email or password. Please check your inputs and try again</string>
+    <string name="network_error">Something went wrong</string>
+    <string name="retry">Retry</string>
 </resources>

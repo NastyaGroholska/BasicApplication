@@ -1,0 +1,9 @@
+package com.shpp.ahrokholska.basicapplication.domain.repository.userRepository
+
+import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
+import com.shpp.ahrokholska.basicapplication.domain.model.User
+
+interface UserNetworkRepository {
+    suspend fun authorizeUser(email: String, password: String): NetworkResponse<User>
+    suspend fun getUser(id: Long, refreshToken: String): NetworkResponse<User>
+}

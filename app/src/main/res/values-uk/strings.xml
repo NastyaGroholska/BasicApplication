@@ -20,6 +20,8 @@
     <string name="incorrect_mail">Неправильна адреса електронної пошти</string>
     <string name="incorrect_password">Ваш пароль має містити щонайменше 8 символів</string>
     <string name="signup_error">Введіть правильну адресу електронної пошти та пароль</string>
+    <string name="incorrect_user_name">Ім\'я користувача має містити щонайменше 3 літери</string>
+    <string name="incorrect_phone_number">Номер телефону має бути довжиною щонайменше 10 цифр</string>
     <string name="career">Професія</string>
     <string name="home_address">Домашня адреса</string>
     <string name="contacts">Контакти</string>
@@ -35,4 +37,17 @@
     <string name="save">Зберегти</string>
     <string name="profile">Профіль</string>
     <string name="message">Написати</string>
+    <string name="your_profile_data">Данні вашого профілю</string>
+    <string name="user_name">Ім\'я користувача</string>
+    <string name="mobile_phone">Мобільний телефон</string>
+    <string name="cancel">Відмінити</string>
+    <string name="forward">Вперед</string>
+    <string name="hello">Привіт!</string>
+    <string name="enter_your_email_and_password_below">Введи свій email та пароль внизу</string>
+    <string name="login">Увійти</string>
+    <string name="don_t_have_account">Немає аккаунту?</string>
+    <string name="sign_up">Зареєструватися</string>
+    <string name="sign_in_email_error">Неправильна адреса електронної пошти або пароль. Перевірте введені дані та повторіть спробу</string>
+    <string name="network_error">Щось пішло не так</string>
+    <string name="retry">Повторити спробу</string>
 </resources>

@@ -11,8 +11,8 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.ahrokholska.basicapplication.R
-import com.shpp.ahrokholska.basicapplication.domain.model.Contact
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentMyContactsBinding
+import com.shpp.ahrokholska.basicapplication.domain.model.Contact
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.adapter.ContactsAdapter
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.interfaces.ContactsNormalItemListener
@@ -142,7 +142,7 @@ class MyContactsFragment :
 
     override fun setListeners() {
         binding.myContactsTextAdd.setOnClickListener {
-            navController.navigate(R.id.action_myContacts_to_addContactDialog)
+            navController.navigate(MyContactsFragmentDirections.actionMyContactsToAddContactDialog())
         }
         binding.myContactsImageArrow.setOnClickListener {
             navController.navigateUp()
