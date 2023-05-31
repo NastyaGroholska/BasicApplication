@@ -79,6 +79,37 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
         )
     }
 
+    override suspend fun editUser(
+        id: Long, accessToken: String, refreshToken: String, name: String, career: String?,
+        phone: String, address: String?, date: String?
+    ): NetworkResponse<User> = withContext(Dispatchers.IO) {
+        val body: String
+        try {
+            body = service.editUser(
+                id, AUTHORIZATION_HEADER + accessToken,
+                name, career, phone, address, date
+            ).string()
+        } catch (e: Exception) {
+            val code = processError(e)
+            return@withContext NetworkResponse<User>(code, User())
+        }
+
+        val con = parseBody<ResponseUser>(body)
+        NetworkResponse(
+            NetworkResponseCode.Success,
+            User(
+                con.data.user.id,
+                con.data.user.name,
+                con.data.user.career,
+                con.data.user.phone,
+                con.data.user.address,
+                con.data.user.birthday,
+                accessToken,
+                refreshToken
+            )
+        )
+    }
+
     private suspend fun getUserByAccessToken(
         id: Long, accessToken: String, refreshToken: String
     ): NetworkResponse<User> =
@@ -123,7 +154,9 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
 
     private inline fun <reified T> parseBody(body: String): T {
         var newBody = body
-        if (body[body.length - 2] != '}') { //some responses don't have closing '}' at the end =/
+        val openBrackets = body.count { it == '{' }
+        val closeBrackets = body.count { it == '}' }
+        if (openBrackets != closeBrackets) { //some responses don't have closing '}' at the end =/
             newBody += '}'
         }
         return Gson().fromJson(newBody, T::class.java)

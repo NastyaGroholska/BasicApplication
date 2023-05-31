@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lower_layout_color"
+    tools:context=".presentation.ui.loginGraph.SignUpFragment">
+
+    <View
+        android:id="@+id/editProfile_top"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/upper_layout_color"
+        app:layout_constraintBottom_toTopOf="@+id/percent30Horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/text_edit_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/edit_profile"
+        android:textColor="@color/main_text_color"
+        android:textSize="@dimen/big_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/image_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/percent1Horizontal"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <ImageView
+        android:id="@+id/image_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/back"
+        app:layout_constraintBottom_toBottomOf="@+id/text_edit_profile"
+        app:layout_constraintStart_toStartOf="@id/percent4Vertical"
+        app:layout_constraintTop_toTopOf="@+id/text_edit_profile"
+        app:srcCompat="@drawable/ic_arrow_back" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/image_profile"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/percent26Horizontal"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/percent10Horizontal"
+        app:shapeAppearanceOverlay="@style/rounded"
+        app:srcCompat="@mipmap/ic_unknown_user_round" />
+
+    <TextView
+        android:id="@+id/text_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:paddingHorizontal="@dimen/edit_text_padding"
+        android:paddingBottom="@dimen/edit_text_padding"
+        android:text="@string/user_name"
+        android:textColor="@color/sub_text_color"
+        android:textSize="@dimen/medium_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/til_username"
+        app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+        app:layout_constraintTop_toBottomOf="@+id/editProfile_top"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_username"
+        style="@style/textInputLayoutEditProfileStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/text_career"
+        app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
+        app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+        app:layout_constraintTop_toBottomOf="@+id/text_username">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiet_username"
+            style="@style/textInputEditTextMain"
+            android:textColor="@color/secondary_text_color" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/text_career"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:paddingHorizontal="@dimen/edit_text_padding"
+        android:paddingBottom="@dimen/edit_text_padding"
+        android:text="@string/career"
+        android:textColor="@color/sub_text_color"
+        android:textSize="@dimen/medium_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/til_career"
+        app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+        app:layout_constraintTop_toBottomOf="@+id/til_username" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_career"
+        style="@style/textInputLayoutEditProfileStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/text_phone"
+        app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
+        app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+        app:layout_constraintTop_toBottomOf="@+id/text_career">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiet_career"
+            style="@style/textInputEditTextMain"
+            android:textColor="@color/secondary_text_color" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/text_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:paddingHorizontal="@dimen/edit_text_padding"
+        android:paddingBottom="@dimen/edit_text_padding"
+        android:text="@string/mobile_phone"
+        android:textColor="@color/sub_text_color"
+        android:textSize="@dimen/medium_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/til_phone"
+        app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+        app:layout_constraintTop_toBottomOf="@+id/til_career" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_phone"
+        style="@style/textInputLayoutEditProfileStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/text_address"
+        app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
+        app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+        app:layout_constraintTop_toBottomOf="@+id/text_phone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiet_phone"
+            style="@style/textInputEditTextMain"
+            android:inputType="phone"
+            android:textColor="@color/secondary_text_color" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/text_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:paddingHorizontal="@dimen/edit_text_padding"
+        android:paddingBottom="@dimen/edit_text_padding"
+        android:text="@string/home_address"
+        android:textColor="@color/sub_text_color"
+        android:textSize="@dimen/medium_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/til_address"
+        app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+        app:layout_constraintTop_toBottomOf="@+id/til_phone" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_address"
+        style="@style/textInputLayoutEditProfileStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/text_date"
+        app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
+        app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+        app:layout_constraintTop_toBottomOf="@+id/text_address">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiet_address"
+            style="@style/textInputEditTextMain"
+            android:textColor="@color/secondary_text_color" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/text_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/open_sans"
+        android:paddingHorizontal="@dimen/edit_text_padding"
+        android:paddingBottom="@dimen/edit_text_padding"
+        android:text="@string/date_of_birth"
+        android:textColor="@color/sub_text_color"
+        android:textSize="@dimen/medium_text_size"
+        app:layout_constraintBottom_toTopOf="@+id/til_date"
+        app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+        app:layout_constraintTop_toBottomOf="@+id/til_address" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_date"
+        style="@style/textInputLayoutEditProfileStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/btn_save"
+        app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
+        app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+        app:layout_constraintTop_toBottomOf="@+id/text_date">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiet_date"
+            style="@style/textInputEditTextMain"
+            android:textColor="@color/secondary_text_color"
+            android:inputType="date"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_save"
+        style="@style/bigButton"
+        android:layout_width="0dp"
+        android:backgroundTint="@color/big_button_color"
+        android:text="@string/save"
+        app:layout_constraintBottom_toTopOf="@+id/percent98Horizontal"
+        app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
+        app:layout_constraintStart_toStartOf="@+id/percent4Vertical" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/percent4Vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/percent96Vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/percent1Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.01" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/percent10Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/percent26Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.26" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/percent30Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/percent98Horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.98" />
+
+    <FrameLayout
+        android:id="@+id/editUser_progressWindow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/upper_layout_color_70_percent"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/editUser_progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

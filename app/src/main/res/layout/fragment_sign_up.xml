@@ -214,22 +214,4 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.96" />
-
-    <FrameLayout
-        android:id="@+id/signUp_progressWindow"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/upper_layout_color_70_percent"
-        android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:visibility="invisible">
-
-        <ProgressBar
-            android:id="@+id/signUp_progressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

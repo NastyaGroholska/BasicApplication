@@ -80,11 +80,21 @@
         android:id="@+id/myProfile"
         android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.myProfile.MyProfileFragment"
         android:label="MyProfileFragment"
-        tools:layout="@layout/fragment_contacts_profile">
+        tools:layout="@layout/fragment_my_profile">
         <action
             android:id="@+id/action_myProfile_to_myContacts"
             app:destination="@id/myContacts" />
+        <action
+            android:id="@+id/action_myProfile_to_editProfile"
+            app:destination="@id/editProfile" />
     </fragment>
+
+    <fragment
+        android:id="@+id/editProfile"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.editProfile.EditProfileFragment"
+        android:label="EditProfileFragment"
+        tools:layout="@layout/fragment_edit_profile"/>
+
     <fragment
         android:id="@+id/myContacts"
         android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.MyContactsFragment"

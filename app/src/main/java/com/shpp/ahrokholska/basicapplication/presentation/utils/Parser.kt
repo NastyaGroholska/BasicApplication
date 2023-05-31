@@ -19,4 +19,9 @@ object Parser {
                     }
                 }
     }
+
+    fun getDate(date: String): String {
+        return Validator.DATE_REGEX.substring(0, Validator.DATE_REGEX.length - 1).toRegex()
+            .find(date)?.value ?: ""
+    }
 }

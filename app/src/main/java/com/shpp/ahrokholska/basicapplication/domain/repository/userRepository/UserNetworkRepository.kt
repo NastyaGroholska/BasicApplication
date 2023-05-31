@@ -9,4 +9,9 @@ interface UserNetworkRepository {
     suspend fun createUser(
         email: String, password: String, name: String?, phone: String?
     ): NetworkResponse<User>
+
+    suspend fun editUser(
+        id: Long, accessToken: String, refreshToken: String,
+        name: String, career: String?, phone: String, address: String?, date: String?
+    ): NetworkResponse<User>
 }

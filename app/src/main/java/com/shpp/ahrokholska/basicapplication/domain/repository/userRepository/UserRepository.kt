@@ -27,7 +27,7 @@ class UserRepository @Inject constructor(
         return response
     }
 
-    suspend fun getSavedUser(email: String, password: String): NetworkResponse<User> {
+    suspend fun getUser(email: String, password: String): NetworkResponse<User> {
         val response = networkRepo.authorizeUser(email, password)
         if (response.code == NetworkResponseCode.Success) {
             _user.value = response.data
@@ -47,5 +47,21 @@ class UserRepository @Inject constructor(
             _user.value = response.data
         }
         return response
+    }
+
+    suspend fun editUser(
+        name: String, career: String?, phone: String, address: String?, date: String?
+    ): NetworkResponse<User> {
+        with(_user.value!!) {
+            val response = networkRepo.editUser(
+                id, accessToken, refreshToken,
+                name, career, phone, address, date
+            )
+
+            if (response.code == NetworkResponseCode.Success) {
+                _user.value = response.data
+            }
+            return response
+        }
     }
 }

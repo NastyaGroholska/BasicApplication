@@ -7,6 +7,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface UserNetworkService {
@@ -26,5 +27,14 @@ interface UserNetworkService {
     suspend fun createUser(
         @Field("email") email: String, @Field("password") password: String,
         @Field("name") name: String?, @Field("phone") phone: String?
+    ): ResponseBody
+
+    @FormUrlEncoded
+    @PUT("users/{userId}")
+    suspend fun editUser(
+        @Path("userId") id: Long, @Header("Authorization") tokenHeader: String,
+        @Field("name") name: String, @Field("career") career: String?,
+        @Field("phone") phone: String, @Field("address") address: String?,
+        @Field("birthday") birthday: String?
     ): ResponseBody
 }

@@ -31,5 +31,8 @@ class MyProfileFragment :
         binding.btnViewMyContacts.setOnClickListener {
             navController.navigate(MyProfileFragmentDirections.actionMyProfileToMyContacts())
         }
+        binding.btnEditProfile.setOnClickListener {
+            navController.navigate(MyProfileFragmentDirections.actionMyProfileToEditProfile())
+        }
     }
 }
