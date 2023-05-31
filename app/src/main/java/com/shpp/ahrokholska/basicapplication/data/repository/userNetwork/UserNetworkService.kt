@@ -9,7 +9,7 @@ import retrofit2.http.Path
 
 interface UserNetworkService {
     @POST("login")
-    suspend fun authorizeUser(@Body user: UserCred): ResponseBody
+    suspend fun authorizeUser(@Body user: UserCredentials): ResponseBody
 
     @POST("refresh")
     suspend fun refreshToken(@Header("RefreshToken") token: String): ResponseBody

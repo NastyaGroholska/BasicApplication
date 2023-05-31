@@ -7,6 +7,7 @@ import com.shpp.ahrokholska.basicapplication.domain.repository.userRepository.Us
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,8 +18,8 @@ class WaitingScreenViewModel @Inject constructor(userRepository: UserRepository)
 
     init {
         viewModelScope.launch {
-            while (true) {
-                val response = userRepository.getUser()
+            while (isActive) {
+                val response = userRepository.getSavedUser()
                 if (response == null || response.code == NetworkResponseCode.InputError) {
                     _isAutoLoginEnabled.value = false
                     break

@@ -16,7 +16,7 @@ class UserRepository @Inject constructor(
     private var _user = MutableStateFlow<User?>(null)
     val user: StateFlow<User?> = _user
 
-    suspend fun getUser(): NetworkResponse<User>? {
+    suspend fun getSavedUser(): NetworkResponse<User>? {
         val token = localRepo.savedToken.first()
         val response = if (token.isEmpty()) {
             null
@@ -27,7 +27,7 @@ class UserRepository @Inject constructor(
         return response
     }
 
-    suspend fun getUser(email: String, password: String): NetworkResponse<User> {
+    suspend fun getSavedUser(email: String, password: String): NetworkResponse<User> {
         val response = networkRepo.authorizeUser(email, password)
         if (response.code == NetworkResponseCode.Success) {
             _user.value = response.data

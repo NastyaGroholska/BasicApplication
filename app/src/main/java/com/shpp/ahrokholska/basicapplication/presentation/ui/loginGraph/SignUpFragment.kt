@@ -1,18 +1,15 @@
 package com.shpp.ahrokholska.basicapplication.presentation.ui.loginGraph
 
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentSignUpBinding
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import com.shpp.ahrokholska.basicapplication.presentation.utils.InputHandler
-import com.shpp.ahrokholska.basicapplication.presentation.utils.Parser
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Validator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding::inflate) {
-    private val viewModel: LoginGraphViewModel by hiltNavGraphViewModels(R.id.loginGraph)
 
     override fun setListeners() {
         with(binding) {
@@ -38,13 +35,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
             val isPasswordValid = password.processInput()
 
             if (isEmailValid && isPasswordValid) {
-                val emailText = email.getInputText()
-                val parsedUserName = Parser.getUserName(emailText)
-                /* viewModel.saveIsAutoLoginEnabled(binding.checkRememberMe.isChecked)
-                 viewModel.saveUsername(parsedUserName)*/
                 navController.navigate(
                     SignUpFragmentDirections.actionSignUpToSignUpExtended(
-                        parsedUserName
+                        email.getInputText(), password.getInputText()
                     )
                 )
             } else {

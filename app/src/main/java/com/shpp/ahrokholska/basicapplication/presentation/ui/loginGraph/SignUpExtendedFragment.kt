@@ -6,13 +6,15 @@ import androidx.navigation.fragment.navArgs
 import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentSignUpExtendedBinding
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
+import com.shpp.ahrokholska.basicapplication.presentation.ui.loginGraph.signIn.SignInViewModel
 import com.shpp.ahrokholska.basicapplication.presentation.utils.InputHandler
+import com.shpp.ahrokholska.basicapplication.presentation.utils.Parser
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Validator
 
 
 class SignUpExtendedFragment :
     BaseFragment<FragmentSignUpExtendedBinding>(FragmentSignUpExtendedBinding::inflate) {
-    private val viewModel: LoginGraphViewModel by hiltNavGraphViewModels(R.id.loginGraph)
+    private val viewModel: SignInViewModel by hiltNavGraphViewModels(R.id.loginGraph)
     private val args: SignUpExtendedFragmentArgs by navArgs()
 
     override fun setListeners() {
@@ -35,6 +37,6 @@ class SignUpExtendedFragment :
     }
 
     override fun setObservers() {
-        binding.tietUserName.append(args.userName)
+        binding.tietUserName.append(Parser.getUserName(args.email))
     }
 }

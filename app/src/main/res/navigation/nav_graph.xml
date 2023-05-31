@@ -10,7 +10,7 @@
         app:startDestination="@id/signIn">
         <fragment
             android:id="@+id/signIn"
-            android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.loginGraph.SignInFragment"
+            android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.loginGraph.signIn.SignInFragment"
             android:label="SignInFragment"
             tools:layout="@layout/fragment_sign_in">
             <action
@@ -41,7 +41,10 @@
             android:label="SignUpExtendedFragment"
             tools:layout="@layout/fragment_sign_up_extended">
             <argument
-                android:name="userName"
+                android:name="email"
+                app:argType="string" />
+            <argument
+                android:name="password"
                 app:argType="string" />
             <action
                 android:id="@+id/action_signUp_to_myProfile"

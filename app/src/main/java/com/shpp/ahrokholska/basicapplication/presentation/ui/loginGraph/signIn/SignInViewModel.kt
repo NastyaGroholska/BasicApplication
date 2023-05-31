@@ -1,4 +1,4 @@
-package com.shpp.ahrokholska.basicapplication.presentation.ui.loginGraph
+package com.shpp.ahrokholska.basicapplication.presentation.ui.loginGraph.signIn
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginGraphViewModel @Inject constructor(private val rep: UserRepository) : ViewModel() {
+class SignInViewModel @Inject constructor(private val rep: UserRepository) : ViewModel() {
     private var _networkResponse = MutableSharedFlow<NetworkResponse<User>>()
     val networkResponse: SharedFlow<NetworkResponse<User>> = _networkResponse
     private var isProcessing = false
@@ -23,7 +23,7 @@ class LoginGraphViewModel @Inject constructor(private val rep: UserRepository) :
 
         viewModelScope.launch {
             isProcessing = true
-            _networkResponse.emit(rep.getUser(email, password))
+            _networkResponse.emit(rep.getSavedUser(email, password))
             isProcessing = false
         }
     }
@@ -33,11 +33,9 @@ class LoginGraphViewModel @Inject constructor(private val rep: UserRepository) :
 
         viewModelScope.launch {
             isProcessing = true
-            val response = rep.getUser(email, password)
+            val response = rep.getSavedUser(email, password)
             if (response.code == NetworkResponseCode.Success) {
-                with(response.data) {
-                    rep.saveUser(this?.id ?: 0, this?.refreshToken.orEmpty())
-                }
+                rep.saveUser(response.data.id, response.data.refreshToken)
             }
             _networkResponse.emit(response)
             isProcessing = false

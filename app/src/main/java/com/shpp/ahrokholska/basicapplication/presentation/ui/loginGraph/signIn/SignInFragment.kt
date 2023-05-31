@@ -1,8 +1,8 @@
-package com.shpp.ahrokholska.basicapplication.presentation.ui.loginGraph
+package com.shpp.ahrokholska.basicapplication.presentation.ui.loginGraph.signIn
 
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
@@ -10,6 +10,7 @@ import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentSignInBinding
 import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponseCode
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
+import com.shpp.ahrokholska.basicapplication.presentation.ui.loginGraph.SignInFragmentDirections
 import com.shpp.ahrokholska.basicapplication.presentation.utils.InputHandler
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Validator
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,7 +18,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding::inflate) {
-    private val viewModel: LoginGraphViewModel by hiltNavGraphViewModels(R.id.loginGraph)
+    private val viewModel: SignInViewModel by viewModels()
 
     override fun setListeners() {
         with(binding) {
