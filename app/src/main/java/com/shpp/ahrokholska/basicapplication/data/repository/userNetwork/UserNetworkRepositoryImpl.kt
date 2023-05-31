@@ -52,6 +52,33 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
             }
         }
 
+    override suspend fun createUser(
+        email: String, password: String, name: String?, phone: String?
+    ) = withContext(Dispatchers.IO) {
+        val body: String
+        try {
+            body = service.createUser(email, password, name, phone).string()
+        } catch (e: Exception) {
+            val code = processError(e)
+            return@withContext NetworkResponse<User>(code, User())
+        }
+
+        val con = parseBody<ResponseUserPlusToken>(body)
+        NetworkResponse(
+            NetworkResponseCode.Success,
+            User(
+                con.data.user.id,
+                con.data.user.name,
+                con.data.user.career,
+                con.data.user.phone,
+                con.data.user.address,
+                con.data.user.birthday,
+                con.data.accessToken,
+                con.data.refreshToken
+            )
+        )
+    }
+
     private suspend fun getUserByAccessToken(
         id: Long, accessToken: String, refreshToken: String
     ): NetworkResponse<User> =

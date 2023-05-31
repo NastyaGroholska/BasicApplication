@@ -10,7 +10,6 @@ import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentSignInBinding
 import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponseCode
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
-import com.shpp.ahrokholska.basicapplication.presentation.ui.loginGraph.SignInFragmentDirections
 import com.shpp.ahrokholska.basicapplication.presentation.utils.InputHandler
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Validator
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,7 +38,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
                 val isPasswordValid = password.processInput()
 
                 if (isEmailValid && isPasswordValid) {
-                    sendAuthRequest(email.getInputText(), password.getInputText())
+                    sendAuthRequest()
                 } else {
                     Snackbar.make(it, R.string.signup_error, Snackbar.LENGTH_SHORT)
                         .setAnchorView(it).show()
@@ -59,17 +58,15 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
                         )
 
                         NetworkResponseCode.NetworkError -> {
-                            AlertDialog.Builder(root.context.applicationContext)
+                            AlertDialog.Builder(root.context)
                                 .setMessage(getString(R.string.network_error))
                                 .setPositiveButton(getString(R.string.retry)) { _, _ ->
-                                    sendAuthRequest(
-                                        tietEmail.text.toString(), tietPassword.text.toString()
-                                    )
+                                    sendAuthRequest()
                                 }.create().show()
                         }
 
                         NetworkResponseCode.InputError -> {
-                            AlertDialog.Builder(root.context.applicationContext)
+                            AlertDialog.Builder(root.context)
                                 .setMessage(getString(R.string.sign_in_email_error)).create().show()
                         }
                     }
@@ -78,12 +75,16 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
         }
     }
 
-    private fun sendAuthRequest(email: String, password: String) {
-        binding.signInProgressWindow.visibility = View.VISIBLE
-        if (binding.checkRememberMe.isChecked) {
-            viewModel.authorizeAndSaveUser(email, password)
-        } else {
-            viewModel.authorizeUser(email, password)
+    private fun sendAuthRequest() {
+        with(binding) {
+            signInProgressWindow.visibility = View.VISIBLE
+            if (checkRememberMe.isChecked) {
+                viewModel.authorizeAndSaveUser(
+                    tietEmail.text.toString(), tietPassword.text.toString()
+                )
+            } else {
+                viewModel.authorizeUser(tietEmail.text.toString(), tietPassword.text.toString())
+            }
         }
     }
 }

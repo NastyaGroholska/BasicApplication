@@ -50,4 +50,5 @@
     <string name="sign_in_email_error">Неправильна адреса електронної пошти або пароль. Перевірте введені дані та повторіть спробу</string>
     <string name="network_error">Щось пішло не так</string>
     <string name="retry">Повторити спробу</string>
+    <string name="sign_up_error">Цей користувач вже існує</string>
 </resources>

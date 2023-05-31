@@ -38,4 +38,14 @@ class UserRepository @Inject constructor(
     suspend fun saveUser(id: Long, refreshToken: String) {
         localRepo.saveUser(id, refreshToken)
     }
+
+    suspend fun createUser(
+        email: String, password: String, name: String?, phone: String?
+    ): NetworkResponse<User> {
+        val response = networkRepo.createUser(email, password, name, phone)
+        if (response.code == NetworkResponseCode.Success) {
+            _user.value = response.data
+        }
+        return response
+    }
 }

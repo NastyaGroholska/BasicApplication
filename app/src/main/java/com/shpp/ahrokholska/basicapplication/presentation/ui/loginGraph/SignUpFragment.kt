@@ -6,9 +6,7 @@ import com.shpp.ahrokholska.basicapplication.databinding.FragmentSignUpBinding
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import com.shpp.ahrokholska.basicapplication.presentation.utils.InputHandler
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Validator
-import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding::inflate) {
 
     override fun setListeners() {
@@ -37,7 +35,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
             if (isEmailValid && isPasswordValid) {
                 navController.navigate(
                     SignUpFragmentDirections.actionSignUpToSignUpExtended(
-                        email.getInputText(), password.getInputText()
+                        email.getInputText(), password.getInputText(),
+                        binding.checkRememberMe.isChecked
                     )
                 )
             } else {

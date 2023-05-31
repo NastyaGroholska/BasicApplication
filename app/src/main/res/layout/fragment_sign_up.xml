@@ -105,7 +105,6 @@
         android:text="@string/remember_me"
         android:textColor="@color/main_text_color"
         android:textSize="@dimen/medium_text_size"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
         app:layout_constraintTop_toBottomOf="@+id/til_password" />

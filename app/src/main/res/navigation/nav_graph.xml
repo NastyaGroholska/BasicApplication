@@ -37,7 +37,7 @@
 
         <fragment
             android:id="@+id/signUpExtended"
-            android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.loginGraph.SignUpExtendedFragment"
+            android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.loginGraph.signUpExtended.SignUpExtendedFragment"
             android:label="SignUpExtendedFragment"
             tools:layout="@layout/fragment_sign_up_extended">
             <argument
@@ -46,6 +46,9 @@
             <argument
                 android:name="password"
                 app:argType="string" />
+            <argument
+                android:name="rememberMe"
+                app:argType="boolean" />
             <action
                 android:id="@+id/action_signUp_to_myProfile"
                 app:destination="@id/myProfile"
