@@ -14,6 +14,9 @@ import javax.inject.Inject
 
 class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNetworkService) :
     UserNetworkRepository {
+    private var cachedUser: User? = null
+
+    override fun getCachedUser(): User? = cachedUser
 
     override suspend fun authorizeUser(email: String, password: String): NetworkResponse<User> =
         withContext(Dispatchers.IO) {
@@ -26,19 +29,18 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
             }
 
             val con = parseBody<ResponseUserPlusToken>(body)
-            NetworkResponse(
-                NetworkResponseCode.Success,
-                User(
-                    con.data.user.id,
-                    con.data.user.name,
-                    con.data.user.career,
-                    con.data.user.phone,
-                    con.data.user.address,
-                    con.data.user.birthday,
-                    con.data.accessToken,
-                    con.data.refreshToken
-                )
+            val user = User(
+                con.data.user.id,
+                con.data.user.name,
+                con.data.user.career,
+                con.data.user.phone,
+                con.data.user.address,
+                con.data.user.birthday,
+                con.data.accessToken,
+                con.data.refreshToken
             )
+            cachedUser = user
+            NetworkResponse(NetworkResponseCode.Success, user)
         }
 
     override suspend fun getUser(id: Long, refreshToken: String): NetworkResponse<User> =
@@ -48,7 +50,11 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
                 return@withContext NetworkResponse<User>(tokenResponse.code, User())
             }
             with(tokenResponse.data) {
-                getUserByAccessToken(id, accessToken, this.refreshToken)
+                val response = getUserByAccessToken(id, accessToken, this.refreshToken)
+                if (response.code == NetworkResponseCode.Success) {
+                    cachedUser = response.data
+                }
+                response
             }
         }
 
@@ -64,19 +70,18 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
         }
 
         val con = parseBody<ResponseUserPlusToken>(body)
-        NetworkResponse(
-            NetworkResponseCode.Success,
-            User(
-                con.data.user.id,
-                con.data.user.name,
-                con.data.user.career,
-                con.data.user.phone,
-                con.data.user.address,
-                con.data.user.birthday,
-                con.data.accessToken,
-                con.data.refreshToken
-            )
+        val user = User(
+            con.data.user.id,
+            con.data.user.name,
+            con.data.user.career,
+            con.data.user.phone,
+            con.data.user.address,
+            con.data.user.birthday,
+            con.data.accessToken,
+            con.data.refreshToken
         )
+        cachedUser = user
+        NetworkResponse(NetworkResponseCode.Success, user)
     }
 
     override suspend fun editUser(
@@ -95,19 +100,18 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
         }
 
         val con = parseBody<ResponseUser>(body)
-        NetworkResponse(
-            NetworkResponseCode.Success,
-            User(
-                con.data.user.id,
-                con.data.user.name,
-                con.data.user.career,
-                con.data.user.phone,
-                con.data.user.address,
-                con.data.user.birthday,
-                accessToken,
-                refreshToken
-            )
+        val user = User(
+            con.data.user.id,
+            con.data.user.name,
+            con.data.user.career,
+            con.data.user.phone,
+            con.data.user.address,
+            con.data.user.birthday,
+            accessToken,
+            refreshToken
         )
+        cachedUser = user
+        NetworkResponse(NetworkResponseCode.Success, user)
     }
 
     private suspend fun getUserByAccessToken(

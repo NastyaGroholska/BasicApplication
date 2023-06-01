@@ -5,7 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
 import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponseCode
 import com.shpp.ahrokholska.basicapplication.domain.model.User
-import com.shpp.ahrokholska.basicapplication.domain.repository.userRepository.UserRepository
+import com.shpp.ahrokholska.basicapplication.domain.useCases.AuthorizeUserUseCase
+import com.shpp.ahrokholska.basicapplication.domain.useCases.SaveUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -13,7 +14,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignInViewModel @Inject constructor(private val rep: UserRepository) : ViewModel() {
+class SignInViewModel @Inject constructor(
+    private val authorizeUserUseCase: AuthorizeUserUseCase,
+    private val saveUserUseCase: SaveUserUseCase
+) :
+    ViewModel() {
     private var _networkResponse = MutableSharedFlow<NetworkResponse<User>>()
     val networkResponse: SharedFlow<NetworkResponse<User>> = _networkResponse
     private var isProcessing = false
@@ -23,7 +28,7 @@ class SignInViewModel @Inject constructor(private val rep: UserRepository) : Vie
 
         viewModelScope.launch {
             isProcessing = true
-            _networkResponse.emit(rep.getUser(email, password))
+            _networkResponse.emit(authorizeUserUseCase(email, password))
             isProcessing = false
         }
     }
@@ -33,9 +38,9 @@ class SignInViewModel @Inject constructor(private val rep: UserRepository) : Vie
 
         viewModelScope.launch {
             isProcessing = true
-            val response = rep.getUser(email, password)
+            val response = authorizeUserUseCase(email, password)
             if (response.code == NetworkResponseCode.Success) {
-                rep.saveUser(response.data.id, response.data.refreshToken)
+                saveUserUseCase(response.data.id, response.data.refreshToken)
             }
             _networkResponse.emit(response)
             isProcessing = false

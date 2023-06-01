@@ -4,6 +4,7 @@ import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
 import com.shpp.ahrokholska.basicapplication.domain.model.User
 
 interface UserNetworkRepository {
+    fun getCachedUser():User?
     suspend fun authorizeUser(email: String, password: String): NetworkResponse<User>
     suspend fun getUser(id: Long, refreshToken: String): NetworkResponse<User>
     suspend fun createUser(
