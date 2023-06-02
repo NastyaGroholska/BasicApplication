@@ -2,7 +2,8 @@ package com.shpp.ahrokholska.basicapplication.presentation.ui.waitingScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponseCode
+import com.shpp.ahrokholska.basicapplication.domain.model.InputErrorNetworkResponse
+import com.shpp.ahrokholska.basicapplication.domain.model.SuccessNetworkResponse
 import com.shpp.ahrokholska.basicapplication.domain.useCases.GetSavedUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,12 +22,12 @@ class WaitingScreenViewModel @Inject constructor(getSavedUserUseCase: GetSavedUs
         viewModelScope.launch {
             while (isActive) {
                 val response = getSavedUserUseCase()
-                if (response == null || response.code == NetworkResponseCode.InputError) {
+                if (response == null || response is InputErrorNetworkResponse) {
                     _isAutoLoginEnabled.value = false
                     break
                 }
 
-                if (response.code == NetworkResponseCode.Success) {
+                if (response is SuccessNetworkResponse) {
                     _isAutoLoginEnabled.value = true
                     break
                 }

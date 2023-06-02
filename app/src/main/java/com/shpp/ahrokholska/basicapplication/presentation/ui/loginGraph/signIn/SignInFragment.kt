@@ -8,7 +8,9 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentSignInBinding
-import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponseCode
+import com.shpp.ahrokholska.basicapplication.domain.model.InputErrorNetworkResponse
+import com.shpp.ahrokholska.basicapplication.domain.model.NetworkErrorNetworkResponse
+import com.shpp.ahrokholska.basicapplication.domain.model.SuccessNetworkResponse
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import com.shpp.ahrokholska.basicapplication.presentation.utils.InputHandler
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Validator
@@ -52,12 +54,12 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
             viewModel.networkResponse.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
                 with(binding) {
                     signInProgressWindow.visibility = View.INVISIBLE
-                    when (it.code) {
-                        NetworkResponseCode.Success -> navController.navigate(
+                    when (it) {
+                        is SuccessNetworkResponse -> navController.navigate(
                             SignInFragmentDirections.actionSignInToMyProfile()
                         )
 
-                        NetworkResponseCode.NetworkError -> {
+                        is NetworkErrorNetworkResponse -> {
                             AlertDialog.Builder(root.context)
                                 .setMessage(getString(R.string.network_error))
                                 .setPositiveButton(getString(R.string.retry)) { _, _ ->
@@ -65,7 +67,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
                                 }.create().show()
                         }
 
-                        NetworkResponseCode.InputError -> {
+                        is InputErrorNetworkResponse -> {
                             AlertDialog.Builder(root.context)
                                 .setMessage(getString(R.string.sign_in_email_error)).create().show()
                         }

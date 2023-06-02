@@ -11,7 +11,9 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentSignUpExtendedBinding
-import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponseCode
+import com.shpp.ahrokholska.basicapplication.domain.model.InputErrorNetworkResponse
+import com.shpp.ahrokholska.basicapplication.domain.model.NetworkErrorNetworkResponse
+import com.shpp.ahrokholska.basicapplication.domain.model.SuccessNetworkResponse
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import com.shpp.ahrokholska.basicapplication.presentation.utils.InputHandler
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Parser
@@ -68,12 +70,12 @@ class SignUpExtendedFragment :
             viewModel.networkResponse.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
                 with(binding) {
                     setLoading(false)
-                    when (it.code) {
-                        NetworkResponseCode.Success -> navController.navigate(
+                    when (it) {
+                        is SuccessNetworkResponse -> navController.navigate(
                             SignUpExtendedFragmentDirections.actionSignUpToMyProfile()
                         )
 
-                        NetworkResponseCode.NetworkError -> {
+                        is NetworkErrorNetworkResponse -> {
                             AlertDialog.Builder(root.context)
                                 .setMessage(getString(R.string.network_error))
                                 .setPositiveButton(getString(R.string.retry)) { _, _ ->
@@ -81,7 +83,7 @@ class SignUpExtendedFragment :
                                 }.create().show()
                         }
 
-                        NetworkResponseCode.InputError -> {
+                        is InputErrorNetworkResponse -> {
                             AlertDialog.Builder(root.context)
                                 .setMessage(getString(R.string.sign_up_error)).create().show()
                         }

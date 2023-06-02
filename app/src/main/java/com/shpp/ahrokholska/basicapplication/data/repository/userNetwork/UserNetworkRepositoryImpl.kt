@@ -3,8 +3,10 @@ package com.shpp.ahrokholska.basicapplication.data.repository.userNetwork
 import com.google.gson.Gson
 import com.shpp.ahrokholska.basicapplication.data.utils.Constants.AUTHORIZATION_HEADER
 import com.shpp.ahrokholska.basicapplication.data.utils.Constants.RESPONSE_ERRORS
+import com.shpp.ahrokholska.basicapplication.domain.model.InputErrorNetworkResponse
+import com.shpp.ahrokholska.basicapplication.domain.model.NetworkErrorNetworkResponse
 import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
-import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponseCode
+import com.shpp.ahrokholska.basicapplication.domain.model.SuccessNetworkResponse
 import com.shpp.ahrokholska.basicapplication.domain.model.User
 import com.shpp.ahrokholska.basicapplication.domain.repository.userRepository.UserNetworkRepository
 import kotlinx.coroutines.CancellationException
@@ -24,8 +26,7 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
             try {
                 body = service.authorizeUser(UserCredentials(email, password)).string()
             } catch (e: Exception) {
-                val code = processError(e)
-                return@withContext NetworkResponse<User>(code, User())
+                return@withContext processError(e)
             }
 
             val con = parseBody<ResponseUserPlusToken>(body)
@@ -40,21 +41,23 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
                 con.data.refreshToken
             )
             cachedUser = user
-            NetworkResponse(NetworkResponseCode.Success, user)
+            SuccessNetworkResponse(user)
         }
 
     override suspend fun getUser(id: Long, refreshToken: String): NetworkResponse<User> =
         withContext(Dispatchers.IO) {
-            val tokenResponse = refreshToken(refreshToken)
-            if (tokenResponse.code != NetworkResponseCode.Success) {
-                return@withContext NetworkResponse<User>(tokenResponse.code, User())
-            }
-            with(tokenResponse.data) {
-                val response = getUserByAccessToken(id, accessToken, this.refreshToken)
-                if (response.code == NetworkResponseCode.Success) {
-                    cachedUser = response.data
+            when (val tokenResponse = refreshToken(refreshToken)) {
+                is NetworkErrorNetworkResponse -> NetworkErrorNetworkResponse()
+                is InputErrorNetworkResponse -> InputErrorNetworkResponse()
+                is SuccessNetworkResponse -> {
+                    with(tokenResponse.data) {
+                        val response = getUserByAccessToken(id, accessToken, this.refreshToken)
+                        if (response is SuccessNetworkResponse<User>) {
+                            cachedUser = response.data
+                        }
+                        response
+                    }
                 }
-                response
             }
         }
 
@@ -65,8 +68,7 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
         try {
             body = service.createUser(email, password, name, phone).string()
         } catch (e: Exception) {
-            val code = processError(e)
-            return@withContext NetworkResponse<User>(code, User())
+            return@withContext processError<User>(e)
         }
 
         val con = parseBody<ResponseUserPlusToken>(body)
@@ -81,7 +83,7 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
             con.data.refreshToken
         )
         cachedUser = user
-        NetworkResponse(NetworkResponseCode.Success, user)
+        SuccessNetworkResponse(user)
     }
 
     override suspend fun editUser(
@@ -95,8 +97,7 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
                 name, career, phone, address, date
             ).string()
         } catch (e: Exception) {
-            val code = processError(e)
-            return@withContext NetworkResponse<User>(code, User())
+            return@withContext processError<User>(e)
         }
 
         val con = parseBody<ResponseUser>(body)
@@ -111,7 +112,7 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
             refreshToken
         )
         cachedUser = user
-        NetworkResponse(NetworkResponseCode.Success, user)
+        SuccessNetworkResponse(user)
     }
 
     private suspend fun getUserByAccessToken(
@@ -122,14 +123,12 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
             try {
                 body = service.getUser(id, AUTHORIZATION_HEADER + accessToken).string()
             } catch (e: Exception) {
-                val code = processError(e)
-                return@withContext NetworkResponse<User>(code, User())
+                return@withContext processError<User>(e)
             }
 
             val con = parseBody<ResponseUser>(body)
             with(con.data.user) {
-                NetworkResponse(
-                    NetworkResponseCode.Success,
+                SuccessNetworkResponse(
                     User(
                         this.id, name, career, phone, address, birthday, accessToken, refreshToken
                     )
@@ -137,23 +136,17 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
             }
         }
 
-    private suspend fun refreshToken(refreshToken: String) =
+    private suspend fun refreshToken(refreshToken: String): NetworkResponse<DataResponseTokens> =
         withContext(Dispatchers.IO) {
             val body: String
             try {
                 body = service.refreshToken(refreshToken).string()
             } catch (e: Exception) {
-                val code = processError(e)
-                return@withContext NetworkResponse<DataResponseTokens>(
-                    code, DataResponseTokens("", "")
-                )
+                return@withContext processError<DataResponseTokens>(e)
             }
 
             val con = parseBody<ResponseTokens>(body)
-            NetworkResponse(
-                NetworkResponseCode.Success,
-                DataResponseTokens(con.data.accessToken, con.data.refreshToken)
-            )
+            SuccessNetworkResponse(DataResponseTokens(con.data.accessToken, con.data.refreshToken))
         }
 
     private inline fun <reified T> parseBody(body: String): T {
@@ -166,20 +159,20 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
         return Gson().fromJson(newBody, T::class.java)
     }
 
-    private fun processError(exception: Exception): NetworkResponseCode {
+    private fun <T> processError(exception: Exception): NetworkResponse<T> {
         return when (exception) {
             is CancellationException -> throw exception
 
             is retrofit2.HttpException -> {
                 if (RESPONSE_ERRORS.values().any { it.code == exception.code() }) {
-                    NetworkResponseCode.InputError
+                    InputErrorNetworkResponse()
                 } else {
-                    NetworkResponseCode.NetworkError
+                    NetworkErrorNetworkResponse()
                 }
             }
 
             else -> {
-                NetworkResponseCode.NetworkError
+                NetworkErrorNetworkResponse()
             }
         }
     }
