@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MyProfileViewModel @Inject constructor(getCachedUserUseCase: GetCachedUserUseCase) :
+class MyProfileViewModel @Inject constructor(private val getCachedUserUseCase: GetCachedUserUseCase) :
     ViewModel() {
-    val userName: User = getCachedUserUseCase()
+    val userName: User get() = getCachedUserUseCase()
 }
