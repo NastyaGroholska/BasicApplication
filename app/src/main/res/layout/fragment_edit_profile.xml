@@ -38,8 +38,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/back"
+        android:padding="@dimen/arrow_ic_padding"
         app:layout_constraintBottom_toBottomOf="@+id/text_edit_profile"
-        app:layout_constraintStart_toStartOf="@id/percent4Vertical"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_edit_profile"
         app:srcCompat="@drawable/ic_arrow_back" />
 
@@ -204,8 +205,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_date"
             style="@style/textInputEditTextMain"
-            android:textColor="@color/secondary_text_color"
-            android:inputType="date"/>
+            android:inputType="date"
+            android:textColor="@color/secondary_text_color" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton

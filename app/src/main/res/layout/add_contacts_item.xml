@@ -66,6 +66,7 @@
         android:id="@+id/contacts_text_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         android:text="@string/error_occurred"
         app:layout_constraintBottom_toTopOf="@+id/contacts_image_plus"
         app:layout_constraintEnd_toEndOf="@id/contacts_percent96Vertical" />

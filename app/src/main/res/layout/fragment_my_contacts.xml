@@ -47,9 +47,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/back"
+            android:padding="@dimen/arrow_ic_padding"
             app:layout_constraintBottom_toBottomOf="@+id/myContacts_text_contacts"
-            app:layout_constraintStart_toStartOf="@id/percent4Vertical"
-            app:layout_constraintTop_toTopOf="@+id/percent1Horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/myContacts_text_contacts"
             app:srcCompat="@drawable/ic_arrow_back" />
 
         <ImageView
