@@ -1,6 +1,5 @@
 package com.shpp.ahrokholska.basicapplication.presentation.ui.loginGraph.signIn
 
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -14,6 +13,8 @@ import com.shpp.ahrokholska.basicapplication.domain.model.SuccessNetworkResponse
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import com.shpp.ahrokholska.basicapplication.presentation.utils.InputHandler
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Validator
+import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.invisible
+import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -53,7 +54,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.networkResponse.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
                 with(binding) {
-                    signInProgressWindow.visibility = View.INVISIBLE
+                    signInProgressWindow.invisible()
                     when (it) {
                         is SuccessNetworkResponse -> navController.navigate(
                             SignInFragmentDirections.actionSignInToMyProfile()
@@ -79,7 +80,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
 
     private fun sendAuthRequest() {
         with(binding) {
-            signInProgressWindow.visibility = View.VISIBLE
+            signInProgressWindow.visible()
             if (checkRememberMe.isChecked) {
                 viewModel.authorizeAndSaveUser(
                     tietEmail.text.toString(), tietPassword.text.toString()

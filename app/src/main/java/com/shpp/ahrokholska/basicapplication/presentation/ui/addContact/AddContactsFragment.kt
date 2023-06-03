@@ -12,6 +12,8 @@ import com.shpp.ahrokholska.basicapplication.databinding.FragmentAddContactsBind
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import com.shpp.ahrokholska.basicapplication.presentation.ui.addContact.adapter.AddContactsAdapter
 import com.shpp.ahrokholska.basicapplication.presentation.utils.VerticalSpaceItemDecoration
+import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.invisible
+import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -28,7 +30,7 @@ class AddContactsFragment :
             if (!viewModel.isLoading) {
                 navController.navigateUp()
             } else {
-                binding.addContactsProgressWindow.visibility = View.VISIBLE
+                binding.addContactsProgressWindow.visible()
                 viewLifecycleOwner.lifecycleScope.launch {
                     viewModel.finishedAll.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
                         if (it) {
@@ -53,12 +55,12 @@ class AddContactsFragment :
     }
 
     override fun setObservers() {
-        binding.addContactsProgressBar.visibility = View.VISIBLE
+        binding.addContactsProgressBar.visible()
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.contacts.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { list ->
                 list?.let {
                     addContactsAdapter.submitList(list)
-                    binding.addContactsProgressBar.visibility = View.INVISIBLE
+                    binding.addContactsProgressBar.invisible()
 
                     viewModel.states.forEachIndexed { i: Int, stateFlow: StateFlow<State> ->
                         launch {

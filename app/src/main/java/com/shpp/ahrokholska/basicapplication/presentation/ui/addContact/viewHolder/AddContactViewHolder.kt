@@ -1,12 +1,13 @@
 package com.shpp.ahrokholska.basicapplication.presentation.ui.addContact.viewHolder
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.shpp.ahrokholska.basicapplication.databinding.AddContactsItemBinding
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
 import com.shpp.ahrokholska.basicapplication.presentation.ui.addContact.State
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants
+import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.gone
 import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.loadFromURL
+import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.visible
 
 class AddContactViewHolder(
     private val binding: AddContactsItemBinding,
@@ -37,31 +38,31 @@ class AddContactViewHolder(
         with(binding) {
             when (state) {
                 State.Normal -> {
-                    contactsImagePlus.visibility = View.VISIBLE
-                    contactsProgressBar.visibility = View.GONE
-                    contactsImageFinish.visibility = View.GONE
-                    contactsTextError.visibility = View.GONE
+                    contactsImagePlus.visible()
+                    contactsProgressBar.gone()
+                    contactsImageFinish.gone()
+                    contactsTextError.gone()
                 }
 
                 State.Loading -> {
-                    contactsImagePlus.visibility = View.GONE
-                    contactsProgressBar.visibility = View.VISIBLE
-                    contactsImageFinish.visibility = View.GONE
-                    contactsTextError.visibility = View.GONE
+                    contactsImagePlus.gone()
+                    contactsProgressBar.visible()
+                    contactsImageFinish.gone()
+                    contactsTextError.gone()
                 }
 
                 State.Loaded -> {
-                    contactsImagePlus.visibility = View.GONE
-                    contactsProgressBar.visibility = View.GONE
-                    contactsImageFinish.visibility = View.VISIBLE
-                    contactsTextError.visibility = View.GONE
+                    contactsImagePlus.gone()
+                    contactsProgressBar.gone()
+                    contactsImageFinish.visible()
+                    contactsTextError.gone()
                 }
 
                 State.Failed -> {
-                    contactsImagePlus.visibility = View.VISIBLE
-                    contactsProgressBar.visibility = View.GONE
-                    contactsImageFinish.visibility = View.GONE
-                    contactsTextError.visibility = View.VISIBLE
+                    contactsImagePlus.visible()
+                    contactsProgressBar.gone()
+                    contactsImageFinish.gone()
+                    contactsTextError.visible()
                 }
             }
         }

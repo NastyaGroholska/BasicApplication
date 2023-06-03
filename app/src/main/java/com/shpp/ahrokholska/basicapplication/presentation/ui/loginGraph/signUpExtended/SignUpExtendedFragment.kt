@@ -1,7 +1,6 @@
 package com.shpp.ahrokholska.basicapplication.presentation.ui.loginGraph.signUpExtended
 
 import android.telephony.PhoneNumberFormattingTextWatcher
-import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
@@ -18,6 +17,8 @@ import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import com.shpp.ahrokholska.basicapplication.presentation.utils.InputHandler
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Parser
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Validator
+import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.invisible
+import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -112,10 +113,10 @@ class SignUpExtendedFragment :
 
     private fun setLoading(isStarted: Boolean) {
         if (isStarted) {
-            binding.signUpExtendedProgressWindow.visibility = View.VISIBLE
+            binding.signUpExtendedProgressWindow.visible()
             requireActivity().onBackPressedDispatcher.addCallback(this, callback)
         } else {
-            binding.signUpExtendedProgressWindow.visibility = View.INVISIBLE
+            binding.signUpExtendedProgressWindow.invisible()
             callback.remove()
         }
     }

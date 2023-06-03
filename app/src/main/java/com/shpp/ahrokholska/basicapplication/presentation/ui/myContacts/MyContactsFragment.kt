@@ -20,6 +20,9 @@ import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.interfac
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.viewHolders.ContactsNormalViewHolder
 import com.shpp.ahrokholska.basicapplication.presentation.utils.VerticalSpaceItemDecoration
 import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.enableHorizontalSwipe
+import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.gone
+import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.invisible
+import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -121,19 +124,23 @@ class MyContactsFragment :
     }
 
     override fun setObservers() {
-        binding.contactsProgressBar.visibility = View.VISIBLE
+        binding.contactsProgressBar.visible()
         viewModel.updateContacts()
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.contacts.collect { list ->
                         contactsAdapter.submitList(list)
-                        binding.contactsProgressBar.visibility = View.INVISIBLE
+                        binding.contactsProgressBar.invisible()
                     }
                 }
                 launch {
                     viewModel.multiselectState.collect {
-                        binding.myContactsBinBtn.visibility = if (it) View.VISIBLE else View.GONE
+                        if (it){
+                            binding.myContactsBinBtn.visible()
+                        }else{
+                            binding.myContactsBinBtn.gone()
+                        }
                         contactsAdapter.changeMultiselectState(it)
                     }
                 }
@@ -155,7 +162,7 @@ class MyContactsFragment :
         }
         binding.myContactsBinBtn.setOnClickListener {
             deleteMultipleRVItems(contactsAdapter.deleteMultiselectItems())
-            it.visibility = View.GONE
+            it.gone()
         }
     }
 
