@@ -1,5 +1,6 @@
 package com.shpp.ahrokholska.basicapplication.presentation.ui.addContact.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -11,7 +12,7 @@ import com.shpp.ahrokholska.basicapplication.presentation.utils.ContactsDiffCall
 
 class AddContactsAdapter(private val onAdd: (Int, Long) -> Unit) :
     ListAdapter<Contact, AddContactViewHolder>(ContactsDiffCallback()) {
-    private lateinit var states: Array<State>
+    private var states: Array<State> = emptyArray()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddContactViewHolder {
         return AddContactViewHolder(
@@ -29,8 +30,18 @@ class AddContactsAdapter(private val onAdd: (Int, Long) -> Unit) :
         holder.bindTo(getItem(position), states[position])
     }
 
-    fun setStateAtPosition(pos: Int, state: State) {
-        states[pos] = state
-        notifyItemChanged(pos)
+    @SuppressLint("NotifyDataSetChanged")
+    fun setStates(states: Array<State>) {
+        if (this.states.size != states.size) {
+            this.states = states
+            notifyDataSetChanged()
+            return
+        }
+        states.forEachIndexed { index, state ->
+            if (this.states[index] != states[index]) {
+                this.states[index] = state
+                notifyItemChanged(index)
+            }
+        }
     }
 }

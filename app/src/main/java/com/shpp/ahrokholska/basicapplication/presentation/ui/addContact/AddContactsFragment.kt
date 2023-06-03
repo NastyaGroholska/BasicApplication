@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentAddContactsBinding
@@ -15,7 +17,6 @@ import com.shpp.ahrokholska.basicapplication.presentation.utils.VerticalSpaceIte
 import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.invisible
 import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.visible
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -57,17 +58,18 @@ class AddContactsFragment :
     override fun setObservers() {
         binding.addContactsProgressBar.visible()
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.contacts.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect { list ->
-                list?.let {
-                    addContactsAdapter.submitList(list)
-                    binding.addContactsProgressBar.invisible()
-
-                    viewModel.states.forEachIndexed { i: Int, stateFlow: StateFlow<State> ->
-                        launch {
-                            stateFlow.collect {
-                                addContactsAdapter.setStateAtPosition(i, it)
-                            }
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.contacts.collect { list ->
+                        list?.let {
+                            addContactsAdapter.submitList(list)
+                            binding.addContactsProgressBar.invisible()
                         }
+                    }
+                }
+                launch {
+                    viewModel.states.collect {
+                        addContactsAdapter.setStates(it)
                     }
                 }
             }

@@ -10,6 +10,7 @@ import com.shpp.ahrokholska.basicapplication.domain.useCases.GetPossibleContacts
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicInteger
@@ -25,9 +26,8 @@ class AddContactViewModel @Inject constructor(
     private val user get() = getCachedUserUseCase()
     private var _contacts = MutableStateFlow<List<Contact>?>(null)
     val contacts: StateFlow<List<Contact>?> = _contacts
-    private lateinit var _states: Array<MutableStateFlow<State>>
-    lateinit var states: Array<StateFlow<State>>
-        private set
+    private var _states: MutableStateFlow<Array<State>> = MutableStateFlow(emptyArray())
+    val states: StateFlow<Array<State>> = _states
     private var _finishedAll = MutableStateFlow(true)
     val finishedAll: StateFlow<Boolean> = _finishedAll
     private var numberOfCoroutines = AtomicInteger()
@@ -40,8 +40,7 @@ class AddContactViewModel @Inject constructor(
             while (isActive) {
                 val contacts = getPossibleContactsUseCase(user.id, user.accessToken)
                 if (contacts is SuccessNetworkResponse) {
-                    _states = Array(contacts.data.size) { MutableStateFlow(State.Normal) }
-                    states = Array(contacts.data.size) { _states[it] }
+                    _states.value = Array(contacts.data.size) { State.Normal }
                     _contacts.value = contacts.data
                     break
                 }
@@ -53,12 +52,12 @@ class AddContactViewModel @Inject constructor(
         numberOfCoroutines.getAndIncrement()
         viewModelScope.launch {
             _finishedAll.emit(false)
-            _states[contactPos].emit(State.Loading)
+            _states.update { it.copyOf().apply { this[contactPos] = State.Loading } }
 
             if (addContactUseCase(user.id, user.accessToken, contactId) is SuccessNetworkResponse) {
-                _states[contactPos].emit(State.Loaded)
+                _states.update { it.copyOf().apply { this[contactPos] = State.Loaded } }
             } else {
-                _states[contactPos].emit(State.Failed)
+                _states.update { it.copyOf().apply { this[contactPos] = State.Failed } }
             }
 
             if (numberOfCoroutines.decrementAndGet() == 0) {
