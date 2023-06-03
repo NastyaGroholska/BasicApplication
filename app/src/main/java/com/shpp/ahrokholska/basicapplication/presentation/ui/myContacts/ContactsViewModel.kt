@@ -3,27 +3,56 @@ package com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
-import com.shpp.ahrokholska.basicapplication.domain.repository.contactsRepository.ContactsRepository
+import com.shpp.ahrokholska.basicapplication.domain.model.SuccessNetworkResponse
+import com.shpp.ahrokholska.basicapplication.domain.useCases.AddContactUseCase
+import com.shpp.ahrokholska.basicapplication.domain.useCases.DeleteContactUseCase
+import com.shpp.ahrokholska.basicapplication.domain.useCases.GetCachedUserUseCase
+import com.shpp.ahrokholska.basicapplication.domain.useCases.GetContactsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ContactsViewModel @Inject constructor(private val contactsRepository: ContactsRepository) :
-    ViewModel() {
-    val contacts: StateFlow<List<Contact>> = contactsRepository.contacts
+class ContactsViewModel @Inject constructor(
+    private val getContactsUseCase: GetContactsUseCase,
+    private val deleteContactUseCase: DeleteContactUseCase,
+    private val addContactUseCase: AddContactUseCase,
+    getCachedUserUseCase: GetCachedUserUseCase
+) : ViewModel() {
+    private val user = getCachedUserUseCase()
+    private var _contacts = MutableStateFlow<List<Contact>?>(null)
+    val contacts: StateFlow<List<Contact>?> = _contacts
 
-    fun deleteContact(contact: Contact) {
+    fun updateContacts() {
         viewModelScope.launch {
-            contactsRepository.removeWithId(contact.id)
+            while (isActive) {
+                val contacts = getContactsUseCase(user.id, user.accessToken)
+                if (contacts is SuccessNetworkResponse) {
+                    _contacts.value = contacts.data
+                    break
+                }
+            }
         }
     }
 
-    fun insertContact(contact: Contact, position: Int) {
+    fun deleteContact(contact: Contact) {
         viewModelScope.launch {
-            contactsRepository.insertAt(contact, position)
+            val response = deleteContactUseCase(user.id, user.accessToken, contact.id)
+            if (response is SuccessNetworkResponse) {
+                _contacts.value = response.data
+            }
+        }
+    }
+
+    fun insertContact(contact: Contact) {
+        viewModelScope.launch {
+            val response = addContactUseCase(user.id, user.accessToken, contact.id)
+            if (response is SuccessNetworkResponse) {
+                _contacts.value = response.data
+            }
         }
     }
 

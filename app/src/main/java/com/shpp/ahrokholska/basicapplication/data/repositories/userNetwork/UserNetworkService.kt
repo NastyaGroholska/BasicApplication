@@ -1,4 +1,4 @@
-package com.shpp.ahrokholska.basicapplication.data.repository.userNetwork
+package com.shpp.ahrokholska.basicapplication.data.repositories.userNetwork
 
 import okhttp3.ResponseBody
 import retrofit2.http.Body

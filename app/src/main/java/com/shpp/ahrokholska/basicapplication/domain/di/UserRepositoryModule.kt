@@ -1,7 +1,7 @@
 package com.shpp.ahrokholska.basicapplication.domain.di
 
-import com.shpp.ahrokholska.basicapplication.data.repository.UserLocalRepositoryImpl
-import com.shpp.ahrokholska.basicapplication.data.repository.userNetwork.UserNetworkRepositoryImpl
+import com.shpp.ahrokholska.basicapplication.data.repositories.UserLocalRepositoryImpl
+import com.shpp.ahrokholska.basicapplication.data.repositories.userNetwork.UserNetworkRepositoryImpl
 import com.shpp.ahrokholska.basicapplication.domain.repository.userRepository.UserNetworkRepository
 import com.shpp.ahrokholska.basicapplication.domain.repository.userRepository.UserLocalRepository
 import dagger.Binds

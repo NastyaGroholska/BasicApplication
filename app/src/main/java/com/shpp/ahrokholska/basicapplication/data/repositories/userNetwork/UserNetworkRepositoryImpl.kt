@@ -1,15 +1,14 @@
-package com.shpp.ahrokholska.basicapplication.data.repository.userNetwork
+package com.shpp.ahrokholska.basicapplication.data.repositories.userNetwork
 
-import com.google.gson.Gson
 import com.shpp.ahrokholska.basicapplication.data.utils.Constants.AUTHORIZATION_HEADER
-import com.shpp.ahrokholska.basicapplication.data.utils.Constants.RESPONSE_ERRORS
+import com.shpp.ahrokholska.basicapplication.data.utils.ErrorHandler.processError
+import com.shpp.ahrokholska.basicapplication.data.utils.Parser.parseBody
 import com.shpp.ahrokholska.basicapplication.domain.model.InputErrorNetworkResponse
 import com.shpp.ahrokholska.basicapplication.domain.model.NetworkErrorNetworkResponse
 import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
 import com.shpp.ahrokholska.basicapplication.domain.model.SuccessNetworkResponse
 import com.shpp.ahrokholska.basicapplication.domain.model.User
 import com.shpp.ahrokholska.basicapplication.domain.repository.userRepository.UserNetworkRepository
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -148,33 +147,4 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
             val con = parseBody<ResponseTokens>(body)
             SuccessNetworkResponse(DataResponseTokens(con.data.accessToken, con.data.refreshToken))
         }
-
-    private inline fun <reified T> parseBody(body: String): T {
-        var newBody = body
-        val openBrackets = body.count { it == '{' }
-        val closeBrackets = body.count { it == '}' }
-        if (openBrackets != closeBrackets) { //some responses don't have closing '}' at the end =/
-            newBody += '}'
-        }
-        return Gson().fromJson(newBody, T::class.java)
-    }
-
-    private fun <T> processError(exception: Exception): NetworkResponse<T> {
-        return when (exception) {
-            is CancellationException -> throw exception
-
-            is retrofit2.HttpException -> {
-                if (RESPONSE_ERRORS.values().any { it.code == exception.code() }) {
-                    InputErrorNetworkResponse()
-                } else {
-                    NetworkErrorNetworkResponse()
-                }
-            }
-
-            else -> {
-                NetworkErrorNetworkResponse()
-            }
-        }
-    }
-
 }

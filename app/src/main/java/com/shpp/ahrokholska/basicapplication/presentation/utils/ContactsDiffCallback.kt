@@ -1,4 +1,4 @@
-package com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.adapter.diffCallback
+package com.shpp.ahrokholska.basicapplication.presentation.utils
 
 import androidx.recyclerview.widget.DiffUtil
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact

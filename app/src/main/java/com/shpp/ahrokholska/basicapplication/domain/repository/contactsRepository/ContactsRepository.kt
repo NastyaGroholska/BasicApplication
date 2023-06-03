@@ -1,13 +1,17 @@
 package com.shpp.ahrokholska.basicapplication.domain.repository.contactsRepository
 
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
-import kotlinx.coroutines.flow.StateFlow
+import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
 
 interface ContactsRepository {
-    val contacts: StateFlow<List<Contact>>
+    fun getCachedContacts(): List<Contact>?
+    suspend fun getContacts(userId: Long, accessToken: String): NetworkResponse<List<Contact>>
+    suspend fun getAllUsers(accessToken: String): NetworkResponse<List<Contact>>
+    suspend fun addContact(
+        userId: Long, accessToken: String, contactId: Long
+    ): NetworkResponse<List<Contact>>
 
-    suspend fun getContactWithId(id: Long): Contact?
-    suspend fun addContact(name: String, career: String)
-    suspend fun removeWithId(id: Long)
-    suspend fun insertAt(contact: Contact, position: Int)
+    suspend fun deleteContact(
+        userId: Long, contactId: Long, accessToken: String
+    ): NetworkResponse<List<Contact>>
 }

@@ -3,6 +3,7 @@ package com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.viewHol
 import androidx.recyclerview.widget.RecyclerView
 import com.shpp.ahrokholska.basicapplication.databinding.ContactsItemMultiselectBinding
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
+import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.PICTURE_URL
 import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.loadFromURL
 
 class ContactsMultiselectViewHolder(
@@ -15,7 +16,7 @@ class ContactsMultiselectViewHolder(
         with(binding) {
             contactsTextName.text = contact.name
             contactsTextCareer.text = contact.career
-            contactsImagePhoto.loadFromURL(contact.picture)
+            contactsImagePhoto.loadFromURL(PICTURE_URL)
             checkContactMultiselect.isChecked = isChecked
         }
         setListeners()

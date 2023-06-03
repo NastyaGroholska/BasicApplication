@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shpp.ahrokholska.basicapplication.databinding.ContactsItemBinding
 import com.shpp.ahrokholska.basicapplication.databinding.ContactsItemMultiselectBinding
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
-import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.adapter.diffCallback.ContactsDiffCallback
+import com.shpp.ahrokholska.basicapplication.presentation.utils.ContactsDiffCallback
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.interfaces.ContactsNormalItemListener
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.interfaces.SelectionListener
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.viewHolders.ContactsMultiselectViewHolder
@@ -53,8 +53,8 @@ class ContactsAdapter(
         }
     }
 
-    fun deleteMultiselectItems(): List<Pair<Int, Contact>> {
-        val itemsToRemove = selectedPositions.sorted().map { it to getItem(it) }
+    fun deleteMultiselectItems(): List<Contact> {
+        val itemsToRemove = selectedPositions.sorted().map { getItem(it) }
         selectionListener.clearSelection()
         return itemsToRemove
     }

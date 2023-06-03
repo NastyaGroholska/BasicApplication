@@ -6,9 +6,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import com.shpp.ahrokholska.basicapplication.domain.model.Contact
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentContactsProfileBinding
+import com.shpp.ahrokholska.basicapplication.domain.model.Contact
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
+import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.PICTURE_URL
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.TRANSITION_NAME_CAREER
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.TRANSITION_NAME_IMAGE
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.TRANSITION_NAME_USER_NAME
@@ -48,7 +49,8 @@ class ContactsProfileFragment :
         with(binding) {
             textName.text = contact.name
             textCareer.text = contact.career
-            imageProfile.loadFromURL(contact.picture)
+            imageProfile.loadFromURL(PICTURE_URL)
+            textAddress.text = contact.address
 
             imageProfile.transitionName = TRANSITION_NAME_IMAGE + args.contactId
             textName.transitionName = TRANSITION_NAME_USER_NAME + args.contactId

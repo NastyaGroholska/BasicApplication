@@ -31,8 +31,8 @@ class MyContactsFragment :
     private val contactsAdapter: ContactsAdapter by lazy {
         ContactsAdapter(
             object : ContactsNormalItemListener {
-                override fun onBinClick(contact: Contact, position: Int) {
-                    deleteRVItem(contact, position)
+                override fun onBinClick(contact: Contact) {
+                    deleteRVItem(contact)
                 }
 
                 override fun onItemClick(
@@ -67,6 +67,7 @@ class MyContactsFragment :
 
     override fun onDestroyView() {
         binding.myContactsRvContacts.adapter = null
+        setExitSharedElementCallback(null)
         super.onDestroyView()
     }
 
@@ -76,7 +77,7 @@ class MyContactsFragment :
             layoutManager = LinearLayoutManager(binding.root.context)
             enableHorizontalSwipe<ContactsNormalViewHolder> {
                 val pos = it.adapterPosition
-                deleteRVItem(contactsAdapter.currentList[pos], pos)
+                deleteRVItem(contactsAdapter.currentList[pos])
             }
             postponeEnterTransition()
             setExitSharedElementCallback(object : androidx.core.app.SharedElementCallback() {
@@ -99,30 +100,35 @@ class MyContactsFragment :
             })
             doOnPreDraw { startPostponedEnterTransition() }
         }.addItemDecoration(
-            VerticalSpaceItemDecoration(RV_ITEM_SPACE)
+            VerticalSpaceItemDecoration(
+                resources.getDimension(R.dimen.recycler_item_spacing).toInt()
+            )
         )
     }
 
-    private fun deleteRVItem(contact: Contact, position: Int) {
-        deleteMultipleRVItems(listOf(position to contact))
+    private fun deleteRVItem(contact: Contact) {
+        deleteMultipleRVItems(listOf(contact))
     }
 
-    private fun deleteMultipleRVItems(contacts: List<Pair<Int, Contact>>) {
-        contacts.forEach { viewModel.deleteContact(it.second) }
+    private fun deleteMultipleRVItems(contacts: List<Contact>) {
+        contacts.forEach { viewModel.deleteContact(it) }
         Snackbar.make(
             binding.myContactsRvContacts, if (contacts.size == 1) R.string.removed_contact
             else R.string.removed_contacts, RV_TIME_TO_CANCEL_MS
         ).setAction(getString(R.string.undo).uppercase()) {
-            contacts.forEach { viewModel.insertContact(it.second, it.first) }
+            contacts.forEach { viewModel.insertContact(it) }
         }.setAnchorView(binding.myContactsRvContacts).show()
     }
 
     override fun setObservers() {
+        binding.contactsProgressBar.visibility = View.VISIBLE
+        viewModel.updateContacts()
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.contacts.collect { list ->
                         contactsAdapter.submitList(list)
+                        binding.contactsProgressBar.visibility = View.INVISIBLE
                     }
                 }
                 launch {
@@ -154,7 +160,6 @@ class MyContactsFragment :
     }
 
     companion object {
-        private const val RV_ITEM_SPACE = 50
         private const val RV_TIME_TO_CANCEL_MS = 5 * 1000
     }
 }

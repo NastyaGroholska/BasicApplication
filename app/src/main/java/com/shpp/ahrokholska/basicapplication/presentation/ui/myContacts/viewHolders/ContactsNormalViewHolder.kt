@@ -7,6 +7,7 @@ import com.shpp.ahrokholska.basicapplication.domain.model.Contact
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants
 import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.loadFromURL
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.interfaces.ContactsNormalItemListener
+import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.PICTURE_URL
 
 class ContactsNormalViewHolder(
     private val binding: ContactsItemBinding,
@@ -19,7 +20,7 @@ class ContactsNormalViewHolder(
         with(binding) {
             contactsTextName.text = contact.name
             contactsTextCareer.text = contact.career
-            contactsImagePhoto.loadFromURL(contact.picture)
+            contactsImagePhoto.loadFromURL(PICTURE_URL)
             contactsImageBin.isEnabled = true
             root.isEnabled = true
             transitionPairs = arrayOf(
@@ -45,7 +46,7 @@ class ContactsNormalViewHolder(
             contactsImageBin.setOnClickListener {
                 it.isEnabled = false
                 root.isEnabled = false
-                listener.onBinClick(contact, adapterPosition)
+                listener.onBinClick(contact)
             }
             root.setOnClickListener {
                 listener.onItemClick(contact, transitionPairs)

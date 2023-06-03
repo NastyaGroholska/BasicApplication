@@ -1,4 +1,4 @@
-package com.shpp.ahrokholska.basicapplication.data.repository.userNetwork
+package com.shpp.ahrokholska.basicapplication.data.repositories.userNetwork
 
 data class UserCredentials(val email: String, val password: String)
 
@@ -29,7 +29,7 @@ data class DataResponseUserPlusToken(
 
 
 data class DataUser(
-    val id: Long, val name: String, val email: String, val phone: String?, val career: String?,
+    val id: Long, val name: String?, val email: String, val phone: String?, val career: String?,
     val address: String?, val birthday: String?, val facebook: String?, val instagram: String?,
     val twitter: String?, val linkedin: String?, val image: String?, val created_at: String?,
     val updated_at: String?

@@ -55,4 +55,7 @@
     <string name="edit_user_error">Please enter correct data</string>
     <string name="date_format">yyyy-mm-dd</string>
     <string name="date_error_first_half">Your birth date should be in format:</string>
+    <string name="users">Users</string>
+    <string name="add">Add</string>
+    <string name="error_occurred">Error occurred</string>
 </resources>

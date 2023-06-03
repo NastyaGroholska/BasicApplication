@@ -1,4 +1,4 @@
-package com.shpp.ahrokholska.basicapplication.data.repository
+package com.shpp.ahrokholska.basicapplication.data.repositories
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit

@@ -1,7 +1,8 @@
 package com.shpp.ahrokholska.basicapplication.domain.di
 
+import com.shpp.ahrokholska.basicapplication.data.repositories.contacts.ContactsNetworkService
+import com.shpp.ahrokholska.basicapplication.data.repositories.userNetwork.UserNetworkService
 import com.shpp.ahrokholska.basicapplication.domain.di.Constants.BASE_URL
-import com.shpp.ahrokholska.basicapplication.data.repository.userNetwork.UserNetworkService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,4 +45,9 @@ object NetworkModule {
     @Singleton
     fun provideUserNetworkService(@RetrofitWithInterceptor retrofit: Retrofit): UserNetworkService =
         retrofit.create(UserNetworkService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideContactsNetworkService(@RetrofitWithInterceptor retrofit: Retrofit): ContactsNetworkService =
+        retrofit.create(ContactsNetworkService::class.java)
 }

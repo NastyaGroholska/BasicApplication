@@ -93,7 +93,7 @@
         android:id="@+id/editProfile"
         android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.editProfile.EditProfileFragment"
         android:label="EditProfileFragment"
-        tools:layout="@layout/fragment_edit_profile"/>
+        tools:layout="@layout/fragment_edit_profile" />
 
     <fragment
         android:id="@+id/myContacts"
@@ -102,17 +102,17 @@
         tools:layout="@layout/fragment_my_contacts">
         <action
             android:id="@+id/action_myContacts_to_addContactDialog"
-            app:destination="@id/addContactDialogFragment" />
+            app:destination="@id/addContacts" />
         <action
             android:id="@+id/action_myContacts_to_contactsProfile"
             app:destination="@id/contactsProfile" />
     </fragment>
 
-    <dialog
-        android:id="@+id/addContactDialogFragment"
-        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.addContact.AddContactDialogFragment"
-        android:label="AddContactDialogFragment"
-        tools:layout="@layout/add_contact_dialog" />
+    <fragment
+        android:id="@+id/addContacts"
+        android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.addContact.AddContactsFragment"
+        android:label="AddContactsFragment"
+        tools:layout="@layout/fragment_add_contacts" />
     <fragment
         android:id="@+id/contactsProfile"
         android:name="com.shpp.ahrokholska.basicapplication.presentation.ui.contactsProfile.ContactsProfileFragment"
