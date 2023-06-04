@@ -7,9 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentSignInBinding
-import com.shpp.ahrokholska.basicapplication.domain.model.InputErrorNetworkResponse
-import com.shpp.ahrokholska.basicapplication.domain.model.NetworkErrorNetworkResponse
-import com.shpp.ahrokholska.basicapplication.domain.model.SuccessNetworkResponse
+import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import com.shpp.ahrokholska.basicapplication.presentation.utils.InputHandler
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Validator
@@ -56,11 +54,11 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
                 with(binding) {
                     signInProgressWindow.invisible()
                     when (it) {
-                        is SuccessNetworkResponse -> navController.navigate(
+                        is NetworkResponse.Success -> navController.navigate(
                             SignInFragmentDirections.actionSignInToMyProfile()
                         )
 
-                        is NetworkErrorNetworkResponse -> {
+                        is NetworkResponse.NetworkError -> {
                             AlertDialog.Builder(root.context)
                                 .setMessage(getString(R.string.network_error))
                                 .setPositiveButton(getString(R.string.retry)) { _, _ ->
@@ -68,7 +66,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(FragmentSignInBinding
                                 }.create().show()
                         }
 
-                        is InputErrorNetworkResponse -> {
+                        is NetworkResponse.InputError -> {
                             AlertDialog.Builder(root.context)
                                 .setMessage(getString(R.string.sign_in_email_error)).create().show()
                         }

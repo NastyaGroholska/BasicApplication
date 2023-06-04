@@ -9,4 +9,5 @@
     <color name="sub_text_color">#B2B2B3</color>
     <color name="error_text_color">#F93E3E</color>
     <color name="lower_layout_color">#3B3636</color>
+    <color name="hyperlink_color">#2196F3</color>
 </resources>

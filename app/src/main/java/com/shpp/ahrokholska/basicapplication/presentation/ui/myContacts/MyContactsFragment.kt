@@ -129,16 +129,32 @@ class MyContactsFragment :
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
+                    viewModel.error.collect {
+                        if (it) {
+                            binding.contactsErrorWindow.visible()
+                        } else {
+                            binding.contactsErrorWindow.gone()
+                        }
+                    }
+                }
+                launch {
                     viewModel.contacts.collect { list ->
-                        contactsAdapter.submitList(list)
-                        binding.contactsProgressBar.invisible()
+                        list?.let {
+                            contactsAdapter.submitList(list)
+                            binding.contactsProgressBar.invisible()
+                            if (list.isEmpty()) {
+                                binding.contactsTextNoContacts.visible()
+                            } else {
+                                binding.contactsTextNoContacts.gone()
+                            }
+                        }
                     }
                 }
                 launch {
                     viewModel.multiselectState.collect {
-                        if (it){
+                        if (it) {
                             binding.myContactsBinBtn.visible()
-                        }else{
+                        } else {
                             binding.myContactsBinBtn.gone()
                         }
                         contactsAdapter.changeMultiselectState(it)
@@ -163,6 +179,9 @@ class MyContactsFragment :
         binding.myContactsBinBtn.setOnClickListener {
             deleteMultipleRVItems(contactsAdapter.deleteMultiselectItems())
             it.gone()
+        }
+        binding.contactsTextTryAgain.setOnClickListener {
+            viewModel.updateContacts()
         }
     }
 

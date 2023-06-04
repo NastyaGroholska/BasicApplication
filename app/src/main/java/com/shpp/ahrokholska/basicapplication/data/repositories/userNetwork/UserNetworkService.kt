@@ -1,5 +1,6 @@
 package com.shpp.ahrokholska.basicapplication.data.repositories.userNetwork
 
+import com.shpp.ahrokholska.basicapplication.data.model.UserCredentials
 import okhttp3.ResponseBody
 import retrofit2.http.Body
 import retrofit2.http.Field

@@ -3,7 +3,7 @@ package com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
-import com.shpp.ahrokholska.basicapplication.domain.model.SuccessNetworkResponse
+import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
 import com.shpp.ahrokholska.basicapplication.domain.useCases.AddContactUseCase
 import com.shpp.ahrokholska.basicapplication.domain.useCases.DeleteContactUseCase
 import com.shpp.ahrokholska.basicapplication.domain.useCases.GetCachedUserUseCase
@@ -11,7 +11,7 @@ import com.shpp.ahrokholska.basicapplication.domain.useCases.GetContactsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.isActive
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,24 +25,34 @@ class ContactsViewModel @Inject constructor(
     private val user = getCachedUserUseCase()
     private var _contacts = MutableStateFlow<List<Contact>?>(null)
     val contacts: StateFlow<List<Contact>?> = _contacts
+    private var _error = MutableStateFlow(false)
+    val error: StateFlow<Boolean> = _error
 
     fun updateContacts() {
         viewModelScope.launch {
-            while (isActive) {
-                val contacts = getContactsUseCase(user.id, user.accessToken)
-                if (contacts is SuccessNetworkResponse) {
-                    _contacts.value = contacts.data
-                    break
-                }
+            val contacts = getContactsUseCase(user.id, user.accessToken)
+            if (contacts is NetworkResponse.Success) {
+                _contacts.value = contacts.data
+                _error.emit(false)
+            } else {
+                setError()
             }
         }
+    }
+
+    private suspend fun setError() {
+        _error.emit(true)
+        _contacts.update { null }
     }
 
     fun deleteContact(contact: Contact) {
         viewModelScope.launch {
             val response = deleteContactUseCase(user.id, user.accessToken, contact.id)
-            if (response is SuccessNetworkResponse) {
-                _contacts.value = response.data
+            if (response is NetworkResponse.Success) {
+                _contacts.update { response.data }
+                _error.emit(false)
+            } else {
+                setError()
             }
         }
     }
@@ -50,8 +60,11 @@ class ContactsViewModel @Inject constructor(
     fun insertContact(contact: Contact) {
         viewModelScope.launch {
             val response = addContactUseCase(user.id, user.accessToken, contact.id)
-            if (response is SuccessNetworkResponse) {
+            if (response is NetworkResponse.Success) {
                 _contacts.value = response.data
+                _error.emit(false)
+            } else {
+                setError()
             }
         }
     }

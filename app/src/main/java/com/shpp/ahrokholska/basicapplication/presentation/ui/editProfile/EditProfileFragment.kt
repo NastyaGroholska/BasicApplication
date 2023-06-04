@@ -9,7 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentEditProfileBinding
-import com.shpp.ahrokholska.basicapplication.domain.model.SuccessNetworkResponse
+import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
 import com.shpp.ahrokholska.basicapplication.presentation.utils.InputHandler
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Parser
@@ -75,7 +75,7 @@ class EditProfileFragment :
             viewModel.networkResponse.flowWithLifecycle(viewLifecycleOwner.lifecycle).collect {
                 with(binding) {
                     setLoading(false)
-                    if (it is SuccessNetworkResponse) {
+                    if (it is NetworkResponse.Success) {
                         navController.navigateUp()
                     } else {
                         AlertDialog.Builder(root.context)

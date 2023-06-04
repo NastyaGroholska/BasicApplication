@@ -3,7 +3,6 @@ package com.shpp.ahrokholska.basicapplication.presentation.ui.loginGraph.signIn
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
-import com.shpp.ahrokholska.basicapplication.domain.model.SuccessNetworkResponse
 import com.shpp.ahrokholska.basicapplication.domain.model.User
 import com.shpp.ahrokholska.basicapplication.domain.useCases.AuthorizeUserUseCase
 import com.shpp.ahrokholska.basicapplication.domain.useCases.SaveUserUseCase
@@ -39,7 +38,7 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             isProcessing = true
             val response = authorizeUserUseCase(email, password)
-            if (response is SuccessNetworkResponse) {
+            if (response is NetworkResponse.Success) {
                 saveUserUseCase(response.data.id, response.data.refreshToken)
             }
             _networkResponse.emit(response)

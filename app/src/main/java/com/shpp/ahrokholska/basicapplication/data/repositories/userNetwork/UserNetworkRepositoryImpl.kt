@@ -1,12 +1,13 @@
 package com.shpp.ahrokholska.basicapplication.data.repositories.userNetwork
 
+import com.shpp.ahrokholska.basicapplication.data.model.ResponseTokens
+import com.shpp.ahrokholska.basicapplication.data.model.ResponseUser
+import com.shpp.ahrokholska.basicapplication.data.model.ResponseUserPlusToken
+import com.shpp.ahrokholska.basicapplication.data.model.UserCredentials
 import com.shpp.ahrokholska.basicapplication.data.utils.Constants.AUTHORIZATION_HEADER
 import com.shpp.ahrokholska.basicapplication.data.utils.ErrorHandler.processError
 import com.shpp.ahrokholska.basicapplication.data.utils.Parser.parseBody
-import com.shpp.ahrokholska.basicapplication.domain.model.InputErrorNetworkResponse
-import com.shpp.ahrokholska.basicapplication.domain.model.NetworkErrorNetworkResponse
 import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
-import com.shpp.ahrokholska.basicapplication.domain.model.SuccessNetworkResponse
 import com.shpp.ahrokholska.basicapplication.domain.model.User
 import com.shpp.ahrokholska.basicapplication.domain.repository.userRepository.UserNetworkRepository
 import kotlinx.coroutines.Dispatchers
@@ -29,29 +30,20 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
             }
 
             val con = parseBody<ResponseUserPlusToken>(body)
-            val user = User(
-                con.data.user.id,
-                con.data.user.name,
-                con.data.user.career,
-                con.data.user.phone,
-                con.data.user.address,
-                con.data.user.birthday,
-                con.data.accessToken,
-                con.data.refreshToken
-            )
+            val user = con.data.user.toUser(con.data.accessToken, con.data.refreshToken)
             cachedUser = user
-            SuccessNetworkResponse(user)
+            NetworkResponse.Success(user)
         }
 
     override suspend fun getUser(id: Long, refreshToken: String): NetworkResponse<User> =
         withContext(Dispatchers.IO) {
             when (val tokenResponse = refreshToken(refreshToken)) {
-                is NetworkErrorNetworkResponse -> NetworkErrorNetworkResponse()
-                is InputErrorNetworkResponse -> InputErrorNetworkResponse()
-                is SuccessNetworkResponse -> {
+                is NetworkResponse.NetworkError -> NetworkResponse.NetworkError()
+                is NetworkResponse.InputError -> NetworkResponse.InputError()
+                is NetworkResponse.Success -> {
                     with(tokenResponse.data) {
                         val response = getUserByAccessToken(id, accessToken, this.refreshToken)
-                        if (response is SuccessNetworkResponse<User>) {
+                        if (response is NetworkResponse.Success<User>) {
                             cachedUser = response.data
                         }
                         response
@@ -71,18 +63,9 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
         }
 
         val con = parseBody<ResponseUserPlusToken>(body)
-        val user = User(
-            con.data.user.id,
-            con.data.user.name,
-            con.data.user.career,
-            con.data.user.phone,
-            con.data.user.address,
-            con.data.user.birthday,
-            con.data.accessToken,
-            con.data.refreshToken
-        )
+        val user = con.data.user.toUser(con.data.accessToken, con.data.refreshToken)
         cachedUser = user
-        SuccessNetworkResponse(user)
+        NetworkResponse.Success(user)
     }
 
     override suspend fun editUser(
@@ -100,18 +83,9 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
         }
 
         val con = parseBody<ResponseUser>(body)
-        val user = User(
-            con.data.user.id,
-            con.data.user.name,
-            con.data.user.career,
-            con.data.user.phone,
-            con.data.user.address,
-            con.data.user.birthday,
-            accessToken,
-            refreshToken
-        )
+        val user = con.data.user.toUser(accessToken, refreshToken)
         cachedUser = user
-        SuccessNetworkResponse(user)
+        NetworkResponse.Success(user)
     }
 
     private suspend fun getUserByAccessToken(
@@ -126,25 +100,24 @@ class UserNetworkRepositoryImpl @Inject constructor(private val service: UserNet
             }
 
             val con = parseBody<ResponseUser>(body)
-            with(con.data.user) {
-                SuccessNetworkResponse(
-                    User(
-                        this.id, name, career, phone, address, birthday, accessToken, refreshToken
-                    )
-                )
-            }
+            NetworkResponse.Success(con.data.user.toUser(accessToken, refreshToken))
         }
 
-    private suspend fun refreshToken(refreshToken: String): NetworkResponse<DataResponseTokens> =
+    private suspend fun refreshToken(refreshToken: String): NetworkResponse<ResponseTokens.Data> =
         withContext(Dispatchers.IO) {
             val body: String
             try {
                 body = service.refreshToken(refreshToken).string()
             } catch (e: Exception) {
-                return@withContext processError<DataResponseTokens>(e)
+                return@withContext processError<ResponseTokens.Data>(e)
             }
 
             val con = parseBody<ResponseTokens>(body)
-            SuccessNetworkResponse(DataResponseTokens(con.data.accessToken, con.data.refreshToken))
+            NetworkResponse.Success(
+                ResponseTokens.Data(
+                    con.data.accessToken,
+                    con.data.refreshToken
+                )
+            )
         }
 }

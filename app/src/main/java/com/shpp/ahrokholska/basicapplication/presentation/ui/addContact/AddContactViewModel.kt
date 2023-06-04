@@ -3,7 +3,7 @@ package com.shpp.ahrokholska.basicapplication.presentation.ui.addContact
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
-import com.shpp.ahrokholska.basicapplication.domain.model.SuccessNetworkResponse
+import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
 import com.shpp.ahrokholska.basicapplication.domain.useCases.AddContactUseCase
 import com.shpp.ahrokholska.basicapplication.domain.useCases.GetCachedUserUseCase
 import com.shpp.ahrokholska.basicapplication.domain.useCases.GetPossibleContactsUseCase
@@ -39,7 +39,7 @@ class AddContactViewModel @Inject constructor(
         viewModelScope.launch {
             while (isActive) {
                 val contacts = getPossibleContactsUseCase(user.id, user.accessToken)
-                if (contacts is SuccessNetworkResponse) {
+                if (contacts is NetworkResponse.Success) {
                     _states.value = Array(contacts.data.size) { State.Normal }
                     _contacts.value = contacts.data
                     break
@@ -54,7 +54,12 @@ class AddContactViewModel @Inject constructor(
             _finishedAll.emit(false)
             _states.update { it.copyOf().apply { this[contactPos] = State.Loading } }
 
-            if (addContactUseCase(user.id, user.accessToken, contactId) is SuccessNetworkResponse) {
+            if (addContactUseCase(
+                    user.id,
+                    user.accessToken,
+                    contactId
+                ) is NetworkResponse.Success
+            ) {
                 _states.update { it.copyOf().apply { this[contactPos] = State.Loaded } }
             } else {
                 _states.update { it.copyOf().apply { this[contactPos] = State.Failed } }

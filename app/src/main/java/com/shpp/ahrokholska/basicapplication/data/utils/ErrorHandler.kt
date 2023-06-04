@@ -1,7 +1,5 @@
 package com.shpp.ahrokholska.basicapplication.data.utils
 
-import com.shpp.ahrokholska.basicapplication.domain.model.InputErrorNetworkResponse
-import com.shpp.ahrokholska.basicapplication.domain.model.NetworkErrorNetworkResponse
 import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
 import kotlinx.coroutines.CancellationException
 
@@ -12,14 +10,14 @@ object ErrorHandler {
 
             is retrofit2.HttpException -> {
                 if (Constants.RESPONSE_ERRORS.values().any { it.code == exception.code() }) {
-                    InputErrorNetworkResponse()
+                    NetworkResponse.InputError()
                 } else {
-                    NetworkErrorNetworkResponse()
+                    NetworkResponse.NetworkError()
                 }
             }
 
             else -> {
-                NetworkErrorNetworkResponse()
+                NetworkResponse.NetworkError()
             }
         }
     }

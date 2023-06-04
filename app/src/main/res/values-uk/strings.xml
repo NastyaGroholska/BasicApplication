@@ -58,4 +58,5 @@
     <string name="users">Користувачі</string>
     <string name="add">Додати</string>
     <string name="error_occurred">Виникла помилка</string>
+    <string name="you_don_t_have_any_contacts">У вас немає жодних контактів</string>
 </resources>

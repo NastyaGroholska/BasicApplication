@@ -3,7 +3,7 @@ package com.shpp.ahrokholska.basicapplication.presentation.ui.contactsProfile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
-import com.shpp.ahrokholska.basicapplication.domain.model.SuccessNetworkResponse
+import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
 import com.shpp.ahrokholska.basicapplication.domain.useCases.GetCachedUserUseCase
 import com.shpp.ahrokholska.basicapplication.domain.useCases.GetContactsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +25,7 @@ class ContactsProfileViewModel @Inject constructor(
         viewModelScope.launch {
             while (isActive) {
                 val contacts = getContactsUseCase(user.id, user.accessToken)
-                if (contacts is SuccessNetworkResponse) {
+                if (contacts is NetworkResponse.Success) {
                     _contact.value = contacts.data.find { it.id == id }
                     break
                 }

@@ -2,7 +2,6 @@ package com.shpp.ahrokholska.basicapplication.domain.useCases
 
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
 import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
-import com.shpp.ahrokholska.basicapplication.domain.model.SuccessNetworkResponse
 import javax.inject.Inject
 
 class GetPossibleContactsUseCase @Inject constructor(
@@ -11,15 +10,11 @@ class GetPossibleContactsUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(userId: Long, accessToken: String): NetworkResponse<List<Contact>> {
         val users = getAllUsersUseCase(userId, accessToken)
-        if (users !is SuccessNetworkResponse) {
-            return users
-        }
+        if (users !is NetworkResponse.Success) return users
 
         val contacts = getContactsUseCase(userId, accessToken)
-        if (contacts !is SuccessNetworkResponse) {
-            return contacts
-        }
+        if (contacts !is NetworkResponse.Success) return contacts
 
-        return SuccessNetworkResponse(users.data.filter { !contacts.data.contains(it) })
+        return NetworkResponse.Success(users.data.filter { !contacts.data.contains(it) })
     }
 }

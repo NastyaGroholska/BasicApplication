@@ -1,11 +1,12 @@
 package com.shpp.ahrokholska.basicapplication.data.repositories.contacts
 
+import com.shpp.ahrokholska.basicapplication.data.model.ResponseContacts
+import com.shpp.ahrokholska.basicapplication.data.model.ResponseUsers
 import com.shpp.ahrokholska.basicapplication.data.utils.Constants.AUTHORIZATION_HEADER
 import com.shpp.ahrokholska.basicapplication.data.utils.ErrorHandler
 import com.shpp.ahrokholska.basicapplication.data.utils.Parser
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
 import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
-import com.shpp.ahrokholska.basicapplication.domain.model.SuccessNetworkResponse
 import com.shpp.ahrokholska.basicapplication.domain.repository.contactsRepository.ContactsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,7 +18,9 @@ class ContactsNetworkRepository @Inject constructor(private val service: Contact
 
     override fun getCachedContacts(): List<Contact>? = cachedContacts
 
-    override suspend fun getContacts(userId: Long, accessToken: String) =
+    override suspend fun getContacts(
+        userId: Long, accessToken: String
+    ): NetworkResponse<List<Contact>> =
         withContext(Dispatchers.IO) {
             val body: String
             try {
@@ -26,13 +29,10 @@ class ContactsNetworkRepository @Inject constructor(private val service: Contact
                 return@withContext ErrorHandler.processError(e)
             }
 
-            val con = Parser.parseBody<ResponseContacts>(body)
-
-            val contacts = con.data.contacts.map {
-                Contact(it.id, it.name, it.career, it.address)
-            }
+            val response = Parser.parseBody<ResponseContacts>(body)
+            val contacts = response.data.contacts.map { it.toContact() }
             cachedContacts = contacts
-            SuccessNetworkResponse(contacts)
+            NetworkResponse.Success(contacts)
         }
 
     override suspend fun getAllUsers(accessToken: String): NetworkResponse<List<Contact>> =
@@ -44,14 +44,14 @@ class ContactsNetworkRepository @Inject constructor(private val service: Contact
                 return@withContext ErrorHandler.processError(e)
             }
 
-            val con = Parser.parseBody<ResponseUsers>(body)
-            val users = con.data.users.map {
-                Contact(it.id, it.name, it.career, it.address)
-            }
-            SuccessNetworkResponse(users)
+            val response = Parser.parseBody<ResponseUsers>(body)
+            val users = response.data.users.map { it.toContact() }
+            NetworkResponse.Success(users)
         }
 
-    override suspend fun addContact(userId: Long, accessToken: String, contactId: Long) =
+    override suspend fun addContact(
+        userId: Long, accessToken: String, contactId: Long
+    ): NetworkResponse<List<Contact>> =
         withContext(Dispatchers.IO) {
             val body: String
             try {
@@ -61,13 +61,10 @@ class ContactsNetworkRepository @Inject constructor(private val service: Contact
                 return@withContext ErrorHandler.processError(e)
             }
 
-            val con = Parser.parseBody<ResponseContacts>(body)
-
-            val contacts = con.data.contacts.map {
-                Contact(it.id, it.name, it.career, it.address)
-            }
+            val response = Parser.parseBody<ResponseContacts>(body)
+            val contacts = response.data.contacts.map { it.toContact() }
             cachedContacts = contacts
-            SuccessNetworkResponse(contacts)
+            NetworkResponse.Success(contacts)
         }
 
     override suspend fun deleteContact(
@@ -81,12 +78,9 @@ class ContactsNetworkRepository @Inject constructor(private val service: Contact
             return@withContext ErrorHandler.processError(e)
         }
 
-        val con = Parser.parseBody<ResponseContacts>(body)
-
-        val contacts = con.data.contacts.map {
-            Contact(it.id, it.name, it.career, it.address)
-        }
+        val response = Parser.parseBody<ResponseContacts>(body)
+        val contacts = response.data.contacts.map { it.toContact() }
         cachedContacts = contacts
-        SuccessNetworkResponse(contacts)
+        NetworkResponse.Success(contacts)
     }
 }

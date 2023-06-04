@@ -58,4 +58,5 @@
     <string name="users">Users</string>
     <string name="add">Add</string>
     <string name="error_occurred">Error occurred</string>
+    <string name="you_don_t_have_any_contacts">You don\'t have any contacts</string>
 </resources>
