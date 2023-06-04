@@ -10,7 +10,7 @@ import com.shpp.ahrokholska.basicapplication.presentation.ui.addContact.State
 import com.shpp.ahrokholska.basicapplication.presentation.ui.addContact.viewHolder.AddContactViewHolder
 import com.shpp.ahrokholska.basicapplication.presentation.utils.ContactsDiffCallback
 
-class AddContactsAdapter(private val onAdd: (Int, Long) -> Unit) :
+class AddContactsAdapter(private val onAdd: (Long) -> Unit) :
     ListAdapter<Contact, AddContactViewHolder>(ContactsDiffCallback()) {
     private var states: Array<Pair<Long, State>> = emptyArray()
 
@@ -47,7 +47,7 @@ class AddContactsAdapter(private val onAdd: (Int, Long) -> Unit) :
         states.forEachIndexed { index, state ->
             if (this.states[index] != states[index]) {
                 this.states[index] = state
-                notifyItemChanged(index)
+                notifyItemChanged(currentList.indexOfFirst { it.id == state.first })
             }
         }
     }

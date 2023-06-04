@@ -11,7 +11,7 @@ import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.visible
 
 class AddContactViewHolder(
     private val binding: AddContactsItemBinding,
-    private val onAdd: (Int, Long) -> Unit
+    private val onAdd: (Long) -> Unit
 ) :
     RecyclerView.ViewHolder(binding.root) {
 
@@ -29,7 +29,7 @@ class AddContactViewHolder(
         with(binding) {
             contactsImagePlus.setOnClickListener {
                 setState(State.Loading)
-                onAdd(adapterPosition, contact.id)
+                onAdd(contact.id)
             }
         }
     }

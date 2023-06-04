@@ -243,14 +243,6 @@ class MyContactsFragment :
         }
     }
 
-  /*  private fun searchOnClick() {
-        with(binding) {
-            myContactsSearch.layoutParams.width = 0
-            myContactsTextContacts.invisible()
-            myContactsImageArrow.invisible()
-        }
-    }*/
-
     companion object {
         private const val RV_TIME_TO_CANCEL_MS = 5 * 1000
     }

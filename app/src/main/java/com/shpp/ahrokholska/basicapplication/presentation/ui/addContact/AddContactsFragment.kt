@@ -2,6 +2,8 @@ package com.shpp.ahrokholska.basicapplication.presentation.ui.addContact
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -53,6 +55,7 @@ class AddContactsFragment :
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+        initializeSearchView()
     }
 
     override fun setObservers() {
@@ -63,6 +66,7 @@ class AddContactsFragment :
                     viewModel.contacts.collect { list ->
                         list?.let {
                             addContactsAdapter.submitList(list)
+                            addContactsAdapter.setStates(viewModel.states.value)
                             binding.addContactsProgressBar.invisible()
                         }
                     }
@@ -85,5 +89,30 @@ class AddContactsFragment :
                 resources.getDimension(R.dimen.recycler_item_spacing).toInt()
             )
         )
+    }
+
+    private fun initializeSearchView() {
+        with(binding) {
+            addContactsSearch.setOnSearchClickListener {
+                addContactsSearch.layoutParams.width = 0
+                addContactsTextUsers.invisible()
+                addContactsImageArrow.invisible()
+            }
+            addContactsSearch.setOnCloseListener {
+                addContactsSearch.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+                viewModel.setFilter(null)
+                addContactsTextUsers.visible()
+                addContactsImageArrow.visible()
+                false
+            }
+            addContactsSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean = true
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    viewModel.setFilter(newText)
+                    return true
+                }
+            })
+        }
     }
 }
