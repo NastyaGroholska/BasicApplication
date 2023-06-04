@@ -53,8 +53,6 @@
     <string name="sign_up_error">This user already exists</string>
     <string name="date_of_birth">Date of birth</string>
     <string name="edit_user_error">Please enter correct data</string>
-    <string name="date_format">yyyy-mm-dd</string>
-    <string name="date_error_first_half">Your birth date should be in format:</string>
     <string name="users">Users</string>
     <string name="add">Add</string>
     <string name="error_occurred">Error occurred</string>

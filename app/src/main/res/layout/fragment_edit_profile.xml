@@ -205,7 +205,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_date"
             style="@style/textInputEditTextMain"
-            android:inputType="date"
+            android:focusable="false"
             android:textColor="@color/secondary_text_color" />
     </com.google.android.material.textfield.TextInputLayout>
 

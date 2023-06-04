@@ -53,8 +53,6 @@
     <string name="sign_up_error">Цей користувач вже існує</string>
     <string name="date_of_birth">Дата народження</string>
     <string name="edit_user_error">Будьласка введіть правильні дані</string>
-    <string name="date_format">рррр-мм-дд</string>
-    <string name="date_error_first_half">Ваш день наромодження повинен бути у форматі:</string>
     <string name="users">Користувачі</string>
     <string name="add">Додати</string>
     <string name="error_occurred">Виникла помилка</string>

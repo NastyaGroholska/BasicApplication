@@ -3,6 +3,7 @@ package com.shpp.ahrokholska.basicapplication.presentation.ui.editProfile
 import android.telephony.PhoneNumberFormattingTextWatcher
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -11,6 +12,7 @@ import com.shpp.ahrokholska.basicapplication.R
 import com.shpp.ahrokholska.basicapplication.databinding.FragmentEditProfileBinding
 import com.shpp.ahrokholska.basicapplication.domain.model.NetworkResponse
 import com.shpp.ahrokholska.basicapplication.presentation.ui.BaseFragment
+import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.DATE_REQUEST_KEY
 import com.shpp.ahrokholska.basicapplication.presentation.utils.InputHandler
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Parser
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Validator
@@ -39,17 +41,10 @@ class EditProfileFragment :
                 getString(R.string.incorrect_phone_number),
                 Validator::isPhoneNumberValid
             )
-            val date = InputHandler(
-                tietDate, tilDate,
-                getString(R.string.date_error_first_half) + getString(R.string.date_format),
-                Validator::isDateValid
-            )
             btnSave.setOnClickListener {
                 val isNameValid = name.processInput()
                 val isPhoneValid = phone.processInput()
-                val isDateValid = date.processInput()
-
-                if (isNameValid && isPhoneValid && isDateValid) {
+                if (isNameValid && isPhoneValid) {
                     editUser()
                 } else {
                     Snackbar.make(it, R.string.edit_user_error, Snackbar.LENGTH_SHORT)
@@ -58,6 +53,13 @@ class EditProfileFragment :
             }
             imageArrow.setOnClickListener {
                 navController.navigateUp()
+            }
+            setFragmentResultListener(DATE_REQUEST_KEY) { _, bundle ->
+                val result = bundle.getString(DATE_REQUEST_KEY)
+                binding.tietDate.setText(result)
+            }
+            tietDate.setOnClickListener {
+                DatePickerFragment().show(parentFragmentManager, "datePicker")
             }
         }
     }
