@@ -7,15 +7,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shpp.ahrokholska.basicapplication.databinding.ContactsItemBinding
 import com.shpp.ahrokholska.basicapplication.databinding.ContactsItemMultiselectBinding
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
-import com.shpp.ahrokholska.basicapplication.presentation.utils.ContactsDiffCallback
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.interfaces.ContactsNormalItemListener
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.interfaces.SelectionListener
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.viewHolders.ContactsMultiselectViewHolder
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.viewHolders.ContactsNormalViewHolder
+import com.shpp.ahrokholska.basicapplication.presentation.utils.ContactsDiffCallback
 
 class ContactsAdapter(
     private val itemListener: ContactsNormalItemListener,
-    private val selectionListener: SelectionListener
+    private val selectionListener: SelectionListener,
+    private val onMultiselectItemStateChangeCallback: (Boolean) -> Unit
 ) :
     ListAdapter<Contact, RecyclerView.ViewHolder>(ContactsDiffCallback()) {
     private var isMultiselectEnabled = false
@@ -72,8 +73,9 @@ class ContactsAdapter(
     }
 
     private fun onMultiselectItemStateChange(isChecked: Boolean, adapterPosition: Int) {
+        onMultiselectItemStateChangeCallback(isChecked)
         if (isChecked) {
-            selectionListener.addItemToSelection(adapterPosition)
+            selectionListener.addItemToSelection(currentList[adapterPosition].id)
         } else {
             selectionListener.removeItemFromSelection(adapterPosition)
         }

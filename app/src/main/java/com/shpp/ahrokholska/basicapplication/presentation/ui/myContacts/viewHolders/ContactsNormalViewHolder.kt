@@ -4,14 +4,14 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.shpp.ahrokholska.basicapplication.databinding.ContactsItemBinding
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
-import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants
-import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.loadFromURL
 import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.interfaces.ContactsNormalItemListener
+import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants
 import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.PICTURE_URL
+import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.loadFromURL
 
 class ContactsNormalViewHolder(
     private val binding: ContactsItemBinding,
-    private val enableMultiselect: (Int) -> Unit
+    private val enableMultiselect: (Long) -> Unit
 ) :
     RecyclerView.ViewHolder(binding.root) {
     var transitionPairs = emptyArray<Pair<View, String>>()
@@ -52,7 +52,7 @@ class ContactsNormalViewHolder(
                 listener.onItemClick(contact, transitionPairs)
             }
             root.setOnLongClickListener {
-                enableMultiselect(adapterPosition)
+                enableMultiselect(contact.id)
                 true
             }
         }

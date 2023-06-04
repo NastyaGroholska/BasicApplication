@@ -54,15 +54,16 @@
             app:layout_constraintTop_toTopOf="@+id/myContacts_text_contacts"
             app:srcCompat="@drawable/ic_arrow_back" />
 
-        <ImageView
-            android:id="@+id/myContacts_image_search"
+        <SearchView
+            android:id="@+id/myContacts_search"
+            style="@style/searchViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/search"
             app:layout_constraintBottom_toBottomOf="@+id/myContacts_text_contacts"
             app:layout_constraintEnd_toEndOf="@id/percent96Vertical"
-            app:layout_constraintTop_toTopOf="@+id/percent1Horizontal"
-            app:srcCompat="@drawable/ic_magnifying_glass" />
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+            app:layout_constraintTop_toTopOf="@+id/percent1Horizontal" />
 
         <TextView
             android:id="@+id/myContacts_text_add"

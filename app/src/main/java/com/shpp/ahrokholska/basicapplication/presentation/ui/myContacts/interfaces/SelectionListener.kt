@@ -2,6 +2,6 @@ package com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.interfa
 
 interface SelectionListener {
     fun clearSelection()
-    fun addItemToSelection(itemPos: Int)
+    fun addItemToSelection(itemId: Long)
     fun removeItemFromSelection(itemPos: Int)
 }

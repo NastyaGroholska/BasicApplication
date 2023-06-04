@@ -2,6 +2,9 @@ package com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.SearchView
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -26,6 +29,7 @@ import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.visible
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+
 @AndroidEntryPoint
 class MyContactsFragment :
     BaseFragment<FragmentMyContactsBinding>(FragmentMyContactsBinding::inflate) {
@@ -48,19 +52,21 @@ class MyContactsFragment :
                         ), FragmentNavigatorExtras(*transitionPairs)
                     )
                 }
-            }, object : SelectionListener {
+            },
+            object : SelectionListener {
                 override fun clearSelection() {
                     viewModel.clearSelectedPositions()
                 }
 
-                override fun addItemToSelection(itemPos: Int) {
-                    viewModel.addSelectedPosition(itemPos)
+                override fun addItemToSelection(itemId: Long) {
+                    viewModel.addSelectedPositionWithId(itemId)
                 }
 
                 override fun removeItemFromSelection(itemPos: Int) {
                     viewModel.removeSelectedPosition(itemPos)
                 }
-            })
+            }, ::searchDisabled
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -157,6 +163,7 @@ class MyContactsFragment :
                         } else {
                             binding.myContactsBinBtn.gone()
                         }
+                        searchDisabled(it)
                         contactsAdapter.changeMultiselectState(it)
                     }
                 }
@@ -169,21 +176,80 @@ class MyContactsFragment :
         }
     }
 
-    override fun setListeners() {
-        binding.myContactsTextAdd.setOnClickListener {
-            navController.navigate(MyContactsFragmentDirections.actionMyContactsToAddContactDialog())
-        }
-        binding.myContactsImageArrow.setOnClickListener {
-            navController.navigateUp()
-        }
-        binding.myContactsBinBtn.setOnClickListener {
-            deleteMultipleRVItems(contactsAdapter.deleteMultiselectItems())
-            it.gone()
-        }
-        binding.contactsTextTryAgain.setOnClickListener {
-            viewModel.updateContacts()
+    private fun searchDisabled(isDisabled: Boolean) {
+        with(binding) {
+            if (isDisabled) {
+                myContactsSearch.setQuery("", false)
+                myContactsSearch.isIconified = true
+                enableSearchView(myContactsSearch,false)
+            } else {
+                myContactsSearch.isEnabled = true
+                enableSearchView(myContactsSearch,true)
+            }
         }
     }
+
+    override fun setListeners() {
+        with(binding) {
+            myContactsTextAdd.setOnClickListener {
+                navController.navigate(MyContactsFragmentDirections.actionMyContactsToAddContactDialog())
+            }
+            myContactsImageArrow.setOnClickListener {
+                navController.navigateUp()
+            }
+            myContactsBinBtn.setOnClickListener {
+                deleteMultipleRVItems(contactsAdapter.deleteMultiselectItems())
+                it.gone()
+            }
+            contactsTextTryAgain.setOnClickListener {
+                viewModel.updateContacts()
+            }
+        }
+        initializeSearchView()
+    }
+
+    private fun initializeSearchView() {
+        with(binding) {
+            myContactsSearch.setOnSearchClickListener {
+                myContactsSearch.layoutParams.width = 0
+                myContactsTextContacts.invisible()
+                myContactsImageArrow.invisible()
+            }
+            myContactsSearch.setOnCloseListener {
+                myContactsSearch.layoutParams.width = WRAP_CONTENT
+                viewModel.setFilter(null)
+                myContactsTextContacts.visible()
+                myContactsImageArrow.visible()
+                false
+            }
+            myContactsSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean = true
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    viewModel.setFilter(newText)
+                    return true
+                }
+            })
+        }
+    }
+
+    private fun enableSearchView(view: View, enabled: Boolean) {
+        view.isEnabled = enabled
+        if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                val child = view.getChildAt(i)
+                enableSearchView(child, enabled)
+            }
+        }
+    }
+
+  /*  private fun searchOnClick() {
+        with(binding) {
+            myContactsSearch.layoutParams.width = 0
+            myContactsTextContacts.invisible()
+            myContactsImageArrow.invisible()
+        }
+    }*/
 
     companion object {
         private const val RV_TIME_TO_CANCEL_MS = 5 * 1000

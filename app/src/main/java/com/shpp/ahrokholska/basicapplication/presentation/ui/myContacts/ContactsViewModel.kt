@@ -23,16 +23,19 @@ class ContactsViewModel @Inject constructor(
     getCachedUserUseCase: GetCachedUserUseCase
 ) : ViewModel() {
     private val user = getCachedUserUseCase()
+    private var _cachedContacts = MutableStateFlow<List<Contact>?>(null)
     private var _contacts = MutableStateFlow<List<Contact>?>(null)
     val contacts: StateFlow<List<Contact>?> = _contacts
     private var _error = MutableStateFlow(false)
     val error: StateFlow<Boolean> = _error
+    private var filter: String? = null
 
     fun updateContacts() {
         viewModelScope.launch {
             val contacts = getContactsUseCase(user.id, user.accessToken)
             if (contacts is NetworkResponse.Success) {
                 _contacts.value = contacts.data
+                _cachedContacts.value = _contacts.value
                 _error.emit(false)
             } else {
                 setError()
@@ -40,16 +43,34 @@ class ContactsViewModel @Inject constructor(
         }
     }
 
+    fun setFilter(filter: String?) {
+        this.filter = filter
+        setContacts(_cachedContacts.value)
+    }
+
+    private fun setContacts(contacts: List<Contact>?) {
+        _cachedContacts.update { contacts }
+        if (filter.isNullOrBlank()) {
+            _contacts.update { contacts }
+        } else {
+            _contacts.update {
+                contacts?.filter {
+                    it.name?.contains(filter ?: "", ignoreCase = true) ?: false
+                }
+            }
+        }
+    }
+
     private suspend fun setError() {
         _error.emit(true)
-        _contacts.update { null }
+        setContacts(null)
     }
 
     fun deleteContact(contact: Contact) {
         viewModelScope.launch {
             val response = deleteContactUseCase(user.id, user.accessToken, contact.id)
             if (response is NetworkResponse.Success) {
-                _contacts.update { response.data }
+                setContacts(response.data)
                 _error.emit(false)
             } else {
                 setError()
@@ -61,7 +82,7 @@ class ContactsViewModel @Inject constructor(
         viewModelScope.launch {
             val response = addContactUseCase(user.id, user.accessToken, contact.id)
             if (response is NetworkResponse.Success) {
-                _contacts.value = response.data
+                setContacts(response.data)
                 _error.emit(false)
             } else {
                 setError()
@@ -83,12 +104,14 @@ class ContactsViewModel @Inject constructor(
         updateMultiselectState(false)
     }
 
-    fun addSelectedPosition(position: Int) {
+    fun addSelectedPositionWithId(id: Long) {
         if (_selectedPositions.value.isEmpty()) {
             updateMultiselectState(true)
         }
+
         _selectedPositions.value =
-            _selectedPositions.value.toMutableList().apply { add(position) }.toList()
+            _selectedPositions.value.toMutableList()
+                .apply { add(_contacts.value?.indexOfFirst { it.id == id } ?: 0) }.toList()
     }
 
     fun removeSelectedPosition(position: Int) {

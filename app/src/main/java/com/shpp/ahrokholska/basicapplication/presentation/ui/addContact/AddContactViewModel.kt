@@ -21,13 +21,12 @@ class AddContactViewModel @Inject constructor(
     private val getPossibleContactsUseCase: GetPossibleContactsUseCase,
     private val getCachedUserUseCase: GetCachedUserUseCase,
     private val addContactUseCase: AddContactUseCase
-) :
-    ViewModel() {
+) : ViewModel() {
     private val user get() = getCachedUserUseCase()
     private var _contacts = MutableStateFlow<List<Contact>?>(null)
     val contacts: StateFlow<List<Contact>?> = _contacts
-    private var _states: MutableStateFlow<Array<State>> = MutableStateFlow(emptyArray())
-    val states: StateFlow<Array<State>> = _states
+    private var _states: MutableStateFlow<Array<Pair<Long, State>>> = MutableStateFlow(emptyArray())
+    val states: StateFlow<Array<Pair<Long, State>>> = _states
     private var _finishedAll = MutableStateFlow(true)
     val finishedAll: StateFlow<Boolean> = _finishedAll
     private var numberOfCoroutines = AtomicInteger()
@@ -40,7 +39,8 @@ class AddContactViewModel @Inject constructor(
             while (isActive) {
                 val contacts = getPossibleContactsUseCase(user.id, user.accessToken)
                 if (contacts is NetworkResponse.Success) {
-                    _states.value = Array(contacts.data.size) { State.Normal }
+                    _states.value =
+                        Array(contacts.data.size) { contacts.data[it].id to State.Normal }
                     _contacts.value = contacts.data
                     break
                 }
@@ -52,17 +52,17 @@ class AddContactViewModel @Inject constructor(
         numberOfCoroutines.getAndIncrement()
         viewModelScope.launch {
             _finishedAll.emit(false)
-            _states.update { it.copyOf().apply { this[contactPos] = State.Loading } }
+            _states.update { it.copyOf().apply { this[contactPos] = contactId to State.Loading } }
 
-            if (addContactUseCase(
-                    user.id,
-                    user.accessToken,
-                    contactId
-                ) is NetworkResponse.Success
+            if (addContactUseCase(user.id, user.accessToken, contactId) is NetworkResponse.Success
             ) {
-                _states.update { it.copyOf().apply { this[contactPos] = State.Loaded } }
+                _states.update {
+                    it.copyOf().apply { this[contactPos] = contactId to State.Loaded }
+                }
             } else {
-                _states.update { it.copyOf().apply { this[contactPos] = State.Failed } }
+                _states.update {
+                    it.copyOf().apply { this[contactPos] = contactId to State.Failed }
+                }
             }
 
             if (numberOfCoroutines.decrementAndGet() == 0) {

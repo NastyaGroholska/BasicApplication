@@ -4,6 +4,7 @@
     <color name="main_text_color">#FFFFFFFF</color>
     <color name="upper_layout_color">#232235</color>
     <color name="upper_layout_color_70_percent">#B3232235</color>
+    <color name="search_view_background">#18181F</color>
     <color name="transparent">#00000000</color>
     <color name="big_button_color">#FB5E06</color>
     <color name="sub_text_color">#B2B2B3</color>

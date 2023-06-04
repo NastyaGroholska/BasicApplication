@@ -12,7 +12,7 @@ import com.shpp.ahrokholska.basicapplication.presentation.utils.ContactsDiffCall
 
 class AddContactsAdapter(private val onAdd: (Int, Long) -> Unit) :
     ListAdapter<Contact, AddContactViewHolder>(ContactsDiffCallback()) {
-    private var states: Array<State> = emptyArray()
+    private var states: Array<Pair<Long, State>> = emptyArray()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddContactViewHolder {
         return AddContactViewHolder(
@@ -23,15 +23,22 @@ class AddContactsAdapter(private val onAdd: (Int, Long) -> Unit) :
 
     override fun submitList(list: List<Contact>?) {
         super.submitList(list)
-        states = Array(list?.size ?: 0) { State.Normal }
+        states = if (list == null) {
+            emptyArray()
+        } else {
+            Array(list.size) { list[it].id to State.Normal }
+        }
     }
 
     override fun onBindViewHolder(holder: AddContactViewHolder, position: Int) {
-        holder.bindTo(getItem(position), states[position])
+        holder.bindTo(
+            getItem(position),
+            states.find { it.first == currentList[position].id }?.second ?: State.Normal
+        )
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setStates(states: Array<State>) {
+    fun setStates(states: Array<Pair<Long, State>>) {
         if (this.states.size != states.size) {
             this.states = states
             notifyDataSetChanged()
