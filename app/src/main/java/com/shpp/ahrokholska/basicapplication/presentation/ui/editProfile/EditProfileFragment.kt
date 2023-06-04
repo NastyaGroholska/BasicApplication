@@ -59,7 +59,7 @@ class EditProfileFragment :
                 binding.tietDate.setText(result)
             }
             tietDate.setOnClickListener {
-                DatePickerFragment().show(parentFragmentManager, "datePicker")
+                DatePickerFragment().show(parentFragmentManager, DATE_PICKER)
             }
         }
     }
@@ -109,5 +109,9 @@ class EditProfileFragment :
                 tietPhone.text.toString(), tietAddress.text.toString(), tietDate.text.toString()
             )
         }
+    }
+
+    private companion object {
+        const val DATE_PICKER = "DATE_PICKER"
     }
 }
