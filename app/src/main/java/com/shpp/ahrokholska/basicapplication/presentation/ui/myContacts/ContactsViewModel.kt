@@ -92,32 +92,30 @@ class ContactsViewModel @Inject constructor(
 
     private val _multiselectState = MutableStateFlow(false)
     val multiselectState: StateFlow<Boolean> = _multiselectState
-    private val _selectedPositions = MutableStateFlow<List<Int>>(emptyList())
-    val selectedPositions: StateFlow<List<Int>> = _selectedPositions
+    private val _selectedIds = MutableStateFlow<List<Long>>(emptyList())
+    val selectedIds: StateFlow<List<Long>> = _selectedIds
 
     private fun updateMultiselectState(newState: Boolean) {
         _multiselectState.value = newState
     }
 
     fun clearSelectedPositions() {
-        _selectedPositions.value = emptyList()
+        _selectedIds.value = emptyList()
         updateMultiselectState(false)
     }
 
-    fun addSelectedPositionWithId(id: Long) {
-        if (_selectedPositions.value.isEmpty()) {
+    fun addSelectedId(id: Long) {
+        if (_selectedIds.value.isEmpty()) {
             updateMultiselectState(true)
         }
 
-        _selectedPositions.value =
-            _selectedPositions.value.toMutableList()
-                .apply { add(_contacts.value?.indexOfFirst { it.id == id } ?: 0) }.toList()
+        _selectedIds.value = _selectedIds.value.toMutableList().apply { add(id) }.toList()
     }
 
-    fun removeSelectedPosition(position: Int) {
-        _selectedPositions.value =
-            _selectedPositions.value.toMutableList().apply { removeIf { it == position } }.toList()
-        if (_selectedPositions.value.isEmpty()) {
+    fun removeSelectedId(id: Long) {
+        _selectedIds.value =
+            _selectedIds.value.toMutableList().apply { removeIf { it == id } }.toList()
+        if (_selectedIds.value.isEmpty()) {
             updateMultiselectState(false)
         }
     }

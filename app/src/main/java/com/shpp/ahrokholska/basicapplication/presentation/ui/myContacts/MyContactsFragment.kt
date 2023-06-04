@@ -59,11 +59,11 @@ class MyContactsFragment :
                 }
 
                 override fun addItemToSelection(itemId: Long) {
-                    viewModel.addSelectedPositionWithId(itemId)
+                    viewModel.addSelectedId(itemId)
                 }
 
-                override fun removeItemFromSelection(itemPos: Int) {
-                    viewModel.removeSelectedPosition(itemPos)
+                override fun removeItemFromSelection(itemId: Long) {
+                    viewModel.removeSelectedId(itemId)
                 }
             }, ::searchDisabled
         )
@@ -168,7 +168,7 @@ class MyContactsFragment :
                     }
                 }
                 launch {
-                    viewModel.selectedPositions.collect {
+                    viewModel.selectedIds.collect {
                         contactsAdapter.changeMultiselectItems(it)
                     }
                 }

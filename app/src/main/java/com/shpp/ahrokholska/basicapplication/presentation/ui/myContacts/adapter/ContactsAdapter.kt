@@ -20,7 +20,7 @@ class ContactsAdapter(
 ) :
     ListAdapter<Contact, RecyclerView.ViewHolder>(ContactsDiffCallback()) {
     private var isMultiselectEnabled = false
-    private var selectedPositions = listOf<Int>()
+    private var selectedIds = listOf<Long>()
 
     private enum class ViewType {
         Normal, Multiselect
@@ -49,13 +49,13 @@ class ContactsAdapter(
         when (holder) {
             is ContactsNormalViewHolder -> holder.bindTo(getItem(position), itemListener)
             is ContactsMultiselectViewHolder -> holder.bindTo(
-                getItem(position), selectedPositions.contains(position)
+                getItem(position), selectedIds.contains(getItem(position).id)
             )
         }
     }
 
     fun deleteMultiselectItems(): List<Contact> {
-        val itemsToRemove = selectedPositions.sorted().map { getItem(it) }
+        val itemsToRemove = selectedIds.map { currentList.first { item -> item.id == it } }
         selectionListener.clearSelection()
         return itemsToRemove
     }
@@ -64,8 +64,8 @@ class ContactsAdapter(
         this.isMultiselectEnabled = isMultiselectEnabled
     }
 
-    fun changeMultiselectItems(selectedPositions: List<Int>) {
-        this.selectedPositions = selectedPositions
+    fun changeMultiselectItems(selectedPositions: List<Long>) {
+        this.selectedIds = selectedPositions
     }
 
     fun getPositionOfId(id: Long): Int {
@@ -77,7 +77,7 @@ class ContactsAdapter(
         if (isChecked) {
             selectionListener.addItemToSelection(currentList[adapterPosition].id)
         } else {
-            selectionListener.removeItemFromSelection(adapterPosition)
+            selectionListener.removeItemFromSelection(currentList[adapterPosition].id)
         }
     }
 }
