@@ -1,13 +1,13 @@
 package com.shpp.ahrokholska.basicapplication.presentation.ui.myProfile
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import com.shpp.ahrokholska.basicapplication.data.repository.UserRepositoryImpl
-import com.shpp.ahrokholska.basicapplication.domain.repository.UserRepository
-import kotlinx.coroutines.flow.Flow
+import androidx.lifecycle.ViewModel
+import com.shpp.ahrokholska.basicapplication.domain.model.User
+import com.shpp.ahrokholska.basicapplication.domain.useCases.GetCachedUserUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MyProfileViewModel(application: Application) : AndroidViewModel(application) {
-    private val userRepository: UserRepository = UserRepositoryImpl(application.applicationContext)
-
-    val userName: Flow<String> = userRepository.userName
+@HiltViewModel
+class MyProfileViewModel @Inject constructor(private val getCachedUserUseCase: GetCachedUserUseCase) :
+    ViewModel() {
+    val userName: User get() = getCachedUserUseCase()
 }

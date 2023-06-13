@@ -3,9 +3,13 @@
     <color name="secondary_text_color">#FF000000</color>
     <color name="main_text_color">#FFFFFFFF</color>
     <color name="upper_layout_color">#232235</color>
+    <color name="upper_layout_color_70_percent">#B3232235</color>
+    <color name="search_view_background">#18181F</color>
     <color name="transparent">#00000000</color>
     <color name="big_button_color">#FB5E06</color>
     <color name="sub_text_color">#B2B2B3</color>
     <color name="error_text_color">#F93E3E</color>
     <color name="lower_layout_color">#FFFFFF</color>
+    <color name="selected_contact_background">#E7E7E7</color>
+    <color name="hyperlink_color">#2196F3</color>
 </resources>

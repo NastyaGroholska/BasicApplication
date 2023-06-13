@@ -1,78 +1,83 @@
 package com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.shpp.ahrokholska.basicapplication.databinding.ContactsItemBinding
+import com.shpp.ahrokholska.basicapplication.databinding.ContactsItemMultiselectBinding
 import com.shpp.ahrokholska.basicapplication.domain.model.Contact
-import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.adapter.diffCallback.ContactsDiffCallback
-import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.TRANSITION_NAME_CAREER
-import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.TRANSITION_NAME_IMAGE
-import com.shpp.ahrokholska.basicapplication.presentation.utils.Constants.TRANSITION_NAME_USER_NAME
-import com.shpp.ahrokholska.basicapplication.presentation.utils.ext.loadFromURL
+import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.interfaces.ContactsNormalItemListener
+import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.interfaces.SelectionListener
+import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.viewHolders.ContactsMultiselectViewHolder
+import com.shpp.ahrokholska.basicapplication.presentation.ui.myContacts.viewHolders.ContactsNormalViewHolder
+import com.shpp.ahrokholska.basicapplication.presentation.utils.ContactsDiffCallback
 
 class ContactsAdapter(
-    private val onBinClick: (Contact, Int) -> Unit,
-    private val onItemClick: (Contact, Array<Pair<View, String>>) -> Unit
+    private val itemListener: ContactsNormalItemListener,
+    private val selectionListener: SelectionListener,
+    private val onMultiselectItemStateChangeCallback: (Boolean) -> Unit
 ) :
-    ListAdapter<Contact, ContactsAdapter.ContactsViewHolder>(ContactsDiffCallback()) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactsViewHolder {
-        return ContactsViewHolder(
-            ContactsItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent, false
+    ListAdapter<Contact, RecyclerView.ViewHolder>(ContactsDiffCallback()) {
+    private var isMultiselectEnabled = false
+    private var selectedIds = listOf<Long>()
+
+    private enum class ViewType {
+        Normal, Multiselect
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        if (isMultiselectEnabled) {
+            return ContactsMultiselectViewHolder(
+                ContactsItemMultiselectBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                ), ::onMultiselectItemStateChange
             )
+        }
+        return ContactsNormalViewHolder(
+            ContactsItemBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            ), selectionListener::addItemToSelection
         )
     }
 
-    override fun onBindViewHolder(holder: ContactsViewHolder, position: Int) {
-        holder.bindTo(getItem(position))
+    override fun getItemViewType(position: Int): Int {
+        return if (isMultiselectEnabled) ViewType.Multiselect.ordinal else ViewType.Normal.ordinal
     }
 
-    inner class ContactsViewHolder(private val binding: ContactsItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bindTo(contact: Contact) {
-            with(binding) {
-                contactsTextName.text = contact.name
-                contactsTextCareer.text = contact.career
-                contactsImagePhoto.loadFromURL(contact.picture)
-                contactsImageBin.isEnabled = true
-                root.isEnabled = true
-            }
-            setListeners(contact)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is ContactsNormalViewHolder -> holder.bindTo(getItem(position), itemListener)
+            is ContactsMultiselectViewHolder -> holder.bindTo(
+                getItem(position), selectedIds.contains(getItem(position).id)
+            )
         }
+    }
 
-        private fun setTransitionName(view: View, name: String): Pair<View, String> {
-            view.transitionName = name
-            return view to name
-        }
+    fun deleteMultiselectItems(): List<Contact> {
+        val itemsToRemove = selectedIds.map { currentList.first { item -> item.id == it } }
+        selectionListener.clearSelection()
+        return itemsToRemove
+    }
 
-        private fun setListeners(contact: Contact) {
-            with(binding) {
-                contactsImageBin.setOnClickListener {
-                    it.isEnabled = false
-                    binding.root.isEnabled = false
-                    onBinClick(contact, adapterPosition)
-                }
-                root.setOnClickListener {
-                    onItemClick(
-                        contact, arrayOf(
-                            setTransitionName(
-                                contactsImagePhoto, TRANSITION_NAME_IMAGE + contact.id
-                            ),
-                            setTransitionName(
-                                contactsTextName, TRANSITION_NAME_USER_NAME + contact.id
-                            ),
-                            setTransitionName(
-                                contactsTextCareer, TRANSITION_NAME_CAREER + contact.id
-                            )
-                        )
-                    )
-                }
-            }
+    fun changeMultiselectState(isMultiselectEnabled: Boolean) {
+        this.isMultiselectEnabled = isMultiselectEnabled
+    }
+
+    fun changeMultiselectItems(selectedPositions: List<Long>) {
+        this.selectedIds = selectedPositions
+    }
+
+    fun getPositionOfId(id: Long): Int {
+        return currentList.indexOfFirst { it.id == id }
+    }
+
+    private fun onMultiselectItemStateChange(isChecked: Boolean, adapterPosition: Int) {
+        onMultiselectItemStateChangeCallback(isChecked)
+        if (isChecked) {
+            selectionListener.addItemToSelection(currentList[adapterPosition].id)
+        } else {
+            selectionListener.removeItemFromSelection(currentList[adapterPosition].id)
         }
     }
 }

@@ -9,9 +9,13 @@
     <dimen name="checkbox_padding">8dp</dimen>
     <dimen name="boarder_width">2dp</dimen>
     <dimen name="btn_icon_padding">16dp</dimen>
+    <dimen name="image_icon_padding">24dp</dimen>
     <dimen name="btn_small_height">40dp</dimen>
     <dimen name="btn_big_height">55dp</dimen>
     <dimen name="text_gap">16dp</dimen>
     <dimen name="distance_between_small_and_big_btns">20dp</dimen>
     <dimen name="contacts_icon_height">50dp</dimen>
+    <dimen name="multiselect_bin_icon_height">60dp</dimen>
+    <dimen name="recycler_item_spacing">16dp</dimen>
+    <dimen name="arrow_ic_padding">15dp</dimen>
 </resources>

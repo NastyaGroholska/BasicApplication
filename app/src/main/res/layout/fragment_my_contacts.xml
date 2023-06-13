@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.contacts.MyContacts">
@@ -46,20 +48,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/back"
+            android:padding="@dimen/arrow_ic_padding"
             app:layout_constraintBottom_toBottomOf="@+id/myContacts_text_contacts"
-            app:layout_constraintStart_toStartOf="@id/percent4Vertical"
-            app:layout_constraintTop_toTopOf="@+id/percent1Horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/myContacts_text_contacts"
             app:srcCompat="@drawable/ic_arrow_back" />
 
-        <ImageView
-            android:id="@+id/myContacts_image_search"
+        <SearchView
+            android:id="@+id/myContacts_search"
+            style="@style/searchViewStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/search"
             app:layout_constraintBottom_toBottomOf="@+id/myContacts_text_contacts"
             app:layout_constraintEnd_toEndOf="@id/percent96Vertical"
-            app:layout_constraintTop_toTopOf="@+id/percent1Horizontal"
-            app:srcCompat="@drawable/ic_magnifying_glass" />
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+            app:layout_constraintTop_toTopOf="@+id/percent1Horizontal" />
 
         <TextView
             android:id="@+id/myContacts_text_add"
@@ -76,11 +80,84 @@
             android:id="@+id/myContacts_rv_contacts"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/btn_icon_padding"
+            app:layout_constraintBottom_toTopOf="@+id/myContacts_bin_btn"
             app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
             app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
             app:layout_constraintTop_toBottomOf="@+id/myContacts_top"
             tools:listitem="@layout/contacts_item" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/myContacts_bin_btn"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/multiselect_bin_icon_height"
+            android:layout_marginBottom="@dimen/btn_small_height"
+            android:background="@color/big_button_color"
+            android:tint="@color/main_text_color"
+            android:visibility="gone"
+            app:contentPadding="@dimen/btn_icon_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="@id/percent96Vertical"
+            app:layout_goneMarginBottom="@dimen/btn_icon_padding"
+            app:shapeAppearanceOverlay="@style/rounded"
+            app:srcCompat="@drawable/ic_bin" />
+
+        <ProgressBar
+            android:id="@+id/contacts_progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
+            app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+            app:layout_constraintTop_toBottomOf="@+id/myContacts_top" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/contacts_text_no_contacts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/you_don_t_have_any_contacts"
+            android:textColor="@color/sub_text_color"
+            android:textSize="@dimen/huge_text_size"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
+            app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+            app:layout_constraintTop_toBottomOf="@+id/myContacts_top" />
+
+        <LinearLayout
+            android:id="@+id/contacts_error_window"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
+            app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+            app:layout_constraintTop_toBottomOf="@+id/myContacts_top">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/contacts_text_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="@string/network_error"
+                android:textColor="@color/sub_text_color"
+                android:textSize="@dimen/huge_text_size" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/contacts_text_try_again"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="@string/retry"
+                android:textColor="@color/hyperlink_color"
+                android:textSize="@dimen/huge_text_size" />
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/percent18Horizontal"
@@ -102,7 +179,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.01" />
-
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/percent4Vertical"

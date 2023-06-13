@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.contacts.MyContacts">
+
+        <View
+            android:id="@+id/addContacts_top"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/upper_layout_color"
+            app:layout_constraintBottom_toTopOf="@+id/percent18Horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/addContacts_bottom"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/lower_layout_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/percent18Horizontal" />
+
+        <TextView
+            android:id="@+id/addContacts_text_users"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/users"
+            android:textColor="@color/main_text_color"
+            android:textSize="@dimen/huge_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/percent1Horizontal" />
+
+        <ImageView
+            android:id="@+id/addContacts_image_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/back"
+            android:padding="@dimen/arrow_ic_padding"
+            app:layout_constraintBottom_toBottomOf="@+id/addContacts_text_users"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/addContacts_text_users"
+            app:srcCompat="@drawable/ic_arrow_back" />
+
+        <SearchView
+            android:id="@+id/addContacts_search"
+            style="@style/searchViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/addContacts_text_users"
+            app:layout_constraintEnd_toEndOf="@id/percent96Vertical"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+            app:layout_constraintTop_toTopOf="@+id/percent1Horizontal" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/addContacts_rv_contacts"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/btn_icon_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
+            app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+            app:layout_constraintTop_toBottomOf="@+id/addContacts_top"
+            tools:listitem="@layout/contacts_item" />
+
+        <ProgressBar
+            android:id="@+id/addContacts_progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/percent96Vertical"
+            app:layout_constraintStart_toStartOf="@+id/percent4Vertical"
+            app:layout_constraintTop_toBottomOf="@+id/addContacts_top" />
+
+        <FrameLayout
+            android:id="@+id/addContacts_progressWindow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/upper_layout_color_70_percent"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/addContacts_progressBar2"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/percent18Horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.18" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/percent1Horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.01" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/percent4Vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.04" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/percent96Vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.96" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

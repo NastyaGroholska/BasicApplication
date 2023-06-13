@@ -6,6 +6,4 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/upper_layout_color</item>
     </style>
-
-    <style name="Theme.BasicApplication" parent="Base.Theme.BasicApplication" />
 </resources>
